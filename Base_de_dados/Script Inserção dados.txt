@@ -1,0 +1,276 @@
+INSERT INTO CENTRO (ID_CENTRO, CENTRO, MORADA, TELEFONE)
+VALUES 
+    (1, 'Viseu', 'Avenida G, Viseu', 222333444),
+    (2, 'Fundão', 'Avenida B, Fundão', 987654321),
+    (3, 'Portalegre', 'Praça C, Portalegre', 111222333),
+    (4, 'Vila Real', 'Rua D, Vila Real', 812343212),
+    (5, 'Tomar', 'Avenida E, Tomar', 444555666);
+
+
+INSERT INTO UTILIZADORES (ID_UTILIZADOR, ID_CENTRO, NOME, DESCRICAO, MORADA, DATANASCIMENTO, DATAREGISTO, TELEFONE, EMAIL, PASSWORD, IMAGEMPERFIL)
+VALUES
+    (1, 1, 'João Silva', NULL, 'Rua Principal, Lisboa', '1990-05-15', GETDATE(), 123456789, 'joao@example.com', 'senha123', NULL),
+    (2, 2, 'Ana Santos', NULL, 'Avenida Central, Porto', '1985-08-20', GETDATE(), 987654321, 'ana@example.com', 'abc123', NULL),
+    (3, 1, 'Pedro Oliveira', NULL, 'Rua Secundária, Lisboa', '1992-11-10', GETDATE(), 123456789, 'pedro@example.com', 'senha456', NULL),
+    (4, 3, 'Marta Costa', NULL, 'Praça Principal, Braga', '1988-04-25', GETDATE(), 111222333, 'marta@example.com', 'qwerty', NULL),
+    (5, 2, 'Rui Santos', NULL, 'Avenida Nova, Porto', '1995-02-28', GETDATE(), 444555666, 'rui@example.com', 'password', NULL),
+    (6, 4, 'Sofia Fernandes', NULL, 'Rua das Flores, Coimbra', '1991-09-03', GETDATE(), 777888999, 'sofia@example.com', '123456', NULL),
+    (7, 1, 'Carlos Rodrigues', NULL, 'Rua da Praia, Lisboa', '1987-07-12', GETDATE(), 222333444, 'carlos@example.com', 'abcxyz', NULL),
+    (8, 3, 'Inês Marques', NULL, 'Praça da Liberdade, Braga', '1993-12-18', GETDATE(), 888999000, 'ines@example.com', 'senha789', NULL),
+    (9, 2, 'Miguel Pereira', NULL, 'Avenida Central, Porto', '1986-06-30', GETDATE(), 555666777, 'miguel@example.com', 'admin123', NULL),
+    (10, 5, 'Rita Santos', NULL, 'Avenida Principal, Faro', '1990-03-08', GETDATE(), 333444555, 'rita@example.com', 'senha1234', NULL);
+
+
+INSERT INTO ADMINSCENTROS (IDADMINCENTRO, ID_CENTRO, ID_UTILIZADOR, DATAFICOUADMIN)
+VALUES
+    (1, 1, 1, GETDATE()),
+    (2, 2, 2, GETDATE()),
+    (3, 3, 3, GETDATE()),
+    (4, 4, 4, GETDATE()),
+    (5, 5, 5, GETDATE());
+
+
+INSERT INTO AREASDEATUACAO (ID_AREA, IMAGEMAREA, LINGUAGEM, NOME)
+VALUES
+    (1, NULL, 'PT', 'Saude'),
+    (2, NULL, 'PT', 'Desporto'),
+    (3, NULL, 'PT', 'Formação'),
+    (4, NULL, 'PT', 'Gastronomia'),
+    (5, NULL, 'PT', 'Habitação'),
+    (6, NULL, 'PT', 'Transportes'),
+    (7, NULL, 'PT', 'Lazer');
+
+INSERT INTO ALBUNSMOMENTOS (ID_ALBUM, ID_AREA, ID_UTILIZADOR, ID_CENTRO, NOME, IMAGEM, DATA_CRIACAO, LOCALIZACAO, VISIBILIDADE)
+VALUES
+    (1, 1, 1, 1, 'Fotos de Evento', NULL, '2023-01-15', 'Salão Principal', 1),
+    (2, 2, 2, 2, 'Passeio na Natureza', NULL, '2022-05-20', 'Parque Nacional', 1),
+    (3, 3, 3, 3, 'Competição de Jogos', NULL, '2023-03-10', 'Estádio Municipal', 1),
+    (4, 4, 4, 4, 'Conferência de TI', NULL, '2022-11-25', 'Centro de Convenções', 1),
+    (5, 5, 5, 5, 'Viagem de Negócios', NULL, '2023-08-18', 'Sede da Empresa', 1),
+    (6, 1, 6, 1, 'Festa de Aniversário', NULL, '2023-02-08', 'Casa da Praia', 1),
+    (7, 2, 7, 2, 'Exposição de Arte', NULL, '2022-07-30', 'Galeria de Arte', 1),
+    (8, 3, 8, 3, 'Retiro Espiritual', NULL, '2023-04-05', 'Mosteiro Antigo', 1),
+    (9, 4, 9, 4, 'Workshop de Marketing', NULL, '2022-09-12', 'Hotel Luxuoso', 1),
+    (10, 5, 10, 5, 'Encontro Familiar', NULL, '2023-06-22', 'Casa dos Pais', 1);
+
+-- Saúde
+INSERT INTO SUB_AREA_ATUACAO (ID_SUBAREA, ID_AREA, IMAGEMSUBAREA, LINGUAGEM, NOME)
+VALUES 
+    (1, 1, NULL, 'PT', 'Clínicas médicas e hospitais'),
+    (2, 1, NULL, 'PT', 'Clínicas dentárias'),
+    (3, 1, NULL, 'PT', 'Clínicas veterinárias');
+
+-- Desporto
+INSERT INTO SUB_AREA_ATUACAO (ID_SUBAREA, ID_AREA, IMAGEMSUBAREA, LINGUAGEM, NOME)
+VALUES 
+    (4, 2, NULL, 'PT', 'Ginásios'),
+    (5, 2, NULL, 'PT', 'Futebol'),
+    (6, 2, NULL, 'PT', 'Padle'),
+    (7, 2, NULL, 'PT', 'Squash'),
+    (8, 2, NULL, 'PT', 'Atletismo'),
+    (9, 2, NULL, 'PT', 'Ciclismo'),
+    (10, 2, NULL, 'PT', 'Karts');
+
+-- Formação
+INSERT INTO SUB_AREA_ATUACAO (ID_SUBAREA, ID_AREA, IMAGEMSUBAREA, LINGUAGEM, NOME)
+VALUES 
+    (11, 3, NULL, 'PT', 'Centros de Formação'),
+    (12, 3, NULL, 'PT', 'Escolas'),
+    (13, 3, NULL, 'PT', 'Infantários');
+
+-- Gastronomia
+INSERT INTO SUB_AREA_ATUACAO (ID_SUBAREA, ID_AREA, IMAGEMSUBAREA, LINGUAGEM, NOME)
+VALUES 
+    (14, 4, NULL, 'PT', 'Restaurantes'),
+    (15, 4, NULL, 'PT', 'Shoppings');
+
+-- Habitação/Alojamento
+INSERT INTO SUB_AREA_ATUACAO (ID_SUBAREA, ID_AREA, IMAGEMSUBAREA, LINGUAGEM, NOME)
+VALUES 
+    (16, 5, NULL, 'PT', 'Quartos para arrendar'),
+    (17, 5, NULL, 'PT', 'Casas para alugar'),
+    (18, 5, NULL, 'PT', 'Casas de férias'),
+    (19, 5, NULL, 'PT', 'Escapadinhas');
+
+-- Transportes
+INSERT INTO SUB_AREA_ATUACAO (ID_SUBAREA, ID_AREA, IMAGEMSUBAREA, LINGUAGEM, NOME)
+VALUES 
+    (20, 6, NULL, 'PT', 'Boleias'),
+    (21, 6, NULL, 'PT', 'Transportes públicos');
+
+-- Lazer
+INSERT INTO SUB_AREA_ATUACAO (ID_SUBAREA, ID_AREA, IMAGEMSUBAREA, LINGUAGEM, NOME)
+VALUES 
+    (22, 7, NULL, 'PT', 'Cinema'),
+    (23, 7, NULL, 'PT', 'Parques');
+
+
+INSERT INTO EVENTOS (ID_EVENTO, ID_SUBAREA, ID_UTILIZADOR, ID_CENTRO, ID_AREA, UTI_ID_UTILIZADOR, NOME, DATA, LOCALIZACAO, TELEFONE, DESCRICAO, PRECO, REVISTO)
+VALUES
+    (1, 1, 1, 1, 1, 1, 'Seminário de Medicina Preventiva', '2024-03-15 09:00:00', 'Avenida Principal, Viseu', 123456789, 'Seminário sobre os avanços na medicina preventiva', 2, 1),
+    (2, 4, 2, 2, 2, 2, 'Torneio de Futebol Amador', '2024-04-20 14:00:00', 'Estádio Municipal, Fundão', 987654321, 'Torneio de futebol para equipas amadoras', 1, 1),
+    (3, 9, 3, 3, 2, 3, 'Ciclismo', '2024-05-10 09:00:00', 'Rua das Escolas, Portalegre', 111222333, 'Curso intensivo de gestão para pequenas empresas', 2, 1),
+    (4, 14, 4, 4, 4, 4, 'Festival Gastronómico', '2024-06-05 18:00:00', 'Praça da Cidade, Vila Real', 812343212, 'Evento que reúne os melhores restaurantes da região', 2, 1),
+    (5, 16, 5, 5, 5, 5, 'Aluguer de Casa de Férias', '2024-07-15 12:00:00', 'Rua das Casas, Tomar', 444555666, 'Casa de férias para famílias', 1, 1),
+    (6, 20, 6, 3, 6, 1, 'Partida de Boleias', '2024-08-10 08:30:00', 'Autoestrada A1', NULL, 'Partida de boleias para Lisboa', 0, 1),
+    (7, 22, 7, 4, 7, 2, 'Sessão de Cinema ao Ar Livre', '2024-09-20 20:00:00', 'Parque Municipal, Fundão', NULL, 'Exibição de filme ao ar livre', 2, 1),
+    (8, 13, 8, 5, 3, 3, 'Seminário sobre Desenvolvimento Infantil', '2024-10-05 10:00:00', 'Avenida das Escolas, Portalegre', 555666777, 'Palestra sobre desenvolvimento infantil', 1, 1),
+    (9, 23, 9, 1, 7, 1, 'Exposição de Arte Urbana', '2024-11-12 16:00:00', 'Rua das Artes, Vila Real', 999888777, 'Exposição de obras de arte urbana', 0, 1),
+    (10, 23, 10, 1, 7, 1, 'Visita Guiada ao Parque Nacional', '2024-12-08 11:00:00', 'Entrada do Parque Nacional, Tomar', NULL, 'Visita guiada pelos trilhos do parque', 2, 1);
+
+
+INSERT INTO ALBUNS_EVENTOS (ID_ALBUMEVENTO, ID_EVENTO, ID_UTILIZADOR, NOME, IMAGEM, DATA_CRIACAO, LOCALIZACAO, VISIBILIDADE)
+VALUES
+    (1, 1, 1, 'Fotos do Seminário de Medicina Preventiva', NULL, '2024-03-15 09:00:00', 'Avenida Principal, Viseu', 1),
+    (2, 2, 2, 'Fotos do Torneio de Futebol Amador', NULL, '2024-04-20 14:00:00', 'Estádio Municipal, Fundão', 1),
+    (3, 3, 3, 'Fotos do Evento de Ciclismo', NULL, '2024-05-10 09:00:00', 'Rua das Escolas, Portalegre', 1),
+    (4, 4, 4, 'Fotos do Festival Gastronómico', NULL, '2024-06-05 18:00:00', 'Praça da Cidade, Vila Real', 1),
+    (5, 5, 5, 'Fotos do Aluguer de Casa de Férias', NULL, '2024-07-15 12:00:00', 'Rua das Casas, Tomar', 1),
+    (6, 6, 6, 'Fotos da Partida de Boleias', NULL, '2024-08-10 08:30:00', 'Autoestrada A1', 1),
+    (7, 7, 7, 'Fotos da Sessão de Cinema ao Ar Livre', NULL, '2024-09-20 20:00:00', 'Parque Municipal, Fundão', 1),
+    (8, 8, 8, 'Fotos do Seminário sobre Desenvolvimento Infantil', NULL, '2024-10-05 10:00:00', 'Avenida das Escolas, Portalegre', 1),
+    (9, 9, 9, 'Fotos da Exposição de Arte Urbana', NULL, '2024-11-12 16:00:00', 'Rua das Artes, Vila Real', 1),
+    (10, 10, 10, 'Fotos da Visita Guiada ao Parque Nacional', NULL, '2024-12-08 11:00:00', 'Entrada do Parque Nacional, Tomar', 1);
+
+
+INSERT INTO CONTEUDO (ID_CONTEUDO, ID_CENTRO, ID_SUBAREA, ID_UTILIZADOR, UTI_ID_UTILIZADOR, ID_AREA, NOMECONTEUDO, MORADA, HORARIO, TELEFONE, WEBSITE, ACESSIBILIDADE, REVISTO)
+VALUES
+    (1, 1, 1, 1, 1, 1, 'Hospital Central', 'Avenida Principal, Viseu', '24 horas', 123456789, 'www.hospitalcentral.com', 'Acesso para cadeiras de rodas', 1),
+    (2, 2, 4, 2, 2, 2, 'Academia Fitness', 'Rua do Desporto, Fundão', 'Seg-Sex: 8:00-22:00, Sáb: 9:00-18:00', 987654321, 'www.academiafitness.com', 'Acesso para cadeiras de rodas', 1),
+    (3, 3, 11, 3, 3, 3, 'Escola de Formação Profissional', 'Praça da Formação, Portalegre', 'Seg-Sex: 9:00-17:00', 111222333, NULL, 'Acesso para cadeiras de rodas', 1),
+    (4, 4, 14, 4, 4, 4, 'Restaurante Sabor & Arte', 'Rua dos Sabores, Vila Real', 'Seg-Dom: 12:00-15:00, 19:00-23:00', 812343212, NULL, 'Acesso para cadeiras de rodas', 1),
+    (5, 5, 18, 5, 5, 5, 'Casa de Férias Tropical', 'Avenida das Férias, Tomar', 'Check-in: 14:00, Check-out: 12:00', 444555666, 'www.casadeférias.com', 'Acesso para cadeiras de rodas', 1),
+    (6, 1, 21, 1, 1, 6, 'Transporte Escolar', 'Rua da Escola, Viseu', 'Seg-Sex: 7:00-18:00', 123456789, NULL, 'Acesso para cadeiras de rodas', 1),
+    (7, 2, 22, 2, 2, 7, 'Cinema Star', 'Avenida dos Cinemas, Fundão', 'Seg-Sex: 14:00-23:00, Sáb-Dom: 12:00-23:00', 987654321, 'www.cinemastar.com', 'Acesso para cadeiras de rodas', 1),
+    (8, 3, 1, 3, 3, 1, 'Consulta Médica de Rotina', 'Avenida da Saúde, Portalegre', 'Seg-Sex: 9:00-17:00', 111222333, NULL, 'Acesso para cadeiras de rodas', 1),
+    (9, 4, 10, 4, 4, 2, 'Circuito de karts', 'Rua do Desporto, Vila Real', 'Seg-Sáb: 10:00-20:00', 812343212, NULL, 'Acesso para cadeiras de rodas', 1),
+    (10, 5, 3, 5, 5, 3, 'Creche Alegria Infantil', 'Avenida da Infância, Tomar', 'Seg-Sex: 7:00-19:00', 444555666, NULL, 'Acesso para cadeiras de rodas', 1);
+
+
+INSERT INTO AVALIACOES (ID_AVALIACAO, ID_CONTEUDO, ID_UTILIZADOR, AVALIACAOGERAL, AVALIACAOPRECO, DATAAVALIACAO)
+VALUES
+    (1, 1, 1, 4, 3, '2024-03-10 08:00:00'),
+    (2, 2, 2, 4, 3, '2024-03-11 10:30:00'),
+    (3, 3, 3, 5, 2, '2024-03-12 14:45:00'),
+    (4, 4, 4, 4, 2, '2024-03-13 17:20:00'),
+    (5, 5, 5, 4, 3, '2024-03-14 09:10:00'),
+    (6, 6, 1, 3, 1, '2024-03-15 11:55:00'),
+    (7, 7, 2, 4, 1, '2024-03-16 13:40:00'),
+    (8, 8, 3, 4, 2, '2024-03-17 15:30:00'),
+    (9, 9, 4, 3, 2, '2024-03-18 18:25:00'),
+    (10, 10, 5, 5, 3, '2024-03-19 20:15:00');
+
+
+INSERT INTO DOCUMENTOS (ID_DOCUMENTO, ID_SUBAREA, ID_UTILIZADOR, DESCRICAO, TIPO, CAMINHO_URL, DATACRIACAO)
+VALUES
+    (1, 1, 1, 'Documento de Exemplo 1', 'PDF', '/caminho/do/documento1.pdf', '2024-01-05 09:30:00'),
+    (2, 2, 2, 'Documento de Exemplo 2', 'Word', '/caminho/do/documento2.docx', '2024-02-10 14:45:00'),
+    (3, 3, 3, 'Documento de Exemplo 3', 'Excel', '/caminho/do/documento3.xlsx', '2024-03-15 11:20:00'),
+    (4, 4, 4, 'Documento de Exemplo 4', 'PDF', '/caminho/do/documento4.pdf', '2024-04-20 08:00:00'),
+    (5, 5, 5, 'Documento de Exemplo 5', 'Word', '/caminho/do/documento5.docx', '2024-05-25 10:30:00'),
+    (6, 1, 6, 'Documento de Exemplo 6', 'PDF', '/caminho/do/documento6.pdf', '2024-06-30 13:15:00'),
+    (7, 2, 7, 'Documento de Exemplo 7', 'Excel', '/caminho/do/documento7.xlsx', '2024-07-05 15:45:00'),
+    (8, 3, 8, 'Documento de Exemplo 8', 'PDF', '/caminho/do/documento8.pdf', '2024-08-10 11:00:00'),
+    (9, 4, 9, 'Documento de Exemplo 9', 'Word', '/caminho/do/documento9.docx', '2024-09-15 09:00:00'),
+    (10, 5, 10, 'Documento de Exemplo 10', 'Excel', '/caminho/do/documento10.xlsx', '2024-10-20 12:30:00');
+
+
+INSERT INTO FAVORITOS (IDFAVORITO, ID_CENTRO, ID_CONTEUDO, ID_UTILIZADOR, DATAFAVORITO)
+VALUES
+    (1, 1, 1, 1, '2024-01-05 09:30:00'),
+    (2, 2, 2, 2, '2024-02-10 14:45:00'),
+    (3, 3, 3, 3, '2024-03-15 11:20:00'),
+    (4, 4, 4, 4, '2024-04-20 08:00:00'),
+    (5, 5, 5, 5, '2024-05-25 10:30:00'),
+    (6, 1, 6, 6, '2024-06-30 13:15:00'),
+    (7, 2, 7, 7, '2024-07-05 15:45:00'),
+    (8, 3, 8, 8, '2024-08-10 11:00:00'),
+    (9, 4, 9, 9, '2024-09-15 09:00:00'),
+    (10, 5, 10, 10, '2024-10-20 12:30:00');
+
+
+INSERT INTO FOTOGRAFIAS (ID_FOTO, ID_UTILIZADOR, ID_ALBUM, DESCRICAO, LOCALIZACAO, DATA_CRIACAO, IMAGEM, VISIBILIDADE)
+VALUES
+    (1, 1, 1, 'Pôr do sol na praia', 'Praia da Rocha, Algarve', '2024-01-05 18:30:00', NULL, 1),
+    (2, 2, 1, 'Família no parque', 'Parque da Cidade, Porto', '2024-02-10 12:45:00', NULL, 1),
+    (3, 3, 2, 'Paisagem montanhosa', 'Serra da Estrela, Portugal', '2024-03-15 14:20:00', NULL, 1),
+    (4, 4, 2, 'Piquenique junto ao rio', 'Rio Douro, Porto', '2024-04-20 11:00:00', NULL, 1),
+    (5, 5, 3, 'Passeio de barco', 'Rio Tejo, Lisboa', '2024-05-25 10:30:00', NULL, 1),
+    (6, 6, 3, 'Cachoeira na floresta', 'Serra da Arrábida, Setúbal', '2024-06-30 09:15:00', NULL, 1),
+    (7, 7, 4, 'Café na praça', 'Praça do Comércio, Lisboa', '2024-07-05 15:45:00', NULL, 1),
+    (8, 8, 4, 'Ponte sobre o rio', 'Ponte D. Luís I, Porto', '2024-08-10 11:00:00', NULL, 1),
+    (9, 9, 5, 'Paisagem rural', 'Alentejo, Portugal', '2024-09-15 09:00:00', NULL, 1),
+    (10, 10, 5, 'Vista da cidade', 'Miradouro da Senhora do Monte, Lisboa', '2024-10-20 12:30:00', NULL, 1);
+
+
+
+INSERT INTO FOTOGRAFIAS_EVENTOS (ID_FOTO2, ID_ALBUMEVENTO, ID_UTILIZADOR, DESCRICAO, LOCALIZACAO, DATA_CRIACAO, IMAGEM, VISIBILIDADE)
+VALUES
+    (1, 1, 1, 'Momento de celebração', 'Salão de festas, Viseu', '2023-12-31 23:59:59', NULL, 1),
+    (2, 2, 2, 'Registro do evento', 'Centro de Convenções, Fundão', '2024-01-15 14:30:00', NULL, 1),
+    (3, 3, 3, 'Apresentação principal', 'Auditório Municipal, Portalegre', '2024-02-20 19:00:00', NULL, 1),
+    (4, 4, 4, 'Discurso do CEO', 'Hotel Lux, Vila Real', '2024-03-10 10:00:00', NULL, 1),
+    (5, 5, 5, 'Competição acirrada', 'Estádio Nacional, Tomar', '2024-04-05 16:00:00', NULL, 1),
+    (6, 1, 1, 'Momento de vitória', 'Pavilhão Desportivo, Viseu', '2024-05-01 18:00:00', NULL, 1),
+    (7, 2, 2, 'Premiação dos vencedores', 'Sala de Eventos, Fundão', '2024-06-20 21:00:00', NULL, 1),
+    (8, 3, 3, 'Cerimônia de encerramento', 'Teatro Municipal, Portalegre', '2024-07-15 20:30:00', NULL, 1),
+    (9, 4, 4, 'Momento emocionante', 'Arena de Kart, Vila Real', '2024-08-10 12:00:00', NULL, 1),
+    (10, 5, 5, 'Pódio dos campeões', 'Pista de Kart, Tomar', '2024-09-05 17:00:00', NULL, 1);
+
+
+INSERT INTO GRUPOS (ID_GRUPO, ID_UTILIZADOR, ID_SUBAREA, ID_AREA, NOME, NMAXIMOMEMBROS, IMAGEM, DATA_CRIACAO)
+VALUES
+    (1, 1, 1, 1, 'Equipa Médica', 10, NULL, '2023-12-31 10:00:00'),
+    (2, 2, 8, 2, 'Clube de Corrida', 20, NULL, '2024-01-15 14:30:00'),
+    (3, 3, 11, 3, 'Grupo de Estudo', 15, NULL, '2024-02-20 19:00:00'),
+    (4, 4, 14, 4, 'Amantes da Gastronomia', 25, NULL, '2024-03-10 10:00:00'),
+    (5, 5, 18, 5, 'Viajantes Aventureiros', 30, NULL, '2024-04-05 16:00:00'),
+    (6, 1, 21, 6, 'Comissão de Transporte', 10, NULL, '2024-05-01 18:00:00'),
+    (7, 2, 22, 7, 'Clube de Cinema', 20, NULL, '2024-06-20 21:00:00'),
+    (8, 3, 1, 1, 'Equipa Médica de Rotina', 15, NULL, '2024-07-15 20:30:00'),
+    (9, 4, 10, 2, 'Equipa de Corrida de Kart', 20, NULL, '2024-08-10 12:00:00'),
+    (10, 5, 13, 3, 'Grupo de Apoio a Creches', 30, NULL, '2024-09-05 17:00:00');
+
+
+INSERT INTO INSCRICOES_EVENTOS (ID_INSCRICAO, ID_EVENTO, ID_UTILIZADOR, DATAINSCRICAO)
+VALUES
+    (1, 1, 1, '2023-12-31 10:00:00'),
+    (2, 2, 2, '2024-01-15 14:30:00'),
+    (3, 3, 3, '2024-02-20 19:00:00'),
+    (4, 4, 4, '2024-03-10 10:00:00'),
+    (5, 5, 5, '2024-04-05 16:00:00'),
+    (6, 6, 6, '2024-05-01 18:00:00'),
+    (7, 7, 7, '2024-06-20 21:00:00'),
+    (8, 8, 8, '2024-07-15 20:30:00'),
+    (9, 9, 9, '2024-08-10 12:00:00'),
+    (10, 10, 10, '2024-09-05 17:00:00');
+
+
+INSERT INTO INSCRICOES_GRUPOS (ID_INSCRICAOGRUPO, ID_UTILIZADOR, ID_GRUPO, DATAINSCRICAO)
+VALUES
+    (1, 1, 1, '2023-12-31 10:00:00'),
+    (2, 2, 2, '2024-01-15 14:30:00'),
+    (3, 3, 3, '2024-02-20 19:00:00'),
+    (4, 4, 4, '2024-03-10 10:00:00'),
+    (5, 5, 5, '2024-04-05 16:00:00'),
+    (6, 1, 6, '2024-05-01 18:00:00'),
+    (7, 2, 7, '2024-06-20 21:00:00'),
+    (8, 3, 8, '2024-07-15 20:30:00'),
+    (9, 4, 9, '2024-08-10 12:00:00'),
+    (10, 5, 10, '2024-09-05 17:00:00');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
