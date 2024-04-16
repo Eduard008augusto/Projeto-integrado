@@ -201,6 +201,7 @@ create table CONTEUDO (
    IMAGEMCONTEUDO       image                null,
    WEBSITE              text                 null,
    ACESSIBILIDADE       text                 null,
+   DATACRIACAOCONTEUDO  datetime             not null,
    REVISTO              bit                  null default 0,
    constraint PK_CONTEUDO primary key (ID_CONTEUDO),
    constraint FK_CONTEUDO_CONTEM_SUB_AREA foreign key (ID_SUBAREA)
@@ -270,6 +271,7 @@ create table EVENTOS (
    TELEFONE             int                  null,
    DESCRICAO            text                 null,
    PRECO                decimal              not null,
+   DATACRIACAOEVENTO    datetime             not null,
    REVISTO              bit                  null default 0,
    constraint PK_EVENTOS primary key (ID_EVENTO),
    constraint FK_EVENTOS_EVENTOS_P_SUB_AREA foreign key (ID_SUBAREA)

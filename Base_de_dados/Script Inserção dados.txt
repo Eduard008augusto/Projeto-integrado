@@ -92,32 +92,32 @@ VALUES
     (23, 7, NULL, 'PT', 'Parques');
 
 
-INSERT INTO EVENTOS (ID_EVENTO, ID_SUBAREA, ID_UTILIZADOR, ID_CENTRO, ID_AREA, UTI_ID_UTILIZADOR, NOME, DATA, LOCALIZACAO, IMAGEMEVENTO, TELEFONE, DESCRICAO, PRECO, REVISTO)
+INSERT INTO EVENTOS (ID_EVENTO, ID_SUBAREA, ID_UTILIZADOR, ID_CENTRO, ID_AREA, UTI_ID_UTILIZADOR, NOME, DATA, LOCALIZACAO, IMAGEMEVENTO, TELEFONE, DESCRICAO, PRECO, DATACRIACAOEVENTO, REVISTO)
 VALUES
-    (1, 1, 1, 1, 1, 1, 'Seminário de Medicina Preventiva', '2024-03-15 09:00:00', 'Avenida Principal, Viseu', NULL, 123456789, 'Seminário sobre os avanços na medicina preventiva', 2, 1),
-    (2, 4, 2, 2, 2, 2, 'Torneio de Futebol Amador', '2024-04-20 14:00:00', 'Estádio Municipal, Fundão', NULL, 987654321, 'Torneio de futebol para equipas amadoras', 1, 1),
-    (3, 9, 3, 3, 2, 3, 'Ciclismo', '2024-05-10 09:00:00', 'Rua das Escolas, Portalegre', NULL, 111222333, 'Curso intensivo de gestão para pequenas empresas', 2, 1),
-    (4, 14, 4, 4, 4, 4, 'Festival Gastronómico', '2024-06-05 18:00:00', 'Praça da Cidade, Vila Real', NULL, 812343212, 'Evento que reúne os melhores restaurantes da região', 2, 1),
-    (5, 16, 5, 5, 5, 5, 'Aluguer de Casa de Férias', '2024-07-15 12:00:00', 'Rua das Casas, Tomar', NULL, 444555666, 'Casa de férias para famílias', 1, 1),
-    (6, 20, 6, 3, 6, 1, 'Partida de Boleias', '2024-08-10 08:30:00', 'Autoestrada A1', NULL, NULL, 'Partida de boleias para Lisboa', 0, 1),
-    (7, 22, 7, 4, 7, 2, 'Sessão de Cinema ao Ar Livre', '2024-09-20 20:00:00', 'Parque Municipal, Fundão', NULL, NULL, 'Exibição de filme ao ar livre', 2, 1),
-    (8, 13, 8, 5, 3, 3, 'Seminário sobre Desenvolvimento Infantil', '2024-10-05 10:00:00', 'Avenida das Escolas, Portalegre', NULL, 555666777, 'Palestra sobre desenvolvimento infantil', 1, 1),
-    (9, 23, 9, 1, 7, 1, 'Exposição de Arte Urbana', '2024-11-12 16:00:00', 'Rua das Artes, Vila Real', NULL, 999888777, 'Exposição de obras de arte urbana', 0, 1),
-    (10, 23, 10, 1, 7, 1, 'Visita Guiada ao Parque Nacional', '2024-12-08 11:00:00', 'Entrada do Parque Nacional, Tomar', NULL, NULL, 'Visita guiada pelos trilhos do parque', 2, 1);
+    (1, 1, 1, 1, 1, 1, 'Seminário de Medicina Preventiva', '2024-03-15 09:00:00', 'Avenida Principal, Viseu', NULL, 123456789, 'Seminário sobre os avanços na medicina preventiva', 2, '2024-03-15 09:00:00', 1),
+    (2, 4, 2, 2, 2, 2, 'Torneio de Futebol Amador', '2024-04-20 14:00:00', 'Estádio Municipal, Fundão', NULL, 987654321, 'Torneio de futebol para equipas amadoras', 1, '2024-04-20 14:00:00', 1),
+    (3, 9, 3, 3, 2, 3, 'Ciclismo', '2024-05-10 09:00:00', 'Rua das Escolas, Portalegre', NULL, 111222333, 'Curso intensivo de gestão para pequenas empresas', 2, '2024-05-10 09:00:00', 1),
+    (4, 14, 4, 4, 4, 4, 'Festival Gastronómico', '2024-06-05 18:00:00', 'Praça da Cidade, Vila Real', NULL, 812343212, 'Evento que reúne os melhores restaurantes da região', 2, '2024-06-05 18:00:00', 1),
+    (5, 16, 5, 5, 5, 5, 'Aluguer de Casa de Férias', '2024-07-15 12:00:00', 'Rua das Casas, Tomar', NULL, 444555666, 'Casa de férias para famílias', 1, '2024-07-15 12:00:00', 1),
+    (6, 20, 6, 3, 6, 1, 'Partida de Boleias', '2024-08-10 08:30:00', 'Autoestrada A1', NULL, NULL, 'Partida de boleias para Lisboa', 0, '2024-08-10 08:30:00', 1),
+    (7, 22, 7, 4, 7, 2, 'Sessão de Cinema ao Ar Livre', '2024-09-20 20:00:00', 'Parque Municipal, Fundão', NULL, NULL, 'Exibição de filme ao ar livre', 2, '2024-09-20 20:00:00', 1),
+    (8, 13, 8, 5, 3, 3, 'Seminário sobre Desenvolvimento Infantil', '2024-10-05 10:00:00', 'Avenida das Escolas, Portalegre', NULL, 555666777, 'Palestra sobre desenvolvimento infantil', 1, '2024-10-05 10:00:00', 1),
+    (9, 23, 9, 1, 7, 1, 'Exposição de Arte Urbana', '2024-11-12 16:00:00', 'Rua das Artes, Vila Real', NULL, 999888777, 'Exposição de obras de arte urbana', 0, '2024-11-12 16:00:00', 1),
+    (10, 23, 10, 1, 7, 1, 'Visita Guiada ao Parque Nacional', '2024-12-08 11:00:00', 'Entrada do Parque Nacional, Tomar', NULL, NULL, 'Visita guiada pelos trilhos do parque', 2, '2024-12-08 11:00:00', 1);
 
 
-INSERT INTO CONTEUDO (ID_CONTEUDO, ID_CENTRO, ID_SUBAREA, ID_UTILIZADOR, UTI_ID_UTILIZADOR, ID_AREA, NOMECONTEUDO, MORADA, HORARIO, TELEFONE, IMAGEMCONTEUDO, WEBSITE, ACESSIBILIDADE, REVISTO)
+INSERT INTO CONTEUDO (ID_CONTEUDO, ID_CENTRO, ID_SUBAREA, ID_UTILIZADOR, UTI_ID_UTILIZADOR, ID_AREA, NOMECONTEUDO, MORADA, HORARIO, TELEFONE, IMAGEMCONTEUDO, WEBSITE, ACESSIBILIDADE, DATACRIACAOCONTEUDO, REVISTO)
 VALUES
-    (1, 1, 1, 1, 1, 1, 'Hospital Central', 'Avenida Principal, Viseu', '24 horas', 123456789, NULL, 'www.hospitalcentral.com', 'Acesso para cadeiras de rodas', 1),
-    (2, 2, 4, 2, 2, 2, 'Academia Fitness', 'Rua do Desporto, Fundão', 'Seg-Sex: 8:00-22:00, Sáb: 9:00-18:00', 987654321, NULL, 'www.academiafitness.com', 'Acesso para cadeiras de rodas', 1),
-    (3, 3, 11, 3, 3, 3, 'Escola de Formação Profissional', 'Praça da Formação, Portalegre', 'Seg-Sex: 9:00-17:00', 111222333, NULL, NULL, 'Acesso para cadeiras de rodas', 1),
-    (4, 4, 14, 4, 4, 4, 'Restaurante Sabor & Arte', 'Rua dos Sabores, Vila Real', 'Seg-Dom: 12:00-15:00, 19:00-23:00', 812343212, NULL, NULL, 'Acesso para cadeiras de rodas', 1),
-    (5, 5, 18, 5, 5, 5, 'Casa de Férias Tropical', 'Avenida das Férias, Tomar', 'Check-in: 14:00, Check-out: 12:00', 444555666, NULL, 'www.casadeférias.com', 'Acesso para cadeiras de rodas', 1),
-    (6, 1, 21, 1, 1, 6, 'Transporte Escolar', 'Rua da Escola, Viseu', 'Seg-Sex: 7:00-18:00', 123456789, NULL, NULL, 'Acesso para cadeiras de rodas', 1),
-    (7, 2, 22, 2, 2, 7, 'Cinema Star', 'Avenida dos Cinemas, Fundão', 'Seg-Sex: 14:00-23:00, Sáb-Dom: 12:00-23:00', 987654321, NULL, 'www.cinemastar.com', 'Acesso para cadeiras de rodas', 1),
-    (8, 3, 1, 3, 3, 1, 'Consulta Médica de Rotina', 'Avenida da Saúde, Portalegre', 'Seg-Sex: 9:00-17:00', 111222333, NULL, NULL, 'Acesso para cadeiras de rodas', 1),
-    (9, 4, 10, 4, 4, 2, 'Circuito de karts', 'Rua do Desporto, Vila Real', 'Seg-Sáb: 10:00-20:00', 812343212, NULL, NULL, 'Acesso para cadeiras de rodas', 1),
-    (10, 5, 3, 5, 5, 3, 'Creche Alegria Infantil', 'Avenida da Infância, Tomar', 'Seg-Sex: 7:00-19:00', 444555666, NULL, NULL, 'Acesso para cadeiras de rodas', 1);
+    (1, 1, 1, 1, 1, 1, 'Hospital Central', 'Avenida Principal, Viseu', '24 horas', 123456789, NULL, 'www.hospitalcentral.com', 'Acesso para cadeiras de rodas', '2024-03-15 09:00:00', 1),
+    (2, 2, 4, 2, 2, 2, 'Academia Fitness', 'Rua do Desporto, Fundão', 'Seg-Sex: 8:00-22:00, Sáb: 9:00-18:00', 987654321, NULL, 'www.academiafitness.com', 'Acesso para cadeiras de rodas', '2024-03-16 10:00:00', 1),
+    (3, 3, 11, 3, 3, 3, 'Escola de Formação Profissional', 'Praça da Formação, Portalegre', 'Seg-Sex: 9:00-17:00', 111222333, NULL, NULL, 'Acesso para cadeiras de rodas', '2024-03-17 11:00:00', 1),
+    (4, 4, 14, 4, 4, 4, 'Restaurante Sabor & Arte', 'Rua dos Sabores, Vila Real', 'Seg-Dom: 12:00-15:00, 19:00-23:00', 812343212, NULL, NULL, 'Acesso para cadeiras de rodas', '2024-03-18 12:00:00', 1),
+    (5, 5, 18, 5, 5, 5, 'Casa de Férias Tropical', 'Avenida das Férias, Tomar', 'Check-in: 14:00, Check-out: 12:00', 444555666, NULL, 'www.casadeférias.com', 'Acesso para cadeiras de rodas', '2024-03-19 13:00:00', 1),
+    (6, 1, 21, 1, 1, 6, 'Transporte Escolar', 'Rua da Escola, Viseu', 'Seg-Sex: 7:00-18:00', 123456789, NULL, NULL, 'Acesso para cadeiras de rodas', '2024-03-20 14:00:00', 1),
+    (7, 2, 22, 2, 2, 7, 'Cinema Star', 'Avenida dos Cinemas, Fundão', 'Seg-Sex: 14:00-23:00, Sáb-Dom: 12:00-23:00', 987654321, NULL, 'www.cinemastar.com', 'Acesso para cadeiras de rodas', '2024-03-21 15:00:00', 1),
+    (8, 3, 1, 3, 3, 1, 'Consulta Médica de Rotina', 'Avenida da Saúde, Portalegre', 'Seg-Sex: 9:00-17:00', 111222333, NULL, NULL, 'Acesso para cadeiras de rodas', '2024-03-22 16:00:00', 1),
+    (9, 4, 10, 4, 4, 2, 'Circuito de karts', 'Rua do Desporto, Vila Real', 'Seg-Sáb: 10:00-20:00', 812343212, NULL, NULL, 'Acesso para cadeiras de rodas', '2024-03-23 17:00:00', 1),
+    (10, 5, 3, 5, 5, 3, 'Creche Alegria Infantil', 'Avenida da Infância, Tomar', 'Seg-Sex: 7:00-19:00', 444555666, NULL, NULL, 'Acesso para cadeiras de rodas', '2024-03-24 18:00:00', 1);
 
 
 INSERT INTO AVALIACOES (ID_AVALIACAO, ID_CONTEUDO, ID_UTILIZADOR, AVALIACAOGERAL, AVALIACAOPRECO, DATAAVALIACAO)
