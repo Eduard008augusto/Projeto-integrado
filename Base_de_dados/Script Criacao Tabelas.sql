@@ -1,7 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2022                    */
-/* Created on:     12/04/2024 14:42:25                          */
+/* Created on:     19/04/2024 16:16:50                          */
 /*==============================================================*/
+
 
 if exists (select 1
             from  sysobjects
@@ -89,9 +90,9 @@ go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('ADMINSCENTROS')
+           where  id = object_id('ADMINISTRADORES')
             and   type = 'U')
-   drop table ADMINSCENTROS
+   drop table ADMINISTRADORES
 go
 
 if exists (select 1
@@ -107,6 +108,7 @@ if exists (select 1
             and   type = 'U')
    drop table CENTRO
 go
+
 
 /*==============================================================*/
 /* Table: CENTRO                                                */
@@ -142,18 +144,17 @@ create table UTILIZADORES (
 go
 
 /*==============================================================*/
-/* Table: ADMINSCENTROS                                         */
+/* Table: ADMINISTRADORES                                       */
 /*==============================================================*/
-create table ADMINSCENTROS (
-   IDADMINCENTRO        int                  not null,
-   ID_CENTRO            int                  not null,
+create table ADMINISTRADORES (
    ID_UTILIZADOR        int                  not null,
+   ID_CENTRO            int                  not null,
    DATAFICOUADMIN       datetime             null,
-   constraint PK_ADMINSCENTROS primary key (IDADMINCENTRO),
-   constraint FK_ADMINSCE_RELATIONS_UTILIZAD foreign key (ID_UTILIZADOR)
-      references UTILIZADORES (ID_UTILIZADOR),
-   constraint FK_ADMINSCE_RELATIONS_CENTRO foreign key (ID_CENTRO)
-      references CENTRO (ID_CENTRO)
+   constraint PK_ADMINISTRADORES primary key (ID_UTILIZADOR),
+   constraint FK_ADMINIST_ADMINS_CE_CENTRO foreign key (ID_CENTRO)
+      references CENTRO (ID_CENTRO),
+   constraint FK_ADMINIST_UTILIZADO_UTILIZAD foreign key (ID_UTILIZADOR)
+      references UTILIZADORES (ID_UTILIZADOR)
 )
 go
 
@@ -190,30 +191,30 @@ go
 create table CONTEUDO (
    ID_CONTEUDO          int                  not null,
    ID_CENTRO            int                  not null,
+   ID_AREA              int                  not null,
    ID_SUBAREA           int                  not null,
    ID_UTILIZADOR        int                  not null,
-   UTI_ID_UTILIZADOR    int                  not null,
-   ID_AREA              int                  not null,
+   ADM_ID_UTILIZADOR    int                  null,
    NOMECONTEUDO         text                 not null,
    MORADA               text                 not null,
-   HORARIO              text                 not null,
+   HORARIO              text                 null,
    TELEFONE             int                  not null,
    IMAGEMCONTEUDO       image                null,
    WEBSITE              text                 null,
    ACESSIBILIDADE       text                 null,
-   DATACRIACAOCONTEUDO  datetime             not null,
+   DATACRIACAOCONTEUDO  datetime             null,
    REVISTO              bit                  null default 0,
    constraint PK_CONTEUDO primary key (ID_CONTEUDO),
    constraint FK_CONTEUDO_CONTEM_SUB_AREA foreign key (ID_SUBAREA)
       references SUB_AREA_ATUACAO (ID_SUBAREA),
-   constraint FK_CONTEUDO_CRIACAO_C_UTILIZAD foreign key (UTI_ID_UTILIZADOR)
+   constraint FK_CONTEUDO_CRIACAO_C_UTILIZAD foreign key (ID_UTILIZADOR)
       references UTILIZADORES (ID_UTILIZADOR),
    constraint FK_CONTEUDO_CONTEUDO__CENTRO foreign key (ID_CENTRO)
       references CENTRO (ID_CENTRO),
-   constraint FK_CONTEUDO_ADMIN_REV_UTILIZAD foreign key (ID_UTILIZADOR)
-      references UTILIZADORES (ID_UTILIZADOR),
    constraint FK_CONTEUDO_AREA_CONT_AREASDEA foreign key (ID_AREA)
-      references AREASDEATUACAO (ID_AREA)
+      references AREASDEATUACAO (ID_AREA),
+   constraint FK_CONTEUDO_ADMINSREV_ADMINIST foreign key (ADM_ID_UTILIZADOR)
+      references ADMINISTRADORES (ID_UTILIZADOR)
 )
 go
 
@@ -259,11 +260,11 @@ go
 /*==============================================================*/
 create table EVENTOS (
    ID_EVENTO            int                  not null,
-   ID_SUBAREA           int                  not null,
-   ID_UTILIZADOR        int                  not null,
    ID_CENTRO            int                  not null,
    ID_AREA              int                  not null,
-   UTI_ID_UTILIZADOR    int                  not null,
+   ID_SUBAREA           int                  not null,
+   ID_UTILIZADOR        int                  not null,
+   ADM_ID_UTILIZADOR    int                  null,
    NOME                 text                 not null,
    DATA                 datetime             not null,
    LOCALIZACAO          text                 not null,
@@ -271,19 +272,19 @@ create table EVENTOS (
    TELEFONE             int                  null,
    DESCRICAO            text                 null,
    PRECO                decimal              not null,
-   DATACRIACAOEVENTO    datetime             not null,
+   DATACRIACAOEVENTO    datetime             null,
    REVISTO              bit                  null default 0,
    constraint PK_EVENTOS primary key (ID_EVENTO),
    constraint FK_EVENTOS_EVENTOS_P_SUB_AREA foreign key (ID_SUBAREA)
       references SUB_AREA_ATUACAO (ID_SUBAREA),
-   constraint FK_EVENTOS_ADMIN_REV_UTILIZAD foreign key (UTI_ID_UTILIZADOR)
-      references UTILIZADORES (ID_UTILIZADOR),
    constraint FK_EVENTOS_EVENTOS_C_CENTRO foreign key (ID_CENTRO)
       references CENTRO (ID_CENTRO),
    constraint FK_EVENTOS_AREA_EVEN_AREASDEA foreign key (ID_AREA)
       references AREASDEATUACAO (ID_AREA),
-   constraint FK_EVENTOS_RELATIONS_UTILIZAD foreign key (ID_UTILIZADOR)
-      references UTILIZADORES (ID_UTILIZADOR)
+   constraint FK_EVENTOS_UT_CRIA_E_UTILIZAD foreign key (ID_UTILIZADOR)
+      references UTILIZADORES (ID_UTILIZADOR),
+   constraint FK_EVENTOS_ADMINREVE_ADMINIST foreign key (ADM_ID_UTILIZADOR)
+      references ADMINISTRADORES (ID_UTILIZADOR)
 )
 go
 
@@ -292,22 +293,22 @@ go
 /*==============================================================*/
 create table FAVORITOS (
    IDFAVORITO           int                  not null,
-   ID_AREA              int                  not null,
    ID_CENTRO            int                  not null,
+   ID_AREA              int                  not null,
    ID_SUBAREA           int                  not null,
    ID_CONTEUDO          int                  not null,
    ID_UTILIZADOR        int                  not null,
    DATAFAVORITO         datetime             null,
    constraint PK_FAVORITOS primary key (IDFAVORITO),
-   constraint FK_FAVORITO_RELATIONS_UTILIZAD foreign key (ID_UTILIZADOR)
+   constraint FK_FAVORITO_UTILIZADO_UTILIZAD foreign key (ID_UTILIZADOR)
       references UTILIZADORES (ID_UTILIZADOR),
    constraint FK_FAVORITO_RELATIONS_CONTEUDO foreign key (ID_CONTEUDO)
       references CONTEUDO (ID_CONTEUDO),
-   constraint FK_FAVORITO_RELATIONS_CENTRO foreign key (ID_CENTRO)
+   constraint FK_FAVORITO_FAVORITOS_CENTRO foreign key (ID_CENTRO)
       references CENTRO (ID_CENTRO),
-   constraint FK_FAVORITO_RELATIONS_SUB_AREA foreign key (ID_SUBAREA)
+   constraint FK_FAVORITO_SUBAREA_F_SUB_AREA foreign key (ID_SUBAREA)
       references SUB_AREA_ATUACAO (ID_SUBAREA),
-   constraint FK_FAVORITO_RELATIONS_AREASDEA foreign key (ID_AREA)
+   constraint FK_FAVORITO_AREAS_FAV_AREASDEA foreign key (ID_AREA)
       references AREASDEATUACAO (ID_AREA)
 )
 go
@@ -325,9 +326,9 @@ create table FOTOGRAFIAS_CONTEUDO (
    IMAGEM               image                null,
    VISIBILIDADE         bit                  null default 1,
    constraint PK_FOTOGRAFIAS_CONTEUDO primary key (ID_FOTO),
-   constraint FK_FOTOGRAF_U_ADD_FOT_UTILIZAD foreign key (ID_UTILIZADOR)
+   constraint FK_FOTOGRAF_U_ADD_FOT_CONTEUDO foreign key (ID_UTILIZADOR)
       references UTILIZADORES (ID_UTILIZADOR),
-   constraint FK_FOTOGRAF_RELATIONS_CONTEUDO foreign key (ID_CONTEUDO)
+   constraint FK_FOTOGRAF_FOTOS_CON_CONTEUDO foreign key (ID_CONTEUDO)
       references CONTEUDO (ID_CONTEUDO)
 )
 go
@@ -336,7 +337,7 @@ go
 /* Table: FOTOGRAFIAS_EVENTOS                                   */
 /*==============================================================*/
 create table FOTOGRAFIAS_EVENTOS (
-   ID_FOTO2             int                  not null,
+   ID_FOTO_EVENTO       int                  not null,
    ID_EVENTO            int                  not null,
    ID_UTILIZADOR        int                  not null,
    DESCRICAO            text                 null,
@@ -344,10 +345,10 @@ create table FOTOGRAFIAS_EVENTOS (
    DATA_CRIACAO         datetime             null,
    IMAGEM               image                null,
    VISIBILIDADE         bit                  null default 1,
-   constraint PK_FOTOGRAFIAS_EVENTOS primary key (ID_FOTO2),
-   constraint FK_FOTOGRAF_RELATIONS_UTILIZAD foreign key (ID_UTILIZADOR)
+   constraint PK_FOTOGRAFIAS_EVENTOS primary key (ID_FOTO_EVENTO),
+   constraint FK_FOTOGRAF_U_ADD_FOT_EVENTOS foreign key (ID_UTILIZADOR)
       references UTILIZADORES (ID_UTILIZADOR),
-   constraint FK_FOTOGRAF_RELATIONS_EVENTOS foreign key (ID_EVENTO)
+   constraint FK_FOTOGRAF_FOTOS_EVE_EVENTOS foreign key (ID_EVENTO)
       references EVENTOS (ID_EVENTO)
 )
 go
@@ -357,9 +358,9 @@ go
 /*==============================================================*/
 create table GRUPOS (
    ID_GRUPO             int                  not null,
-   ID_UTILIZADOR        int                  not null,
-   ID_SUBAREA           int                  not null,
    ID_AREA              int                  not null,
+   ID_SUBAREA           int                  not null,
+   ID_UTILIZADOR        int                  not null,
    NOME                 text                 not null,
    NMAXIMOMEMBROS       int                  null,
    IMAGEM               image                null,
@@ -369,7 +370,7 @@ create table GRUPOS (
       references SUB_AREA_ATUACAO (ID_SUBAREA),
    constraint FK_GRUPOS_GRUPO_ARE_AREASDEA foreign key (ID_AREA)
       references AREASDEATUACAO (ID_AREA),
-   constraint FK_GRUPOS_RELATIONS_UTILIZAD foreign key (ID_UTILIZADOR)
+   constraint FK_GRUPOS_U_CRIA_GR_UTILIZAD foreign key (ID_UTILIZADOR)
       references UTILIZADORES (ID_UTILIZADOR)
 )
 go
