@@ -1,7 +1,7 @@
 name: soft_shares
-description: "A new Flutter project."
+description: "A new Flutter project for sharing software."
 publish_to: 'none'
-version: 0.1.0
+version: 0.1.0+1
 
 environment:
   sdk: '>=3.3.3 <4.0.0'
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg:
+  flutter_svg: any  # Versão especificada ou 'any'
 
 dev_dependencies:
   flutter_test:
@@ -20,3 +20,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/logo.svg
+    - assets/images/google.svg
+    - assets/images/facebook.svg
