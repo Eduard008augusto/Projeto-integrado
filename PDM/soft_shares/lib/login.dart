@@ -14,77 +14,100 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Center(
-            child: Container(
-              margin: const EdgeInsets.only(top: 70.0),
-              child: SvgPicture.asset(
-                '../assets/images/logo.svg',
-                width: 120,
-                height: 120,
-              ),
-            )
-          ),
-
-          const SizedBox(
-            height: 180,
-          ),
-        
-          Container(
-            margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Center(
-              child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Utilizador'),
-                const SizedBox(
-                  height: 5,
+    return MaterialApp(
+      home: Scaffold(
+        body: Column(
+          children: [
+            Center(
+              child: Container(
+                margin: const EdgeInsets.only(top: 70.0),
+                child: SvgPicture.asset(
+                  'assets/images/logo.svg',
+                  width: 120,
+                  height: 120,
                 ),
-                TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email ou Usuário',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ]
+              )
             ),
-            )
-          ),
 
-          const SizedBox(
-            height: 20,
-          ),
-        
-          Container(
-            margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Palavra-passe'),
-                TextField(
-                  controller: passController,
-                  decoration: const InputDecoration(
-                    labelText: 'Palavra-passe',
-                    border: OutlineInputBorder(),
+            const SizedBox(
+              height: 100,
+            ),
+
+            Container(
+              margin: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Center(
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Utilizador'),
+                  const SizedBox(
+                    height: 5,
                   ),
-                ),
-              ],
-            )
-          ),
+                  TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      label: Text('Email ou Usuário'),
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ]
+              ),
+              )
+            ),
 
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text('Esqueci-me da palavra-passe?'),
-            ],
-          ),
+            const SizedBox(
+              height: 20,
+            ),
 
-          const Divider(height: 70, thickness: 1, indent: 30, endIndent: 30, color: Color.fromARGB(255, 41, 40, 40),),
+            Container(
+              margin: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Palavra-passe'),
+                  TextField(
+                    controller: passController,
+                    decoration: const InputDecoration(
+                      labelText: 'Palavra-passe',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ],
+              )
+            ),
 
-          Row(
+            Container(
+              margin: const EdgeInsets.only(right: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(onPressed: (){
+                    print('HALLO :)');
+                  }, child: const Text('Esqueci-me da palavra-passe')),
+                ],
+              ),
+            ),
+
+            OutlinedButton(onPressed: (){
+              print('Login CLICK');
+            },
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 153),
+              backgroundColor: const Color.fromARGB(255, 0, 184, 224),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),  
+              ),
+              side: const BorderSide(
+                color: Color.fromARGB(255, 255, 255, 255),
+                width: 1,
+              )
+            ),
+            child: const Text('ENTRAR')),
+
+            const Divider(height: 70, thickness: 1, indent: 30, endIndent: 30, color: Color.fromARGB(255, 41, 40, 40),),
+
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
@@ -92,7 +115,7 @@ class Login extends StatelessWidget {
                     print('Google CLICK');
                   },
                   child: SvgPicture.asset(
-                    '../assets/images/google.svg',
+                    'assets/images/google.svg',
                     width: 50,
                     height: 50,
                   ),
@@ -105,15 +128,16 @@ class Login extends StatelessWidget {
                     print('Facebook CLICK');
                   },
                   child: SvgPicture.asset(
-                    '../assets/images/facebook.svg',
+                    'assets/images/facebook.svg',
                     width: 50,
                     height: 50,
                   ),
                 ),
               ],
             ),
-        ],
-      )
+          ],
+        )
+      ),
     );
   }
 }
