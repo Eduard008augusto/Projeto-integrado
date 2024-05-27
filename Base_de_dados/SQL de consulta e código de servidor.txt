@@ -1,0 +1,289 @@
+/*Consultas SQL: Junções e Uniões (1 interna e 1 externa)*/
+
+/*==============================================================*/
+/* Junção Externa                                          */
+/* Nesta consulta, usamos um LEFT JOIN, o que significa que
+   estamos a ir buscar todos os registros da tabela CENTRO e, 
+   para cada um deles, tentamos encontrar um correspondente na 
+   tabela UTILIZADORES. Se não houver um correspondente na tabela 
+   UTILIZADORES, os campos associados a essa tabela serão NULL.*/
+/*==============================================================*/
+
+SELECT 
+    C.CENTRO,
+    U.NOME AS NOME_UTILIZADOR,
+    U.EMAIL
+FROM 
+    CENTRO C
+LEFT JOIN 
+    UTILIZADORES U ON C.ID_CENTRO = U.ID_CENTRO;
+
+/*==============================================================*/
+/* Junção Interna                                          */
+/* Esta consulta une as tabelas CENTRO e UTILIZADORES usando a
+   coluna ID_CENTRO como chave de junção. Ela retorna o nome do centro 
+   (CENTRO), o nome do utilizador (NOME) e o email (EMAIL) dos
+   utilizadores associados a cada centro.*/
+/*==============================================================*/
+SELECT 
+    C.CENTRO,
+    U.NOME AS NOME_UTILIZADOR,
+    U.EMAIL
+FROM 
+    CENTRO C
+INNER JOIN 
+    UTILIZADORES U ON C.ID_CENTRO = U.ID_CENTRO;
+
+
+/*Agrupamento e sumário de dados e funções de agregação 
+(1 com cláusula Having e outra com funções de agregação)*/
+
+/*==============================================================*/
+/* Consulta com funções de agregação                            */
+/* Nesta consulta, estamos a contar o número de utilizadores 
+   por centro (ID_CENTRO) na tabela UTILIZADORES usando a função 
+   COUNT e a agrupar por centro.*/
+/*==============================================================*/
+
+SELECT 
+    ID_CENTRO,
+    COUNT(ID_UTILIZADOR) AS NUMERO_UTILIZADORES
+FROM 
+    UTILIZADORES
+GROUP BY 
+    ID_CENTRO;
+
+
+/*==============================================================*/
+/* Consulta com a cláusula HAVING                           */
+/* Nesta consulta, estamos a contar o número de utilizadores 
+   por centro (ID_CENTRO) na tabela UTILIZADORES. Em seguida, 
+   estamos a filtrar os resultados usando a cláusula HAVING, que 
+   nos permite filtrar resultados de grupos agregados.*/
+/*==============================================================*/
+
+SELECT 
+    ID_CENTRO,
+    COUNT(ID_UTILIZADOR) AS NUMERO_UTILIZADORES
+FROM 
+    UTILIZADORES
+GROUP BY 
+    ID_CENTRO
+HAVING 
+    COUNT(ID_UTILIZADOR) > 2;
+
+
+/* Subconsultas (2x. Se possível, 1 na cláusula Where e outra noutra cláusula) */
+
+/*==============================================================*/
+/* Subconsulta na cláusula WHERE                           */
+/* Nesta consulta, estamos a selecionar o ID_CONTEUDO, 
+   NOMECONTEUDO e TELEFONE da tabela CONTEUDO, onde o 
+   ID_CENTRO está presente na subconsulta que seleciona os 
+   ID_CENTRO da tabela CENTRO onde o ID_CENTRO = 1*/
+/*==============================================================*/
+
+SELECT 
+    ID_CONTEUDO,
+    NOMECONTEUDO,
+    TELEFONE
+FROM 
+    CONTEUDO
+WHERE 
+    ID_CENTRO IN (SELECT ID_CENTRO FROM CENTRO WHERE ID_CENTRO =1);
+
+
+/*==============================================================*/
+/* Subconsulta em outra cláusula                           */
+/* Nesta consulta, estamos a contar o número de conteúdos por 
+   ID_AREA na tabela CONTEUDO. Na cláusula HAVING, estamos 
+   a filtrar os resultados para mostrar apenas as áreas que 
+   têm menos conteúdos do que o número total de conteúdos 
+   revistos (REVISTO = 1). A subconsulta dentro da cláusula 
+   HAVING nos dá o número total de conteúdos revistos.*/
+/*==============================================================*/
+
+SELECT 
+    ID_AREA,
+    COUNT(*) AS NUMERO_CONTEUDOS
+FROM 
+    CONTEUDO
+GROUP BY 
+    ID_AREA
+HAVING 
+    COUNT(*) < (SELECT COUNT(*) FROM CONTEUDO WHERE REVISTO = 1);
+
+
+/*==============================================================*/
+/* Procedimentos Armazenados com processamento de dados (1x)    */
+/* Este procedimento armazenado calcula o total de conteúdos 
+   para cada área de atuação. Ele junta as tabelas AREASDEATUACAO, 
+   SUB_AREA_ATUACAO e CONTEUDO usando operações LEFT JOIN para 
+   garantir que todas as áreas tenham pelo menos uma entrada, 
+   mesmo que não tenham conteúdos associados. Em seguida, ele 
+   agrupa os resultados pelo ID_AREA e NOME e conta o número de 
+   conteúdos em cada area.*/
+/*==============================================================*/
+
+CREATE PROCEDURE CalcularTotalConteudosPorArea
+AS
+BEGIN
+    SELECT 
+        A.ID_AREA,
+		A.NOME,
+        COUNT(C.ID_CONTEUDO) AS TOTAL_CONTEUDO
+    FROM 
+        AREASDEATUACAO A
+    LEFT JOIN 
+        SUB_AREA_ATUACAO SA ON A.ID_AREA = SA.ID_AREA
+    LEFT JOIN 
+        CONTEUDO C ON SA.ID_SUBAREA = C.ID_SUBAREA
+    GROUP BY 
+        A.ID_AREA,A.NOME;
+END;
+
+EXEC CalcularTotalConteudosPorArea
+
+/*==============================================================*/
+/* Funções (1x)													*/
+/* Esta função aceita o ID de uma área como entrada e retorna o 
+   número de subáreas associadas a essa área.*/
+/*==============================================================*/
+
+CREATE FUNCTION ContarSubareasPorArea (@IDArea INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @Contagem INT;
+
+    SELECT @Contagem = COUNT(ID_SUBAREA)
+    FROM SUB_AREA_ATUACAO
+    WHERE ID_AREA = @IDArea;
+
+    RETURN @Contagem;
+END;
+
+/* Para usar a função
+   Pode alterar o IDArea para verificar a quantidade de subareas*/
+DECLARE @IDArea INT = 2; 
+DECLARE @ContagemSubareas INT;
+DECLARE @NomeArea varchar(30);
+
+SET @NomeArea = (SELECT NOME FROM AREASDEATUACAO WHERE ID_AREA=@IDArea)
+SET @ContagemSubareas = sc23_111.ContarSubareasPorArea(@IDArea);
+PRINT 'O número de subáreas para a área ' + CAST(@IDArea AS VARCHAR) + ' (' + @NomeArea + ')' + ' é: ' + CAST(@ContagemSubareas AS VARCHAR);
+
+
+/*==============================================================*/
+/* Triggers (2x)												*/
+/* Este trigger serve para registrar a data de registo de um novo
+   utilizador*/
+/*==============================================================*/
+
+CREATE TRIGGER trg_RegistarDataRegistoUtilizador
+ON UTILIZADORES
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @ID_Utilizador int;
+    DECLARE @DataRegisto datetime;
+
+    SELECT @ID_Utilizador = ID_UTILIZADOR FROM inserted;
+    SELECT @DataRegisto = GETDATE();
+
+    UPDATE UTILIZADORES
+    SET DATAREGISTO = @DataRegisto
+    WHERE ID_UTILIZADOR = @ID_Utilizador;
+END;
+
+--executar depois de criar o trigger!
+INSERT INTO UTILIZADORES (ID_UTILIZADOR, ID_CENTRO, NOME, DESCRICAO, MORADA, DATANASCIMENTO, TELEFONE, EMAIL, PASSWORD, IMAGEMPERFIL)
+VALUES
+    (11, 1, 'Antonio Silva', NULL, 'Rua Principal, Lisboa', '1990-05-15', 123456789, 'antonio@example.com', 'senha123', NULL)
+select * from UTILIZADORES
+
+/*==============================================================*/
+/* Este trigger serve para atualizar a data de última alteração 
+   quando um conteúdo é atualizado*/
+/*==============================================================*/
+CREATE TRIGGER trg_AtualizarDataUltimaAlteracaoConteudo
+ON CONTEUDO
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @ID_Conteudo int;
+    DECLARE @DataUltimaAlteracao datetime;
+
+    SELECT @ID_Conteudo = ID_CONTEUDO FROM inserted;
+    SELECT @DataUltimaAlteracao = GETDATE();
+
+    UPDATE CONTEUDO
+    SET DATA_ULT_ALTERACAO = @DataUltimaAlteracao
+    WHERE ID_CONTEUDO = @ID_Conteudo;
+END;
+
+--executar depois de criar o trigger!
+select * from CONTEUDO
+UPDATE CONTEUDO SET WEBSITE='www.kartsvilareal.com',REVISTO=1 where ID_Conteudo=9
+select * from CONTEUDO
+
+/*==============================================================*/
+/* Cursor (1x)												*/
+/* Este cursor serve para iterar os eventos registados na tabela 
+   EVENTOS e calcula o número de inscrições para cada evento.*/
+/*==============================================================*/
+
+DECLARE evento_cursor CURSOR FOR
+SELECT ID_EVENTO, NOME
+FROM EVENTOS;
+
+DECLARE @ID_Evento int;
+DECLARE @NomeEvento varchar(100);
+DECLARE @TotalInscricoes int;
+
+-- tabela temporária para armazenar o resultado
+CREATE TABLE #TempInscricoes (
+    ID_EVENTO int,
+    NOME_EVENTO varchar(100),
+    TOTAL_INSCRICOES int
+);
+
+-- Abrir o cursor
+OPEN evento_cursor;
+
+FETCH NEXT FROM evento_cursor INTO @ID_Evento, @NomeEvento;
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    -- Contagem de inscrições para o evento atual
+    SELECT @TotalInscricoes = COUNT(ID_INSCRICAO)
+    FROM INSCRICOES_EVENTOS
+    WHERE ID_EVENTO = @ID_Evento;
+
+    -- Inserir o resultado na tabela temporária
+    INSERT INTO #TempInscricoes (ID_EVENTO, NOME_EVENTO, TOTAL_INSCRICOES)
+    VALUES (@ID_Evento, @NomeEvento, @TotalInscricoes);
+
+    FETCH NEXT FROM evento_cursor INTO @ID_Evento, @NomeEvento;
+END;
+
+-- Fechar o cursor
+CLOSE evento_cursor;
+
+-- Desalocar o cursor
+DEALLOCATE evento_cursor;
+
+-- Selecionar os resultados da tabela temporária
+SELECT * FROM #TempInscricoes;
+
+-- Limpar a tabela temporária
+DROP TABLE #TempInscricoes;
+
+-- Para criar uma nova inscrição para testar o cursor, no fim de fazer insert devem aparecer 2 inscrições no evento 1
+INSERT INTO INSCRICOES_EVENTOS (ID_INSCRICAO, ID_EVENTO, ID_UTILIZADOR, DATAINSCRICAO)
+VALUES
+    (11, 1, 10, getdate())
