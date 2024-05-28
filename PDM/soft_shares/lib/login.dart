@@ -46,7 +46,7 @@ class Login extends StatelessWidget {
                   TextField(
                     controller: emailController,
                     decoration: const InputDecoration(
-                      label: Text('Email ou Usuário'),
+                      hintText: 'Email ou Usuário',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -68,7 +68,7 @@ class Login extends StatelessWidget {
                   TextField(
                     controller: passController,
                     decoration: const InputDecoration(
-                      labelText: 'Palavra-passe',
+                      hintText: 'Palavra-passe',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -77,7 +77,7 @@ class Login extends StatelessWidget {
             ),
 
             Container(
-              margin: const EdgeInsets.only(right: 16.0),
+              margin: const EdgeInsets.only(right: 16.0, bottom: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -105,7 +105,29 @@ class Login extends StatelessWidget {
             ),
             child: const Text('ENTRAR')),
 
-            const Divider(height: 70, thickness: 1, indent: 30, endIndent: 30, color: Color.fromARGB(255, 41, 40, 40),),
+            const Row(
+              children: [
+                Expanded(
+                  child: Divider(
+                    height: 70,
+                    thickness: 1,
+                    indent: 30,
+                    endIndent: 10,
+                    color: Color.fromARGB(255, 41, 40, 40),
+                  ),
+                ),
+                Text("OU"),
+                Expanded(
+                  child: Divider(
+                    height: 70,
+                    thickness: 1,
+                    indent: 10,
+                    endIndent: 30,
+                    color: Color.fromARGB(255, 41, 40, 40),
+                  ),
+                ),
+              ],
+            ),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
