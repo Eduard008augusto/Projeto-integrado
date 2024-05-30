@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
-  runApp(Login());
+  runApp(Registar());
 }
 
-class Login extends StatelessWidget {
-  Login({super.key});
+class Registar extends StatelessWidget {
+  Registar({super.key});
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
+  TextEditingController confPassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +38,23 @@ class Login extends StatelessWidget {
               margin: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Center(
                 child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Utilizador'),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextField(
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Email ou Usuário',
-                      border: OutlineInputBorder(),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Utilizador'),
+                    const SizedBox(
+                      height: 5,
                     ),
-                  ),
-                ]
+
+                    TextField(
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        hintText: 'Email ou Usuário',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ]
+                ),
               ),
-              )
             ),
 
             const SizedBox(
@@ -73,17 +75,22 @@ class Login extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
             ),
 
             Container(
-              margin: const EdgeInsets.only(right: 16.0, bottom: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              margin: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextButton(onPressed: (){
-                    print('HALLO :)');
-                  }, child: const Text('Esqueci-me da palavra-passe')),
+                  const Text('Confirmar Palavra-passe'),
+                  TextField(
+                    controller: confPassController,
+                    decoration: const InputDecoration(
+                      hintText: 'Confirmar Palavra-passe',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -155,18 +162,6 @@ class Login extends StatelessWidget {
                     height: 50,
                   ),
                 ),
-              ],
-            ),
-
-            const SizedBox(height: 70,),
-           
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Não possui uma conta?'),
-                TextButton(onPressed: (){
-                  
-                }, child: const Text('Clique aqui!')),
               ],
             ),
           ],
