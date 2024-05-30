@@ -20,7 +20,7 @@ class Login extends StatelessWidget {
           children: [
             Center(
               child: Container(
-                margin: const EdgeInsets.only(top: 70.0),
+                margin: const EdgeInsets.only(top: 110.0),
                 child: SvgPicture.asset(
                   'assets/images/logo.svg',
                   width: 120,
@@ -30,7 +30,7 @@ class Login extends StatelessWidget {
             ),
 
             const SizedBox(
-              height: 100,
+              height: 75,
             ),
 
             Container(
@@ -158,14 +158,14 @@ class Login extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 70,),
+            const SizedBox(height: 60,),
            
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Não possui uma conta?'),
                 TextButton(onPressed: (){
-                  
+                  Navigator.pushNamed(context, '/registo');
                 }, child: const Text('Clique aqui!')),
               ],
             ),

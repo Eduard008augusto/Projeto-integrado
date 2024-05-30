@@ -10,6 +10,7 @@ class Registar extends StatelessWidget {
   Registar({super.key});
 
   TextEditingController emailController = TextEditingController();
+  TextEditingController userController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController confPassController = TextEditingController();
 
@@ -21,7 +22,7 @@ class Registar extends StatelessWidget {
           children: [
             Center(
               child: Container(
-                margin: const EdgeInsets.only(top: 70.0),
+                margin: const EdgeInsets.only(top: 110.0),
                 child: SvgPicture.asset(
                   'assets/images/logo.svg',
                   width: 120,
@@ -31,30 +32,49 @@ class Registar extends StatelessWidget {
             ),
 
             const SizedBox(
-              height: 100,
+              height: 75,
             ),
 
             Container(
               margin: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Center(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Utilizador'),
-                    const SizedBox(
-                      height: 5,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Email'),
+                  TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      hintText: 'Email',
+                      border: OutlineInputBorder(),
                     ),
-
-                    TextField(
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        hintText: 'Email ou Usuário',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ]
-                ),
+                  ),
+                ]
               ),
+              )
+            ),
+
+            const SizedBox(
+              height: 20,
+            ),
+
+            Container(
+              margin: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Center(
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Nome de Usuário'),
+                  TextField(
+                    controller: userController,
+                    decoration: const InputDecoration(
+                      hintText: 'Nome de Usuário',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ]
+              ),
+              )
             ),
 
             const SizedBox(
@@ -75,7 +95,11 @@ class Registar extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
+              )
+            ),
+
+            const SizedBox(
+              height: 20,
             ),
 
             Container(
@@ -92,7 +116,7 @@ class Registar extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
+              )
             ),
 
             OutlinedButton(onPressed: (){
@@ -111,59 +135,6 @@ class Registar extends StatelessWidget {
               )
             ),
             child: const Text('ENTRAR')),
-
-            const Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    height: 70,
-                    thickness: 1,
-                    indent: 30,
-                    endIndent: 10,
-                    color: Color.fromARGB(255, 41, 40, 40),
-                  ),
-                ),
-                Text("OU"),
-                Expanded(
-                  child: Divider(
-                    height: 70,
-                    thickness: 1,
-                    indent: 10,
-                    endIndent: 30,
-                    color: Color.fromARGB(255, 41, 40, 40),
-                  ),
-                ),
-              ],
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    print('Google CLICK');
-                  },
-                  child: SvgPicture.asset(
-                    'assets/images/google.svg',
-                    width: 50,
-                    height: 50,
-                  ),
-                ),
-
-                const SizedBox(width: 50,),
-
-                GestureDetector(
-                  onTap: () {
-                    print('Facebook CLICK');
-                  },
-                  child: SvgPicture.asset(
-                    'assets/images/facebook.svg',
-                    width: 50,
-                    height: 50,
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
