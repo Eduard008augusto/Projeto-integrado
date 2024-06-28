@@ -14,7 +14,7 @@ namespace Etapa3bd
 {
     public class Base_de_Dados
     {
-        public string strc = "Persist Security Info=True; Data Source=193.137.7.32;User ID = aluno23_111; Password=Rafaus12pj";
+        public string strc = "Persist Security Info=True; Data Source=193.137.7.32;User ID = teste321; Password=teste123";
         public Base_de_Dados()
         {
             //
