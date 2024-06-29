@@ -597,39 +597,69 @@ class DatabaseHelper {
          constraint FK_INSCRICO_INSCREVE_GRUPOS foreign key (ID_GRUPO)
             references GRUPOS (ID_GRUPO)
       )
-      go
       ''',
     );
   }
 
-  Future<void> adicionarprod(String nome, String desc) async {
+  /*Future<void> adicionarprod(String nome, String desc) async {
     final db = await instance.database;
     await db.insert(
       'products',
       {'nome': nome, 'desc': desc},
     );
-  }
+  }*/
 
-  Future<List<Map<String, dynamic>>> getprodutos() async {
+  /*Future<List<Map<String, dynamic>>> getprodutos() async {
     final db = await instance.database;
     return await db.query('products');
-  }
+  }*/
 
-  Future <String> pesquisarprod(int id) async {
+  /*Future <String> pesquisarprod(int id) async {
     final db = await instance.database;
     final List<Map<String, dynamic>> maps = await db.query('products', where: 'id = ?', whereArgs: [id]);
     return maps[0]['nome'];
-  }
+  }*/
 
   Future<void> apagartabela() async {
     final db = await instance.database;
-    await db.execute('DROP TABLE products');
+    await db.execute('''
+      drop table INSCRICOES_GRUPOS
+      go
+      drop table INSCRICOES_EVENTOS
+      go
+      drop table GRUPOS
+      go
+      drop table FOTOGRAFIAS_EVENTOS
+      go
+      drop table FOTOGRAFIAS_CONTEUDO
+      go
+      drop table FAVORITOS
+      go
+      drop table EVENTOS
+      go
+      drop table DOCUMENTOS
+      go
+      drop table AVALIACOES
+      go
+      drop table CONTEUDO
+      go
+      drop table SUB_AREA_ATUACAO
+      go
+      drop table AREASDEATUACAO
+      go
+      drop table ADMINISTRADORES
+      go
+      drop table UTILIZADORES
+      go
+      drop table CENTRO
+      go
+      ''');
     await _createTable(db, 1);
   }
 
-  Future<void> consultasimples() async {
+  /*Future<void> consultasimples() async {
     final db = await instance.database;
     List<Map> resultado = await db.rawQuery('SELECT id, nome, desc FROM products');
     resultado.forEach((linha) {print(linha);});
-  }
+  }*/
 }
