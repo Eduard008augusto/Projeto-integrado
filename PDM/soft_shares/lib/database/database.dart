@@ -30,11 +30,11 @@ class DatabaseHelper {
   Future<void> _createTable(Database db, int version) async {
     await db.execute('''
       create table CENTRO (
-        ID_CENTRO            int                  not null,
-        CENTRO               varchar(100)                 not null,
-        MORADA               varchar(100)                 not null,
-        TELEFONE             int                  null,
-          constraint PK_CENTRO primary key (ID_CENTRO)
+         ID_CENTRO            int                  not null,
+         CENTRO               varchar(100)                 not null,
+         MORADA               varchar(100)                 not null,
+         TELEFONE             int                  null,
+         constraint PK_CENTRO primary key (ID_CENTRO)
       )
       go
 
@@ -48,8 +48,8 @@ class DatabaseHelper {
          DATAREGISTO          datetime             null,
          TELEFONE             int                  null,
          EMAIL                varchar(100)                 not null,
-         PASSWORD             varchar(100)                 not null,
-         IMAGEMPERFIL         image                null,
+         PASSWORD             varchar(255)                 not null,
+         IMAGEMPERFIL         varchar(255)         null,
          ATIVO                bit                  null default 1,
          DATAULTIMA_ALTERACAO datetime             null,
          constraint PK_UTILIZADORES primary key (ID_UTILIZADOR),
@@ -57,7 +57,7 @@ class DatabaseHelper {
             references CENTRO (ID_CENTRO)
       )
       go
-      
+
       create table ADMINISTRADORES (
          ID_UTILIZADOR        int                  not null,
          ID_CENTRO            int                  not null,
@@ -69,14 +69,14 @@ class DatabaseHelper {
             references UTILIZADORES (ID_UTILIZADOR)
       )
       go
-      
+
       create table AREASDEATUACAO (
          ID_AREA              int                  not null,
          ID_CENTRO            int                  null,
          ADMIN_CRIOU          int                  null,
          ADMIN_EDITOU         int                  null,
          DATA_CRIACAO         datetime             null,
-         IMAGEMAREA           image                null,
+         IMAGEMAREA           varchar(255)                null,
          NOME                 varchar(100)                 not null,
          NOMEENG              varchar(100)                 null,
          NOMEESP              varchar(100)                 null,
@@ -90,7 +90,7 @@ class DatabaseHelper {
             references CENTRO (ID_CENTRO)
       )
       go
-      
+
       create table SUB_AREA_ATUACAO (
          ID_SUBAREA           int                  not null,
          ID_CENTRO            int                  null,
@@ -98,7 +98,7 @@ class DatabaseHelper {
          ADMIN_CRIOU          int                  null,
          ADMIN_EDITOU         int                  null,
          DATA_CRIACAO         datetime             null,
-         IMAGEMSUBAREA        image                null,
+         IMAGEMSUBAREA        varchar(255)                null,
          NOME                 varchar(100)                 not null,
          NOMEENG              varchar(100)                 null,
          NOMEESP              varchar(100)                 null,
@@ -114,7 +114,7 @@ class DatabaseHelper {
             references CENTRO (ID_CENTRO)
       )
       go
-      
+
       create table CONTEUDO (
          ID_CONTEUDO          int                  not null,
          ID_CENTRO            int                  not null,
@@ -126,7 +126,7 @@ class DatabaseHelper {
          MORADA               varchar(100)                 not null,
          HORARIO              varchar(100)                 null,
          TELEFONE             int                  not null,
-         IMAGEMCONTEUDO       image                null,
+         IMAGEMCONTEUDO       varchar(255)                null,
          WEBSITE              varchar(100)                 null,
          ACESSIBILIDADE       varchar(100)                 null,
          DATACRIACAOCONTEUDO  datetime             null,
@@ -145,13 +145,13 @@ class DatabaseHelper {
             references AREASDEATUACAO (ID_AREA)
       )
       go
-      
+
       create table AVALIACOES (
          ID_AVALIACAO         int                  not null,
          ID_CONTEUDO          int                  not null,
          ID_UTILIZADOR        int                  not null,
-         AVALIACAOGERAL       numeric              null,
-         AVALIACAOPRECO       numeric              null,
+         AVALIACAOGERAL       int              null,
+         AVALIACAOPRECO       int              null,
          DATAAVALIACAO        datetime             not null,
          constraint PK_AVALIACOES primary key (ID_AVALIACAO),
          constraint FK_AVALIACO_AVALIACAO_CONTEUDO foreign key (ID_CONTEUDO)
@@ -160,7 +160,7 @@ class DatabaseHelper {
             references UTILIZADORES (ID_UTILIZADOR)
       )
       go
-      
+
       create table DOCUMENTOS (
          ID_DOCUMENTO         int                  not null,
          ID_SUBAREA           int                  not null,
@@ -176,7 +176,7 @@ class DatabaseHelper {
             references ADMINISTRADORES (ID_UTILIZADOR)
       )
       go
-      
+
       create table EVENTOS (
          ID_EVENTO            int                  not null,
          ID_CENTRO            int                  not null,
@@ -187,7 +187,7 @@ class DatabaseHelper {
          NOME                 varchar(100)                 not null,
          DATA                 datetime             not null,
          LOCALIZACAO          varchar(100)                 not null,
-         IMAGEMEVENTO         image                null,
+         IMAGEMEVENTO         varchar(255)                null,
          TELEFONE             int                  null,
          DESCRICAO            varchar(100)                 null,
          PRECO                decimal              not null,
@@ -207,7 +207,7 @@ class DatabaseHelper {
             references UTILIZADORES (ID_UTILIZADOR)
       )
       go
-      
+
       create table FAVORITOS (
          IDFAVORITO           int                  not null,
          ID_CENTRO            int                  not null,
@@ -229,7 +229,7 @@ class DatabaseHelper {
             references AREASDEATUACAO (ID_AREA)
       )
       go
-      
+
       create table FOTOGRAFIAS_CONTEUDO (
          ID_FOTO              int                  not null,
          ID_CONTEUDO          int                  not null,
@@ -237,7 +237,7 @@ class DatabaseHelper {
          DESCRICAO            varchar(100)                 null,
          LOCALIZACAO          varchar(100)                 null,
          DATA_CRIACAO         datetime             null,
-         IMAGEM               image                null,
+         IMAGEM               varchar(255)                null,
          VISIBILIDADE         bit                  null default 1,
          DATA_ULT_ALTERACAO   datetime             null,
          constraint PK_FOTOGRAFIAS_CONTEUDO primary key (ID_FOTO),
@@ -247,7 +247,7 @@ class DatabaseHelper {
             references CONTEUDO (ID_CONTEUDO)
       )
       go
-      
+
       create table FOTOGRAFIAS_EVENTOS (
          ID_FOTO_EVENTO       int                  not null,
          ID_EVENTO            int                  not null,
@@ -255,7 +255,7 @@ class DatabaseHelper {
          DESCRICAO            varchar(100)                 null,
          LOCALIZACAO          varchar(100)                 null,
          DATA_CRIACAO         datetime             null,
-         IMAGEM               image                null,
+         IMAGEM               varchar(255)                null,
          VISIBILIDADE         bit                  null default 1,
          DATA_ULT_ALTERACAO   datetime             null,
          constraint PK_FOTOGRAFIAS_EVENTOS primary key (ID_FOTO_EVENTO),
@@ -265,7 +265,7 @@ class DatabaseHelper {
             references EVENTOS (ID_EVENTO)
       )
       go
-      
+
       create table GRUPOS (
          ID_GRUPO             int                  not null,
          ID_AREA              int                  not null,
@@ -284,7 +284,7 @@ class DatabaseHelper {
             references UTILIZADORES (ID_UTILIZADOR)
       )
       go
-      
+
       create table INSCRICOES_EVENTOS (
          ID_INSCRICAO         int                  not null,
          ID_EVENTO            int                  not null,
@@ -297,7 +297,7 @@ class DatabaseHelper {
             references UTILIZADORES (ID_UTILIZADOR)
       )
       go
-      
+
       create table INSCRICOES_GRUPOS (
          ID_INSCRICAOGRUPO    int                  not null,
          ID_UTILIZADOR        int                  not null,
@@ -309,7 +309,8 @@ class DatabaseHelper {
          constraint FK_INSCRICO_INSCREVE_GRUPOS foreign key (ID_GRUPO)
             references GRUPOS (ID_GRUPO)
       )
-      ''',
+      go
+    ''',
     );
   }
 
@@ -317,11 +318,11 @@ class DatabaseHelper {
     final db = await instance.database;
     await db.execute('''
       create table CENTRO (
-        ID_CENTRO            int                  not null,
-        CENTRO               varchar(100)                 not null,
-        MORADA               varchar(100)                 not null,
-        TELEFONE             int                  null,
-          constraint PK_CENTRO primary key (ID_CENTRO)
+         ID_CENTRO            int                  not null,
+         CENTRO               varchar(100)                 not null,
+         MORADA               varchar(100)                 not null,
+         TELEFONE             int                  null,
+         constraint PK_CENTRO primary key (ID_CENTRO)
       )
       go
 
@@ -335,8 +336,8 @@ class DatabaseHelper {
          DATAREGISTO          datetime             null,
          TELEFONE             int                  null,
          EMAIL                varchar(100)                 not null,
-         PASSWORD             varchar(100)                 not null,
-         IMAGEMPERFIL         image                null,
+         PASSWORD             varchar(255)                 not null,
+         IMAGEMPERFIL         varchar(255)         null,
          ATIVO                bit                  null default 1,
          DATAULTIMA_ALTERACAO datetime             null,
          constraint PK_UTILIZADORES primary key (ID_UTILIZADOR),
@@ -363,7 +364,7 @@ class DatabaseHelper {
          ADMIN_CRIOU          int                  null,
          ADMIN_EDITOU         int                  null,
          DATA_CRIACAO         datetime             null,
-         IMAGEMAREA           image                null,
+         IMAGEMAREA           varchar(255)                null,
          NOME                 varchar(100)                 not null,
          NOMEENG              varchar(100)                 null,
          NOMEESP              varchar(100)                 null,
@@ -385,7 +386,7 @@ class DatabaseHelper {
          ADMIN_CRIOU          int                  null,
          ADMIN_EDITOU         int                  null,
          DATA_CRIACAO         datetime             null,
-         IMAGEMSUBAREA        image                null,
+         IMAGEMSUBAREA        varchar(255)                null,
          NOME                 varchar(100)                 not null,
          NOMEENG              varchar(100)                 null,
          NOMEESP              varchar(100)                 null,
@@ -413,7 +414,7 @@ class DatabaseHelper {
          MORADA               varchar(100)                 not null,
          HORARIO              varchar(100)                 null,
          TELEFONE             int                  not null,
-         IMAGEMCONTEUDO       image                null,
+         IMAGEMCONTEUDO       varchar(255)                null,
          WEBSITE              varchar(100)                 null,
          ACESSIBILIDADE       varchar(100)                 null,
          DATACRIACAOCONTEUDO  datetime             null,
@@ -437,8 +438,8 @@ class DatabaseHelper {
          ID_AVALIACAO         int                  not null,
          ID_CONTEUDO          int                  not null,
          ID_UTILIZADOR        int                  not null,
-         AVALIACAOGERAL       numeric              null,
-         AVALIACAOPRECO       numeric              null,
+         AVALIACAOGERAL       int              null,
+         AVALIACAOPRECO       int              null,
          DATAAVALIACAO        datetime             not null,
          constraint PK_AVALIACOES primary key (ID_AVALIACAO),
          constraint FK_AVALIACO_AVALIACAO_CONTEUDO foreign key (ID_CONTEUDO)
@@ -474,7 +475,7 @@ class DatabaseHelper {
          NOME                 varchar(100)                 not null,
          DATA                 datetime             not null,
          LOCALIZACAO          varchar(100)                 not null,
-         IMAGEMEVENTO         image                null,
+         IMAGEMEVENTO         varchar(255)                null,
          TELEFONE             int                  null,
          DESCRICAO            varchar(100)                 null,
          PRECO                decimal              not null,
@@ -524,7 +525,7 @@ class DatabaseHelper {
          DESCRICAO            varchar(100)                 null,
          LOCALIZACAO          varchar(100)                 null,
          DATA_CRIACAO         datetime             null,
-         IMAGEM               image                null,
+         IMAGEM               varchar(255)                null,
          VISIBILIDADE         bit                  null default 1,
          DATA_ULT_ALTERACAO   datetime             null,
          constraint PK_FOTOGRAFIAS_CONTEUDO primary key (ID_FOTO),
@@ -542,7 +543,7 @@ class DatabaseHelper {
          DESCRICAO            varchar(100)                 null,
          LOCALIZACAO          varchar(100)                 null,
          DATA_CRIACAO         datetime             null,
-         IMAGEM               image                null,
+         IMAGEM               varchar(255)                null,
          VISIBILIDADE         bit                  null default 1,
          DATA_ULT_ALTERACAO   datetime             null,
          constraint PK_FOTOGRAFIAS_EVENTOS primary key (ID_FOTO_EVENTO),
@@ -596,6 +597,7 @@ class DatabaseHelper {
          constraint FK_INSCRICO_INSCREVE_GRUPOS foreign key (ID_GRUPO)
             references GRUPOS (ID_GRUPO)
       )
+      go
       ''',
     );
   }
