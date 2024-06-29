@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   flutter_svg: any
   http:
+  path:
+  sqflite:
 
 dev_dependencies:
   flutter_test:
