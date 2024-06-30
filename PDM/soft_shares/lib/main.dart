@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialRoute: '/',
       routes: {
-        '/': (context) => const Areas(),
+        '/': (context) => Login(),
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),

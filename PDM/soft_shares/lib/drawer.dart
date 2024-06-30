@@ -14,7 +14,7 @@ class MenuDrawer extends StatelessWidget {
       child: ListView(
         children: [
           const SizedBox(height: 20.0,),
-          
+
           ListTile(
             leading: const Icon(Icons.account_circle, size: 40.0,),
             title: const Text(
@@ -57,6 +57,7 @@ class MenuDrawer extends StatelessWidget {
               ),
             onTap: () { Navigator.pushNamed(context, '/areas'); },
           ),
+
           ListTile(
             leading: const Icon(Icons.favorite),
             title: const Text(
@@ -82,6 +83,7 @@ class MenuDrawer extends StatelessWidget {
               ),
             onTap: () { Navigator.pushNamed(context, '/'); },
           ),
+          
           ListTile(
             leading: const Icon(Icons.settings),
             title: const Text(
@@ -90,6 +92,7 @@ class MenuDrawer extends StatelessWidget {
               ),
             onTap: () { Navigator.pushNamed(context, '/'); },
           ),
+
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text(

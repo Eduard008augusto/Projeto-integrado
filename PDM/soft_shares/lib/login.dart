@@ -1,6 +1,8 @@
-// ignore_for_file: must_be_immutable, avoid_print
+// ignore_for_file: must_be_immutable, avoid_print, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'database/server.dart';
 
 void main() {
   runApp(Login());
@@ -88,8 +90,16 @@ class Login extends StatelessWidget {
               ),
             ),
 
-            OutlinedButton(onPressed: (){
-              print('Login CLICK');
+            OutlinedButton(onPressed: () async {
+              try{
+                Map<String, dynamic> data = await login(emailController.text, passController.text);
+
+                if(data['success']){
+                  Navigator.pushNamed(context, '/areas');
+                }
+              } catch (e) {
+                print(e.toString());
+              }             
             },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 153),
