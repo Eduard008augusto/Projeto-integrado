@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soft_shares/drawer.dart';
 import './database/server.dart';
 
 void main() {
@@ -14,8 +15,9 @@ class Areas extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Areas'),
       ),
+      drawer: const MenuDrawer(),
       body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: fetchData(),
+        future: fetchAreas(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator(),);
@@ -27,10 +29,10 @@ class Areas extends StatelessWidget {
             final List<Map<String, dynamic>> areas = snapshot.data!;
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Duas colunas por linha
-                crossAxisSpacing: 10.0, // Espaçamento entre as colunas
-                mainAxisSpacing: 10.0, // Espaçamento entre as linhas
-                childAspectRatio: 0.90, // Proporção da altura dos cards em relação à largura
+                crossAxisCount: 2,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                childAspectRatio: 0.90,
               ),
               itemCount: areas.length,
               itemBuilder: (context, index) {

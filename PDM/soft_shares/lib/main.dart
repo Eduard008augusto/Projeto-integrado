@@ -18,6 +18,7 @@ class MainApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const Areas(),
+        '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),
       },

@@ -5,7 +5,7 @@ import 'dart:convert';
 var url = 'https://pintbackend-w8pt.onrender.com/';
 var localhost = 'http://localhost:3000/';
 
-Future<List<Map<String, dynamic>>> fetchData() async {
+Future<List<Map<String, dynamic>>> fetchAreas() async {
   final response = await http.get(Uri.parse('${url}area/list'));
   var data = jsonDecode(response.body);
   if (data['success']) {
