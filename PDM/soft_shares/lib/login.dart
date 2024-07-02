@@ -72,7 +72,9 @@ class Login extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Palavra-passe',
                       border: OutlineInputBorder(),
+                      //errorText: 'AAAAAAAAAAA',
                     ),
+                    obscureText: true,
                   ),
                 ],
               )

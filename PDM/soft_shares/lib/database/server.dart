@@ -41,3 +41,13 @@ Future<Map<String, dynamic>> login(String email, String password) async {
   }
 }
 
+Future<List<Map<String, dynamic>>> fetchPublicacoes() async {
+  final response = await http.get(Uri.parse('${baseUrl}conteudo/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> publicacoes = List<Map<String, dynamic>>.from(data['data']);
+    return publicacoes;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}

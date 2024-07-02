@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'registo.dart';
 import 'areas.dart';
+import 'feed.dart';
 
 void main() {
   runApp(const MainApp());
@@ -17,7 +18,7 @@ class MainApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialRoute: '/',
       routes: {
-        '/': (context) => Login(),
+        '/': (context) => const Feed(),
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),
