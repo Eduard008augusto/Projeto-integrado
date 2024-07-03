@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'drawer.dart';
+import './database/var.dart' as globals;
 
-class MapaPage extends StatefulWidget {
-  @override
-  _MapaPageState createState() => _MapaPageState();
+void main() {
+  runApp(const Mapa());
 }
 
-class _MapaPageState extends State<MapaPage> {
-  int _counter = 0;
+
+class Mapa extends StatelessWidget {
+  const Mapa({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,42 +19,9 @@ class _MapaPageState extends State<MapaPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mapa'),
+        title: const Text('Mapa'),
       ),
- drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 48, 99, 141),
-              ),
-              child: Text('MENU'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Perfil'),
-              onTap: () {
-                Navigator.pushNamed(context, '/PagPerfil');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.favorite_border_rounded),
-              title: const Text('Favoritos'),
-              onTap: () {
-                Navigator.pushNamed(context, '/PagFavoritos');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings_outlined),
-              title: const Text('Definições'),
-              onTap: () {
-                Navigator.pushNamed(context, '/PagDefinicoes');
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: const MenuDrawer(),
       body: Center(
         child: Stack(
           children: [
@@ -71,9 +40,7 @@ class _MapaPageState extends State<MapaPage> {
               left: screenWidth * 0.155 * scalingFactor,
               child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _counter++;
-                  });
+                  globals.idCentro = 5;
                 },
                 child: SvgPicture.asset(
                   'assets/Distritos/VilaReal.svg',
@@ -90,9 +57,7 @@ class _MapaPageState extends State<MapaPage> {
               left: screenWidth * 0.145 * scalingFactor,
               child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _counter++;
-                  });
+                  globals.idCentro = 1;
                 },
                 child: SvgPicture.asset(
                   'assets/Distritos/Viseu.svg',
@@ -109,9 +74,7 @@ class _MapaPageState extends State<MapaPage> {
               left: screenWidth * 0.022 * scalingFactor,
               child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _counter++;
-                  });
+                  globals.idCentro = 6;
                 },
                 child: SvgPicture.asset(
                   'assets/Distritos/Lisboa.svg',
@@ -128,9 +91,7 @@ class _MapaPageState extends State<MapaPage> {
               left: screenWidth * 0.076 * scalingFactor,
               child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _counter++;
-                  });
+                  globals.idCentro = 2;
                 },
                 child: SvgPicture.asset(
                   'assets/Distritos/Santarem.svg',
@@ -143,13 +104,11 @@ class _MapaPageState extends State<MapaPage> {
             // SVG  Portalegre
 
              Positioned(
-              top: screenHeight * 0.196* scalingFactor,
+              top: screenHeight * 0.196 * scalingFactor,
               left: screenWidth * 0.165 * scalingFactor,
               child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _counter++;
-                  });
+                  globals.idCentro = 4;
                 },
                 child: SvgPicture.asset(
                   'assets/Distritos/Portalegre.svg',
@@ -167,25 +126,13 @@ class _MapaPageState extends State<MapaPage> {
               left: screenWidth * 0.165 * scalingFactor,
               child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _counter++;
-                  });
+                  globals.idCentro = 3;
                 },
                 child: SvgPicture.asset(
                   'assets/Distritos/CasteloBranco.svg',
                   width: screenWidth * 0.152 * scalingFactor,
                   height: screenWidth * 0.152 * scalingFactor,
                 ),
-              ),
-            ),
-
-
-            // Contador (tamanho fixo)
-            Positioned(
-              bottom: 20 * scalingFactor,
-              child: Text(
-                '$_counter',
-                style: TextStyle(fontSize: 24 * scalingFactor),
               ),
             ),
           ],

@@ -4,6 +4,7 @@ import 'login.dart';
 import 'registo.dart';
 import 'areas.dart';
 import 'feed.dart';
+import 'mapa.dart';
 
 void main() {
   runApp(const MainApp());
@@ -22,6 +23,7 @@ class MainApp extends StatelessWidget {
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),
+        '/mapa': (context) => Mapa(),
       },
     );
   }
