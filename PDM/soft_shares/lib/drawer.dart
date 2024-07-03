@@ -38,7 +38,7 @@ class MenuDrawer extends StatelessWidget {
               'Centro Selecionado',
               style: TextStyle(fontSize: 18.0),
               ),
-            onTap: () { Navigator.pushNamed(context, '/'); },
+            onTap: () { Navigator.pushNamed(context, '/mapa'); },
           ),
 
           const Divider(

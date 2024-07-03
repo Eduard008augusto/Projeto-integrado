@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
 import 'drawer.dart';
 import './database/var.dart' as globals;
 
@@ -7,9 +8,44 @@ void main() {
   runApp(const Mapa());
 }
 
-
 class Mapa extends StatelessWidget {
   const Mapa({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: const MapaPage(),
+    );
+  }
+}
+
+class MapaPage extends StatefulWidget {
+  const MapaPage({super.key});
+
+  @override
+  _MapaPageState createState() => _MapaPageState();
+}
+
+class _MapaPageState extends State<MapaPage> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +61,15 @@ class Mapa extends StatelessWidget {
       body: Center(
         child: Stack(
           children: [
-            // SVG  fundo 
+            // SVG fundo 
             SvgPicture.asset(
-              'assets/Distritos/PT_1.svg',
+              'assets/images/Distritos/PT_1.svg',
               width: screenWidth,
               height: screenHeight,
               fit: BoxFit.cover,
             ),
             
-            // SVG  VilaReal 
-            
+            // SVG VilaReal 
             Positioned(
               top: screenHeight * 0.021 * scalingFactor,
               left: screenWidth * 0.155 * scalingFactor,
@@ -43,15 +78,14 @@ class Mapa extends StatelessWidget {
                   globals.idCentro = 5;
                 },
                 child: SvgPicture.asset(
-                  'assets/Distritos/VilaReal.svg',
+                  'assets/images/Distritos/VilaReal.svg',
                   width: screenWidth * 0.142 * scalingFactor,
                   height: screenWidth * 0.142 * scalingFactor,
                 ),
               ),
             ),
 
-            // SVG  Viseu 
-
+            // SVG Viseu 
             Positioned(
               top: screenHeight * 0.075 * scalingFactor,
               left: screenWidth * 0.145 * scalingFactor,
@@ -60,15 +94,14 @@ class Mapa extends StatelessWidget {
                   globals.idCentro = 1;
                 },
                 child: SvgPicture.asset(
-                  'assets/Distritos/Viseu.svg',
+                  'assets/images/Distritos/Viseu.svg',
                   width: screenWidth * 0.16 * scalingFactor,
                   height: screenWidth * 0.16 * scalingFactor,
                 ),
               ),
             ),
 
-            // SVG  Lisboa 
-
+            // SVG Lisboa 
             Positioned(
               top: screenHeight * 0.233 * scalingFactor,
               left: screenWidth * 0.022 * scalingFactor,
@@ -77,16 +110,15 @@ class Mapa extends StatelessWidget {
                   globals.idCentro = 6;
                 },
                 child: SvgPicture.asset(
-                  'assets/Distritos/Lisboa.svg',
+                  'assets/images/Distritos/Lisboa.svg',
                   width: screenWidth * 0.11 * scalingFactor,
                   height: screenWidth * 0.11 * scalingFactor,
                 ),
               ),
             ),
             
-            // SVG  Santarem
-
-             Positioned(
+            // SVG Santarem
+            Positioned(
               top: screenHeight * 0.188 * scalingFactor,
               left: screenWidth * 0.076 * scalingFactor,
               child: GestureDetector(
@@ -94,16 +126,15 @@ class Mapa extends StatelessWidget {
                   globals.idCentro = 2;
                 },
                 child: SvgPicture.asset(
-                  'assets/Distritos/Santarem.svg',
+                  'assets/images/Distritos/Santarem.svg',
                   width: screenWidth * 0.19 * scalingFactor,
                   height: screenWidth * 0.19 * scalingFactor,
                 ),
               ),
             ),
 
-            // SVG  Portalegre
-
-             Positioned(
+            // SVG Portalegre
+            Positioned(
               top: screenHeight * 0.196 * scalingFactor,
               left: screenWidth * 0.165 * scalingFactor,
               child: GestureDetector(
@@ -111,17 +142,15 @@ class Mapa extends StatelessWidget {
                   globals.idCentro = 4;
                 },
                 child: SvgPicture.asset(
-                  'assets/Distritos/Portalegre.svg',
+                  'assets/images/Distritos/Portalegre.svg',
                   width: screenWidth * 0.152 * scalingFactor,
                   height: screenWidth * 0.152 * scalingFactor,
                 ),
               ),
             ),
 
-  
-            // SVG  CateloBranco
-
-             Positioned(
+            // SVG CateloBranco
+            Positioned(
               top: screenHeight * 0.137 * scalingFactor,
               left: screenWidth * 0.165 * scalingFactor,
               child: GestureDetector(
@@ -129,7 +158,7 @@ class Mapa extends StatelessWidget {
                   globals.idCentro = 3;
                 },
                 child: SvgPicture.asset(
-                  'assets/Distritos/CasteloBranco.svg',
+                  'assets/images/Distritos/CasteloBranco.svg',
                   width: screenWidth * 0.152 * scalingFactor,
                   height: screenWidth * 0.152 * scalingFactor,
                 ),
