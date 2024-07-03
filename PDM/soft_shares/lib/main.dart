@@ -23,6 +23,7 @@ class MainApp extends StatelessWidget {
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),
+        '/feed': (context) => const Feed(),
         '/mapa': (context) => Mapa(),
       },
     );

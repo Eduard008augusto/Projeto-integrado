@@ -99,7 +99,7 @@ class MenuDrawer extends StatelessWidget {
               'Terminar Sessão',
               style: TextStyle(fontSize: 18.0),
               ),
-            onTap: () { Navigator.pushNamed(context, '/'); },
+            onTap: () { Navigator.pushNamed(context, '/login'); },
           ),
         ],
       ),
