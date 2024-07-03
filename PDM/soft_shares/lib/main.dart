@@ -5,6 +5,7 @@ import 'registo.dart';
 import 'areas.dart';
 import 'feed.dart';
 import 'mapa.dart';
+import 'settings.dart';
 
 void main() {
   runApp(const MainApp());
@@ -25,6 +26,8 @@ class MainApp extends StatelessWidget {
         '/registo': (context) => Registar(),
         '/feed': (context) => const Feed(),
         '/mapa': (context) => const Mapa(),
+        '/settings': (context) => const SettingsPage(),
+
       },
     );
   }
