@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),
         '/feed': (context) => const Feed(),
-        '/mapa': (context) => Mapa(),
+        '/mapa': (context) => const Mapa(),
       },
     );
   }

@@ -13,8 +13,8 @@ class Mapa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const MapaPage(),
+    return const MaterialApp(
+      home: MapaPage(),
     );
   }
 }
