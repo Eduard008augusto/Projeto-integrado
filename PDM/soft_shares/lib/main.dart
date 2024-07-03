@@ -16,10 +16,10 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Soft Shares',
       initialRoute: '/',
       routes: {
-        '/': (context) => const Feed(),
+        '/': (context) => const Mapa(),
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),

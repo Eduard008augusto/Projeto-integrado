@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 
+import './database/var.dart' as globals;
+
 void main() {
   runApp(const MaterialApp(
     home: Feed(),
