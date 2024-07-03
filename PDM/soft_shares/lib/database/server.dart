@@ -43,7 +43,7 @@ Future<Map<String, dynamic>> login(String email, String password) async {
 }
 
 Future<List<Map<String, dynamic>>> fetchPublicacoes(var centro, var area) async {
-  final response = await http.get(Uri.parse('${baseUrl}conteudo/listTEST/$centro/$area'));
+  final response = await http.get(Uri.parse('${baseUrl}conteudo/listPorCentroArea/$centro/$area'));
   var data = jsonDecode(response.body);
   if(data['success']){
     List<Map<String, dynamic>> publicacoes = List<Map<String, dynamic>>.from(data['data']);
