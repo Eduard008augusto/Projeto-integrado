@@ -2,11 +2,12 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:soft_shares/database/var.dart';
+
 var baseUrl = 'https://pintbackend-w8pt.onrender.com/';
-var localhost = 'http://localhost:3000/';
 
 Future<List<Map<String, dynamic>>> fetchAreas() async {
-  final response = await http.get(Uri.parse('${baseUrl}area/list'));  // area/listporcentro/idcentro
+  final response = await http.get(Uri.parse('${baseUrl}area/listPorCentro/$idCentro'));
   var data = jsonDecode(response.body);
   if (data['success']) {
     List<Map<String, dynamic>> areas = List<Map<String, dynamic>>.from(data['data']);
@@ -41,8 +42,8 @@ Future<Map<String, dynamic>> login(String email, String password) async {
   }
 }
 
-Future<List<Map<String, dynamic>>> fetchPublicacoes() async {
-  final response = await http.get(Uri.parse('${baseUrl}conteudo/list'));
+Future<List<Map<String, dynamic>>> fetchPublicacoes(var centro, var area) async {
+  final response = await http.get(Uri.parse('${baseUrl}conteudo/listTEST/$centro/$area'));
   var data = jsonDecode(response.body);
   if(data['success']){
     List<Map<String, dynamic>> publicacoes = List<Map<String, dynamic>>.from(data['data']);

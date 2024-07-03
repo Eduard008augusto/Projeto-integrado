@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 
+import './database/var.dart' as globals;
+
 void main() {
   runApp(const MaterialApp(
     home: Feed(),
@@ -26,7 +28,7 @@ class Feed extends StatelessWidget {
       ),
       drawer: const MenuDrawer(),
       body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: fetchPublicacoes(),
+        future: fetchPublicacoes(globals.idCentro, globals.idArea),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator(),);
@@ -41,32 +43,37 @@ class Feed extends StatelessWidget {
               itemBuilder: (context, index) {
                 final publicacao = publicacoes[index];
                 return SizedBox(
-                  height: 300, // Define a altura do card
-                  child: Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(15.0),
-                            topRight: Radius.circular(15.0),
+                  height: 300,
+                  child: GestureDetector(
+                    onTap: () {
+                      
+                    },
+                    child: Card(
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(15.0),
+                              topRight: Radius.circular(15.0),
+                            ),
+                            child: Image.network(
+                              'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: 200,
+                            ),
                           ),
-                          child: Image.network(
-                            'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: 200, // Ajuste a altura da imagem conforme necessário
-                          ),
-                        ),
-                        const SizedBox(height: 10.0,),
-                        Text(publicacao['NOMECONTEUDO'], style: const TextStyle(fontSize: 20.0),),
-                        Text(publicacao['MORADA']),
-                        Text(publicacao['TELEFONE']),
-                      ],
+                          const SizedBox(height: 10.0,),
+                          Text(publicacao['NOMECONTEUDO'], style: const TextStyle(fontSize: 20.0),),
+                          Text(publicacao['MORADA']),
+                          Text(publicacao['TELEFONE']),
+                        ],
+                      ),
                     ),
                   ),
                 );
