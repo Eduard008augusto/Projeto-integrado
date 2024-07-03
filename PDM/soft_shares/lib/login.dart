@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'database/server.dart';
+import './database/var.dart' as globals;
 
 void main() {
   runApp(Login());
@@ -97,6 +98,7 @@ class Login extends StatelessWidget {
                 Map<String, dynamic> data = await login(emailController.text, passController.text);
 
                 if(data['success']){
+                  globals.idUtilizador = data['id_utilizador'];
                   Navigator.pushNamed(context, '/areas');
                 }
               } catch (e) {
