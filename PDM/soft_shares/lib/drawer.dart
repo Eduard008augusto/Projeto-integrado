@@ -16,7 +16,7 @@ class MenuDrawer extends StatelessWidget {
           const SizedBox(height: 20.0,),
 
           ListTile(
-            leading: const Icon(Icons.account_circle, size: 40.0,),
+            leading: const Icon(Icons.account_circle_outlined, size: 40.0,),
             title: const Text(
               'NOME DO UTILIZADOR',
               style: TextStyle(fontSize: 18.0),
@@ -33,7 +33,7 @@ class MenuDrawer extends StatelessWidget {
           ),
           
           ListTile(
-            leading: const Icon(Icons.home, size: 30.0,),
+            leading: const Icon(Icons.home_outlined, size: 30.0,),
             title: const Text(
               'Centro Selecionado',
               style: TextStyle(fontSize: 18.0),
@@ -50,7 +50,7 @@ class MenuDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            leading: const Icon(Icons.dashboard),
+            leading: const Icon(Icons.dashboard_outlined),
             title: const Text(
               'Areas',
               style: TextStyle(fontSize: 18.0),
@@ -59,7 +59,7 @@ class MenuDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            leading: const Icon(Icons.favorite),
+            leading: const Icon(Icons.favorite_border),
             title: const Text(
               'Favoritos',
               style: TextStyle(fontSize: 18.0),
@@ -76,7 +76,7 @@ class MenuDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            leading: const Icon(Icons.calendar_month),
+            leading: const Icon(Icons.calendar_month_outlined),
             title: const Text(
               'Eventos',
               style: TextStyle(fontSize: 18.0),
@@ -85,7 +85,7 @@ class MenuDrawer extends StatelessWidget {
           ),
           
           ListTile(
-            leading: const Icon(Icons.settings),
+            leading: const Icon(Icons.settings_outlined),
             title: const Text(
               'Definições',
               style: TextStyle(fontSize: 18.0),
@@ -94,7 +94,7 @@ class MenuDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            leading: const Icon(Icons.logout),
+            leading: const Icon(Icons.logout_outlined),
             title: const Text(
               'Terminar Sessão',
               style: TextStyle(fontSize: 18.0),
