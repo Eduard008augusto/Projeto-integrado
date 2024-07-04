@@ -656,10 +656,4 @@ class DatabaseHelper {
       ''');
     await _createTable(db, 1);
   }
-
-  /*Future<void> consultasimples() async {
-    final db = await instance.database;
-    List<Map> resultado = await db.rawQuery('SELECT id, nome, desc FROM products');
-    resultado.forEach((linha) {print(linha);});
-  }*/
 }

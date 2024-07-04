@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import './database/var.dart' as globals;
+
 void main() {
-  runApp(Registar());
+  runApp(RegistarP1());
 }
 
-class Registar extends StatelessWidget {
-  Registar({super.key});
+class RegistarP1 extends StatelessWidget {
+  RegistarP1({super.key});
 
   TextEditingController emailController = TextEditingController();
   TextEditingController userController = TextEditingController();
@@ -119,8 +121,16 @@ class Registar extends StatelessWidget {
               )
             ),
 
+            const SizedBox(height: 30,),
+
             OutlinedButton(onPressed: (){
-              print('Login CLICK');
+              if(passController.text == confPassController.text){
+                globals.email = emailController.text;
+                globals.nome = userController.text;
+                globals.password = passController.text;
+
+                Navigator.pushNamed(context, '/registo2');
+              }
             },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 153),
@@ -134,7 +144,7 @@ class Registar extends StatelessWidget {
                 width: 1,
               )
             ),
-            child: const Text('ENTRAR')),
+            child: const Text('Registar')),
           ],
         ),
       ),
