@@ -46,7 +46,8 @@ class Feed extends StatelessWidget {
                   height: 300,
                   child: GestureDetector(
                     onTap: () {
-                      
+                      globals.idPublicacao = publicacao['ID_CONTEUDO'];
+                      Navigator.pushNamed(context, '/publicacao');
                     },
                     child: Card(
                       elevation: 4.0,
