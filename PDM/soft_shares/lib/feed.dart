@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 
@@ -46,7 +47,7 @@ class Feed extends StatelessWidget {
                   height: 300,
                   child: GestureDetector(
                     onTap: () {
-                      
+                      // Ação ao clicar no card
                     },
                     child: Card(
                       elevation: 4.0,
@@ -68,10 +69,42 @@ class Feed extends StatelessWidget {
                               height: 200,
                             ),
                           ),
-                          const SizedBox(height: 10.0,),
-                          Text(publicacao['NOMECONTEUDO'], style: const TextStyle(fontSize: 20.0),),
-                          Text(publicacao['MORADA']),
-                          Text(publicacao['TELEFONE']),
+                          // Dados do Conteudo
+                          const SizedBox(height: 3),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                publicacao['NOMECONTEUDO']!,
+                                style: const TextStyle(fontSize: 20.0, /*fontWeight: FontWeight.bold,*/),
+                              ),
+                              const SizedBox(height: 3),
+
+                              Row(
+                                children: [
+                                  const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                  const SizedBox(width: 3), 
+                                  Text(
+                                      publicacao['MORADA']!,
+                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 3),
+
+                              Row(
+                                children: [
+                                  const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                  const SizedBox(width: 3), 
+                                  Text(
+                                      publicacao['TELEFONE']!,
+                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 3),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -81,6 +114,13 @@ class Feed extends StatelessWidget {
             );
           }
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // pagina de adicionar local
+        },
+        backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

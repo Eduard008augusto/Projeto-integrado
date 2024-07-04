@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:soft_shares/drawer.dart';
 import './database/server.dart';
-
 import './database/var.dart' as globals;
 
 void main() {
@@ -51,9 +50,25 @@ class Areas extends StatelessWidget {
                     ),
                     child: Column(
                       children: <Widget>[
-                        Image.network(
-                          'https://pintbackend-w8pt.onrender.com/images/${area['IMAGEMAREA']}',
-                          fit: BoxFit.cover,
+                        Container(
+                          width: double.infinity, 
+                          height: 150.0, 
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15.0),
+                              topRight: Radius.circular(15.0),
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(15.0),
+                              topRight: Radius.circular(15.0),
+                            ),
+                            child: Image.network(
+                              'https://pintbackend-w8pt.onrender.com/images/${area['IMAGEMAREA']}',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(16.0),
