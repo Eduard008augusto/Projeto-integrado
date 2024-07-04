@@ -28,7 +28,7 @@ class Feed extends StatelessWidget {
       ),
       drawer: const MenuDrawer(),
       body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: fetchPublicacoes(globals.idCentro, globals.idArea),
+        future: fetchPublicacoes(globals.idCentro, globals.idArea, globals.idSubArea),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator(),);
