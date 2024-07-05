@@ -20,3 +20,5 @@ var telefone = 0; // FEITO
 var email = ''; // FEITO
 var password = ''; // FEITO
 File? imagemperfil; // FEITO
+
+var nomArea = '';

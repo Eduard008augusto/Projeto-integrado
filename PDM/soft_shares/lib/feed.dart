@@ -18,7 +18,7 @@ class Feed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('NOME AREA'),
+        title: Text(globals.nomArea),
         actions: const [
           Icon(Icons.search),
           SizedBox(width: 20,),
@@ -43,6 +43,7 @@ class Feed extends StatelessWidget {
               itemCount: publicacoes.length,
               itemBuilder: (context, index) {
                 final publicacao = publicacoes[index];
+                globals.nomArea = publicacao['NOME'];
                 return SizedBox(
                   height: 300,
                   child: GestureDetector(

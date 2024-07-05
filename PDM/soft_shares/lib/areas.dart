@@ -41,6 +41,7 @@ class Areas extends StatelessWidget {
                 return GestureDetector(
                   onTap: () {
                     globals.idArea = area['ID_AREA'];
+                    globals.nomArea = area['NOME']; 
                     Navigator.pushNamed(context, '/feed');
                   },
                   child: Card(
