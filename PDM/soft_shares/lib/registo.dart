@@ -16,6 +16,7 @@ class Registar extends StatelessWidget {
   Registar({super.key});
 
   File? image;
+  DateTime? selectedDate;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController userController = TextEditingController();
@@ -134,12 +135,23 @@ class Registar extends StatelessWidget {
               if(pickedFile != null){
                 image = File(pickedFile.path);
               }
-              
             }, child: const Text('Escolher Imagem')),
 
-            ElevatedButton(onPressed: (){
-              uploadImage(image!);
-            }, child: const Text("Confirmar escolha")),
+            ElevatedButton(onPressed: () async {
+              final DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2101),
+                locale: const Locale('pt', 'PT'),
+              );
+
+              if(pickedDate != null && pickedDate != selectedDate){
+                selectedDate = pickedDate;
+              }
+
+              globals.data = selectedDate!;
+            }, child: const Text('Escolher Data de Nascimento')),
 
             OutlinedButton(onPressed: () async {
               if(passController.text == confPassController.text){
@@ -147,7 +159,9 @@ class Registar extends StatelessWidget {
                 globals.nome = userController.text;
                 globals.password = passController.text;
 
-                await registo(globals.idCentro, globals.nome, globals.email, globals.password, globals.imagem);
+                await uploadImage(image!);
+
+                await registo(globals.idCentro, globals.nome, globals.email, globals.password, globals.imagem, globals.data);
 
                 Navigator.pushNamed(context, '/areas');
               }

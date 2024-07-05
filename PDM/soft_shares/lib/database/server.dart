@@ -70,7 +70,7 @@ Future<void> uploadImage(File imageFile) async {
   }
 }
 
-Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var password, var imagem) async {
+Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var password, var imagem, var dataNascimento) async {
   final url = Uri.parse('${baseUrl}utilizador/create');
 
   final body = json.encode({
@@ -79,9 +79,8 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
     'EMAIL': email,
     'PASSWORD': password,
     'IMAGEMPERFIL': imagem,
+    'DATANASCIMENTO': dataNascimento.toIso8601String(),
   });
-
-  print('$idcentro + $nome + $email + $password');
 
   final response = await http.post(
     url,
@@ -93,11 +92,8 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
 
   var data = jsonDecode(response.body);
 
-  print(data.toString());
-
   if (data['success']) {
     Map<String, dynamic> res = Map<String, dynamic>.from(data);
-    print(res.toString());
     return res;
   } else {
     throw Exception('Falha ao carregar dados');

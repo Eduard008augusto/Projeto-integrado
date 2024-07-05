@@ -14,6 +14,7 @@ var nome = '';
 var email = '';
 var password = '';
 var imagem = '';
+DateTime data = DateTime.now();
 
 
 var nomArea = '';

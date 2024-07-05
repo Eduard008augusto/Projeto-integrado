@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'login.dart';
 import 'registo.dart';
@@ -28,6 +29,15 @@ class MainApp extends StatelessWidget {
         '/mapa': (context) => const Mapa(),
         '/settings': (context) => const SettingsPage(),
       },
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'),
+        Locale('pt', 'PT'),
+      ],
     );
   }
 }
