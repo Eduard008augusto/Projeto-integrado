@@ -1,15 +1,21 @@
-// ignore_for_file: must_be_immutable, avoid_print
+// ignore_for_file: must_be_immutable, avoid_print, use_build_context_synchronously
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:soft_shares/database/server.dart';
 
 import './database/var.dart' as globals;
 
 void main() {
-  runApp(RegistarP1());
+  runApp(Registar());
 }
 
-class RegistarP1 extends StatelessWidget {
-  RegistarP1({super.key});
+class Registar extends StatelessWidget {
+  Registar({super.key});
+
+  File? image;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController userController = TextEditingController();
@@ -95,6 +101,7 @@ class RegistarP1 extends StatelessWidget {
                       hintText: 'Palavra-passe',
                       border: OutlineInputBorder(),
                     ),
+                    obscureText: true,
                   ),
                 ],
               )
@@ -116,20 +123,33 @@ class RegistarP1 extends StatelessWidget {
                       hintText: 'Confirmar Palavra-passe',
                       border: OutlineInputBorder(),
                     ),
+                    obscureText: true,
                   ),
                 ],
               )
             ),
 
-            const SizedBox(height: 30,),
+            ElevatedButton(onPressed: () async {
+              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+              if(pickedFile != null){
+                image = File(pickedFile.path);
+              }
+              
+            }, child: const Text('Escolher Imagem')),
 
-            OutlinedButton(onPressed: (){
+            ElevatedButton(onPressed: (){
+              uploadImage(image!);
+            }, child: const Text("Confirmar escolha")),
+
+            OutlinedButton(onPressed: () async {
               if(passController.text == confPassController.text){
                 globals.email = emailController.text;
                 globals.nome = userController.text;
                 globals.password = passController.text;
 
-                Navigator.pushNamed(context, '/registo2');
+                await registo(globals.idCentro, globals.nome, globals.email, globals.password, globals.imagem);
+
+                Navigator.pushNamed(context, '/areas');
               }
             },
             style: OutlinedButton.styleFrom(

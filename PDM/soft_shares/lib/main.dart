@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'login.dart';
-import 'registo_p1.dart';
-import 'registo_p2.dart';
+import 'registo.dart';
 import 'areas.dart';
 import 'feed.dart';
 import 'mapa.dart';
@@ -21,11 +20,10 @@ class MainApp extends StatelessWidget {
       title: 'Soft Shares',
       initialRoute: '/',
       routes: {
-        '/': (context) => RegistarP1(),
+        '/': (context) => const Mapa(),
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
-        '/registo1': (context) => RegistarP1(),
-        '/registo2': (context) => RegistarP2(),
+        '/registo': (context) => Registar(),
         '/feed': (context) => const Feed(),
         '/mapa': (context) => const Mapa(),
         '/settings': (context) => const SettingsPage(),
