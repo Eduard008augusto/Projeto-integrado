@@ -24,9 +24,15 @@ class Mapa extends StatelessWidget {
     double scalingFactor = screenWidth > screenHeight ? screenWidth / 400 : screenHeight / 400;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mapa'),
-      ),
+        appBar: AppBar(
+          centerTitle: true,
+          title: SvgPicture.asset(
+            'assets/images/logo2.svg', 
+            height: 25.0,
+            width: 25.0,
+          ),
+        ),
+
       drawer: const MenuDrawer(),
       body: Center(
         child: Stack(

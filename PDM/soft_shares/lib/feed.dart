@@ -43,70 +43,106 @@ class Feed extends StatelessWidget {
               itemCount: publicacoes.length,
               itemBuilder: (context, index) {
                 final publicacao = publicacoes[index];
-                return SizedBox(
-                  height: 300,
-                  child: GestureDetector(
-                    onTap: () {
-                      globals.idPublicacao = publicacao['ID_CONTEUDO'];
-                      Navigator.pushNamed(context, '/publicacao');
-                    },
-                    child: Card(
-                      elevation: 4.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(15.0),
-                              topRight: Radius.circular(15.0),
-                            ),
-                            child: Image.network(
-                              'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: 200,
-                            ),
-                          ),
-                          // Dados do Conteudo
-                          const SizedBox(height: 3),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                publicacao['NOMECONTEUDO']!,
-                                style: const TextStyle(fontSize: 20.0, /*fontWeight: FontWeight.bold,*/),
-                              ),
-                              const SizedBox(height: 3),
+                var rating = publicacao['mediaAvaliacoesGerais'] ?? 0; 
+                var priceRating = publicacao['mediaAvaliacoesPreco'] ?? 0; 
 
-                              Row(
-                                children: [
-                                  const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
-                                  const SizedBox(width: 3), 
-                                  Text(
-                                      publicacao['MORADA']!,
-                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                  ),
-                                ],
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  child: SizedBox(
+                    height: 300,
+                    child: GestureDetector(
+                      onTap: () {
+                        /*globals.idPublicacao = publicacao['ID_CONTEUDO'];
+                        Navigator.pushNamed(context, '/publicacao');*/
+                      },
+                      child: Card(
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(15.0),
+                                topRight: Radius.circular(15.0),
                               ),
-                              const SizedBox(height: 3),
-
-                              Row(
-                                children: [
-                                  const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
-                                  const SizedBox(width: 3), 
-                                  Text(
-                                      publicacao['TELEFONE']!,
-                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                  ),
-                                ],
+                              child: Image.network(
+                                'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 150,
                               ),
-                              const SizedBox(height: 3),
-                            ],
-                          ),
-                        ],
+                            ),
+                            // Dados do Conteudo
+                            const SizedBox(height: 3),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  publicacao['NOMECONTEUDO'],
+                                  style: const TextStyle(fontSize: 20.0, /*fontWeight: FontWeight.bold,*/),
+                                ),
+                                const SizedBox(height: 3),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '(${publicacao['totalAvaliacoes']})',
+                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    ),
+                                    const SizedBox(width: 5), //estrelas
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: List.generate(5, (rating) {
+                                        return Icon(
+                                          5 < rating ? Icons.star : Icons.star_border,
+                                          color: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+                                        );
+                                      }),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 3),
+                                //preço
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: List.generate(3, (priceRating) {
+                                    return Icon(
+                                      Icons.euro,
+                                      color: 3 < priceRating
+                                          ? Colors.black
+                                          : Colors.black.withOpacity(0.3),
+                                    );
+                                  }),
+                                ),
+                                const SizedBox(height: 3),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                    const SizedBox(width: 3), 
+                                    Text(
+                                      publicacao['MORADA'],
+                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 3),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                    const SizedBox(width: 3), 
+                                    Text(
+                                      publicacao['TELEFONE'],
+                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 3),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -116,12 +152,19 @@ class Feed extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // pagina de adicionar local
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/scroll'); 
         },
-        backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Container(
+          width: 56.0,
+          height: 56.0,
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
       ),
     );
   }

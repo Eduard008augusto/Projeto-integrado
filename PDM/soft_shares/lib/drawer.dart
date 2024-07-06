@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MenuDrawer());
@@ -11,7 +11,7 @@ class MenuDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
+      child: Column(
         children: [
           const SizedBox(height: 20.0,),
 
@@ -20,7 +20,7 @@ class MenuDrawer extends StatelessWidget {
             title: const Text(
               'NOME DO UTILIZADOR',
               style: TextStyle(fontSize: 18.0),
-              ),
+            ),
             onTap: () { Navigator.pushNamed(context, '/'); },
           ),
           
@@ -37,7 +37,7 @@ class MenuDrawer extends StatelessWidget {
             title: const Text(
               'Centro Selecionado',
               style: TextStyle(fontSize: 18.0),
-              ),
+            ),
             onTap: () { Navigator.pushNamed(context, '/mapa'); },
           ),
 
@@ -54,7 +54,7 @@ class MenuDrawer extends StatelessWidget {
             title: const Text(
               'Areas',
               style: TextStyle(fontSize: 18.0),
-              ),
+            ),
             onTap: () { Navigator.pushNamed(context, '/areas'); },
           ),
 
@@ -63,7 +63,7 @@ class MenuDrawer extends StatelessWidget {
             title: const Text(
               'Favoritos',
               style: TextStyle(fontSize: 18.0),
-              ),
+            ),
             onTap: () { Navigator.pushNamed(context, '/'); },
           ),
 
@@ -80,7 +80,7 @@ class MenuDrawer extends StatelessWidget {
             title: const Text(
               'Eventos',
               style: TextStyle(fontSize: 18.0),
-              ),
+            ),
             onTap: () { Navigator.pushNamed(context, '/feed'); },
           ),
           
@@ -89,7 +89,7 @@ class MenuDrawer extends StatelessWidget {
             title: const Text(
               'Definições',
               style: TextStyle(fontSize: 18.0),
-              ),
+            ),
             onTap: () { Navigator.pushNamed(context, '/settings'); },
           ),
 
@@ -98,8 +98,25 @@ class MenuDrawer extends StatelessWidget {
             title: const Text(
               'Terminar Sessão',
               style: TextStyle(fontSize: 18.0),
-              ),
+            ),
             onTap: () { Navigator.pushNamed(context, '/login'); },
+          ),
+
+          Expanded(
+             child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Opacity(
+                  opacity: 0.3,
+                  child: SvgPicture.asset(
+                    'assets/images/logo.svg', 
+                    height: 90.0,
+                    width: 90.0,
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),

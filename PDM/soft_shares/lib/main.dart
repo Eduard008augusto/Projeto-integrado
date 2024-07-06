@@ -6,6 +6,7 @@ import 'areas.dart';
 import 'feed.dart';
 import 'mapa.dart';
 import 'settings.dart';
+import 'horiscroll.dart';
 
 void main() {
   runApp(const MainApp());
@@ -27,7 +28,7 @@ class MainApp extends StatelessWidget {
         '/feed': (context) => const Feed(),
         '/mapa': (context) => const Mapa(),
         '/settings': (context) => const SettingsPage(),
-
+        '/scroll': (context) => const MyApp(),
       },
     );
   }
