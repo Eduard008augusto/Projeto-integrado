@@ -53,6 +53,7 @@ class Mapa extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   globals.idCentro = 5;
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: SvgPicture.asset(
                   'assets/images/Distritos/VilaReal.svg',
@@ -70,7 +71,7 @@ class Mapa extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   globals.idCentro = 1;
-                  Navigator.pushNamed(context, '/areas');
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: SvgPicture.asset(
                   'assets/images/Distritos/Viseu.svg',
@@ -88,6 +89,7 @@ class Mapa extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   globals.idCentro = 6;
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: SvgPicture.asset(
                   'assets/images/Distritos/Lisboa.svg',
@@ -105,6 +107,7 @@ class Mapa extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   globals.idCentro = 2;
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: SvgPicture.asset(
                   'assets/images/Distritos/Santarem.svg',
@@ -122,6 +125,7 @@ class Mapa extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   globals.idCentro = 4;
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: SvgPicture.asset(
                   'assets/images/Distritos/Portalegre.svg',
@@ -140,6 +144,7 @@ class Mapa extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   globals.idCentro = 3;
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: SvgPicture.asset(
                   'assets/images/Distritos/CasteloBranco.svg',

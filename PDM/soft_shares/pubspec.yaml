@@ -13,6 +13,10 @@ dependencies:
   http:
   path:
   sqflite:
+  image_picker:
+  intl:
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

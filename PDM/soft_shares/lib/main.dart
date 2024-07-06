@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'login.dart';
 import 'registo.dart';
@@ -8,7 +9,7 @@ import 'mapa.dart';
 import 'settings.dart';
 import 'horiscroll.dart';
 
-void main() {
+void main() async {
   runApp(const MainApp());
 }
 
@@ -30,6 +31,15 @@ class MainApp extends StatelessWidget {
         '/settings': (context) => const SettingsPage(),
         '/scroll': (context) => const MyApp(),
       },
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'),
+        Locale('pt', 'PT'),
+      ],
     );
   }
 }

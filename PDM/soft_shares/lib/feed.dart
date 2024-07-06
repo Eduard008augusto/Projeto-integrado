@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 
@@ -18,7 +17,7 @@ class Feed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('NOME AREA'),
+        title: Text(globals.nomArea),
         actions: const [
           Icon(Icons.search),
           SizedBox(width: 20,),
