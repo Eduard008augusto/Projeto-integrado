@@ -132,3 +132,14 @@ Future<Map<String, dynamic>> fetchUtilizador(var id) async {
     throw Exception('Falha ao carregar dados');
   }
 }
+
+Future<List<Map<String, dynamic>>> fetchSubAreas(var area) async {
+  final response = await http.get(Uri.parse('${baseUrl}subArea/listPorArea/$area'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
