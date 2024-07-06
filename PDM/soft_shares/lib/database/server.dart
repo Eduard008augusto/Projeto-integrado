@@ -39,7 +39,7 @@ Future<Map<String, dynamic>> login(String email, String password) async {
   var data = jsonDecode(response.body);
 
   if (data['success']) {
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
     throw Exception('Falha ao carregar dados');
@@ -70,7 +70,7 @@ Future<void> uploadImage(File imageFile) async {
   }
 }
 
-Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var password, var imagem, var dataNascimento) async {
+Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var password) async {
   final url = Uri.parse('${baseUrl}utilizador/create');
 
   final body = json.encode({
@@ -78,8 +78,8 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
     'NOME': nome,
     'EMAIL': email,
     'PASSWORD': password,
-    'IMAGEMPERFIL': imagem,
-    'DATANASCIMENTO': dataNascimento.toIso8601String(),
+    //'IMAGEMPERFIL': imagem,
+    //'DATANASCIMENTO': dataNascimento.toIso8601String(),
   });
 
   final response = await http.post(
@@ -93,7 +93,7 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
   var data = jsonDecode(response.body);
 
   if (data['success']) {
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
     throw Exception('Falha ao carregar dados');
@@ -115,7 +115,7 @@ Future<Map<String, dynamic>> fetchPublicacao(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}conteudo/get/$id'));
   var data = jsonDecode(response.body);
   if(data['success']){
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
     throw Exception('Falha ao carregar dados');
@@ -126,7 +126,7 @@ Future<Map<String, dynamic>> fetchUtilizador(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}utilizador/get/$id'));
   var data = jsonDecode(response.body);
   if(data['success']){
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
     throw Exception('Falha ao carregar dados');
@@ -137,9 +137,55 @@ Future<List<Map<String, dynamic>>> fetchSubAreas(var area) async {
   final response = await http.get(Uri.parse('${baseUrl}subArea/listPorArea/$area'));
   var data = jsonDecode(response.body);
   if(data['success']){
-    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data);
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
   } else {
     throw Exception('Falha ao carregar dados');
   }
 }
+
+
+/*
+
+File? image;
+DateTime? selectedDate;
+
+
+ElevatedButton(onPressed: () async {
+              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+              if(pickedFile != null){
+                image = File(pickedFile.path);
+              }
+            }, child: const Text('Escolher Imagem')),
+
+            ElevatedButton(onPressed: () async {
+              final DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2101),
+                locale: const Locale('pt', 'PT'),
+              );
+
+              if(pickedDate != null && pickedDate != selectedDate){
+                selectedDate = pickedDate;
+              }
+
+              globals.data = selectedDate!;
+            }, child: const Text('Escolher Data de Nascimento')),
+
+            OutlinedButton(onPressed: () async {
+              if(passController.text == confPassController.text){
+                globals.email = emailController.text;
+                globals.nome = userController.text;
+                globals.password = passController.text;
+
+                await uploadImage(image!);
+
+                await registo(globals.idCentro, globals.nome, globals.email, globals.password, globals.imagem, globals.data);
+
+                Navigator.pushNamed(context, '/areas');
+              }
+            },
+
+*/

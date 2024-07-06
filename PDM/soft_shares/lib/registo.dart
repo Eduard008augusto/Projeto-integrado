@@ -161,7 +161,7 @@ class Registar extends StatelessWidget {
 
                 await uploadImage(image!);
 
-                await registo(globals.idCentro, globals.nome, globals.email, globals.password, globals.imagem, globals.data);
+                await registo(globals.idCentro, globals.nome, globals.email, globals.password);
 
                 Navigator.pushNamed(context, '/areas');
               }

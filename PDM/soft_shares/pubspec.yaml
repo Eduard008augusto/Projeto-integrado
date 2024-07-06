@@ -17,6 +17,10 @@ dependencies:
   intl:
   flutter_localizations:
     sdk: flutter
+  firebase_auth:
+  google_sign_in:
+  firebase_core:
+  flutter_facebook_auth:
 
 dev_dependencies:
   flutter_test:

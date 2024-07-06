@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, avoid_print, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:soft_shares/services/auth_service.dart';
 
 import 'database/server.dart';
 import './database/var.dart' as globals;
@@ -147,8 +148,9 @@ class Login extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    print('Google CLICK');
+                  onTap: () async {
+                    await AuthService().signInWithGoogle();
+                    Navigator.pushNamed(context, '/areas');
                   },
                   child: SvgPicture.asset(
                     'assets/images/google.svg',
