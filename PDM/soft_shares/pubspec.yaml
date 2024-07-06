@@ -10,6 +10,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: any
+  http:
+  path:
+  sqflite:
+  image_picker:
+  intl:
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -20,5 +27,12 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/logo.svg
+    - assets/images/logo2.svg
     - assets/images/google.svg
     - assets/images/facebook.svg
+    - assets/images/Distritos/PT_1.svg
+    - assets/images/Distritos/CasteloBranco.svg
+    - assets/images/Distritos/Portalegre.svg
+    - assets/images/Distritos/Santarem.svg
+    - assets/images/Distritos/VilaReal.svg
+    - assets/images/Distritos/Viseu.svg

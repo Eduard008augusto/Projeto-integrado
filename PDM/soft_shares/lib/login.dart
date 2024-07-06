@@ -1,6 +1,9 @@
-// ignore_for_file: must_be_immutable, avoid_print
+// ignore_for_file: must_be_immutable, avoid_print, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'database/server.dart';
+import './database/var.dart' as globals;
 
 void main() {
   runApp(Login());
@@ -20,7 +23,7 @@ class Login extends StatelessWidget {
           children: [
             Center(
               child: Container(
-                margin: const EdgeInsets.only(top: 70.0),
+                margin: const EdgeInsets.only(top: 110.0),
                 child: SvgPicture.asset(
                   'assets/images/logo.svg',
                   width: 120,
@@ -30,7 +33,7 @@ class Login extends StatelessWidget {
             ),
 
             const SizedBox(
-              height: 100,
+              height: 75,
             ),
 
             Container(
@@ -70,7 +73,9 @@ class Login extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Palavra-passe',
                       border: OutlineInputBorder(),
+                      //errorText: 'AAAAAAAAAAA',
                     ),
+                    obscureText: true,
                   ),
                 ],
               )
@@ -88,8 +93,17 @@ class Login extends StatelessWidget {
               ),
             ),
 
-            OutlinedButton(onPressed: (){
-              print('Login CLICK');
+            OutlinedButton(onPressed: () async {
+              try{
+                Map<String, dynamic> data = await login(emailController.text, passController.text);
+
+                if(data['success']){
+                  globals.idUtilizador = data['id_utilizador'];
+                  Navigator.pushNamed(context, '/areas');
+                }
+              } catch (e) {
+                print(e.toString());
+              }             
             },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 153),
@@ -157,8 +171,20 @@ class Login extends StatelessWidget {
                 ),
               ],
             ),
+
+            const SizedBox(height: 60,),
+           
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Não possui uma conta?'),
+                TextButton(onPressed: (){
+                  Navigator.pushNamed(context, '/registo');
+                }, child: const Text('Clique aqui!')),
+              ],
+            ),
           ],
-        )
+        ),
       ),
     );
   }
