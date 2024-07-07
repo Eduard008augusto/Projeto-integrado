@@ -74,7 +74,6 @@ class Login extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Palavra-passe',
                       border: OutlineInputBorder(),
-                      //errorText: 'AAAAAAAAAAA',
                     ),
                     obscureText: true,
                   ),
@@ -95,16 +94,74 @@ class Login extends StatelessWidget {
             ),
 
             OutlinedButton(onPressed: () async {
-              try{
+              if (emailController.text.isEmpty || passController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      icon: const Icon(Icons.warning),
+                      title: const Text('ERRO'),
+                      content: const Text('Preencha todos os campos!'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+                return;
+              }
+
+              try {
                 Map<String, dynamic> data = await login(emailController.text, passController.text);
 
-                if(data['success']){
+                if (data['success']) {
                   globals.idUtilizador = data['id_utilizador'];
                   Navigator.pushNamed(context, '/areas');
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        icon: const Icon(Icons.warning),
+                        title: const Text('ERRO'),
+                        content: const Text('Login falhou! Verifique suas credenciais.'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }
               } catch (e) {
-                print(e.toString());
-              }             
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      icon: const Icon(Icons.warning),
+                      title: const Text('ERRO'),
+                      content: Text(e.toString()),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 153),
@@ -149,8 +206,21 @@ class Login extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () async {
-                    await AuthService().signInWithGoogle();
-                    Navigator.pushNamed(context, '/areas');
+                    try {
+                      bool success = await AuthService().signInWithGoogle();
+                      if (success) {
+                        Navigator.pushNamed(context, '/areas');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Erro durante o login'))
+                        );
+                      }
+                    } catch (e) {
+                      print(e.toString());
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Erro durante o login: ${e.toString()}'))
+                      );
+                    }
                   },
                   child: SvgPicture.asset(
                     'assets/images/google.svg',

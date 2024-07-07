@@ -1,9 +1,6 @@
 // ignore_for_file: must_be_immutable, avoid_print, use_build_context_synchronously
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:soft_shares/database/server.dart';
 
 import './database/var.dart' as globals;
@@ -14,9 +11,6 @@ void main() {
 
 class Registar extends StatelessWidget {
   Registar({super.key});
-
-  File? image;
-  DateTime? selectedDate;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController userController = TextEditingController();
@@ -130,40 +124,78 @@ class Registar extends StatelessWidget {
               )
             ),
 
-            ElevatedButton(onPressed: () async {
-              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-              if(pickedFile != null){
-                image = File(pickedFile.path);
-              }
-            }, child: const Text('Escolher Imagem')),
-
-            ElevatedButton(onPressed: () async {
-              final DateTime? pickedDate = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2101),
-                locale: const Locale('pt', 'PT'),
-              );
-
-              if(pickedDate != null && pickedDate != selectedDate){
-                selectedDate = pickedDate;
-              }
-
-              globals.data = selectedDate!;
-            }, child: const Text('Escolher Data de Nascimento')),
-
             OutlinedButton(onPressed: () async {
-              if(passController.text == confPassController.text){
-                globals.email = emailController.text;
-                globals.nome = userController.text;
-                globals.password = passController.text;
+              try{
+                if(emailController.text.isEmpty || userController.text.isEmpty || passController.text.isEmpty || confPassController.text.isEmpty){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        icon: const Icon(Icons.warning),
+                        title: const Text('ERRO'),
+                        content: const Text('Preencha todos os campos!'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                  return;
+                }
 
-                await uploadImage(image!);
+                if(passController.text == confPassController.text){
+                  globals.email = emailController.text;
+                  globals.nome = userController.text;
+                  globals.password = passController.text;
 
-                await registo(globals.idCentro, globals.nome, globals.email, globals.password);
+                  await registo(globals.idCentro, globals.nome, globals.email, globals.password);
 
-                Navigator.pushNamed(context, '/areas');
+                  Navigator.pushNamed(context, '/areas');
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        icon: const Icon(Icons.warning),
+                        title: const Text('ERRO'),
+                        content: const Text('As palavras-passes devem coincidir!'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                  return;
+                }
+              } catch (e) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        icon: const Icon(Icons.warning),
+                        title: const Text('ERRO'),
+                        content: Text('ERROR: ${e.toString()}'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
               }
             },
             style: OutlinedButton.styleFrom(

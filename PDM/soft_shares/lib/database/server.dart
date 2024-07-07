@@ -22,29 +22,34 @@ Future<List<Map<String, dynamic>>> fetchAreas() async {
 }
 
 Future<Map<String, dynamic>> login(String email, String password) async {
-  final url = Uri.parse('${baseUrl}utilizador/loginApp');
-  final body = json.encode({
-    'EMAIL': email,
-    'PASSWORD': password,
-  });
+  try {
+    final url = Uri.parse('${baseUrl}utilizador/loginApp');
+    final body = json.encode({
+      'EMAIL': email,
+      'PASSWORD': password,
+    });
 
-  final response = await http.post(
-    url,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: body,
-  );
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    );
 
-  var data = jsonDecode(response.body);
+    var data = jsonDecode(response.body);
 
-  if (data['success']) {
-    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
-    return res;
-  } else {
-    throw Exception('Falha ao carregar dados');
+    if (data['success']) {
+      Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
+      return res;
+    } else {
+      throw Exception('Email ou palavra-passe incorreto!');
+    }
+  } catch (e) {
+    throw Exception('LOGIN ERROR: ${e.toString()}');
   }
 }
+
 
 Future<void> uploadImage(File imageFile) async {
   var stream = http.ByteStream(imageFile.openRead().cast());
@@ -71,7 +76,7 @@ Future<void> uploadImage(File imageFile) async {
 }
 
 Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var password) async {
-  final url = Uri.parse('${baseUrl}utilizador/create');
+  final url = Uri.parse('${baseUrl}utilizador/createnew');
 
   final body = json.encode({
     'ID_CENTRO': idcentro,
@@ -96,7 +101,7 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao carregar dados');
+    throw Exception(data['error']);
   }
 }
 
@@ -152,40 +157,39 @@ DateTime? selectedDate;
 
 
 ElevatedButton(onPressed: () async {
-              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-              if(pickedFile != null){
-                image = File(pickedFile.path);
-              }
-            }, child: const Text('Escolher Imagem')),
+  final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+  if(pickedFile != null){
+    image = File(pickedFile.path);
+  }
+}, child: const Text('Escolher Imagem')),
 
-            ElevatedButton(onPressed: () async {
-              final DateTime? pickedDate = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2101),
-                locale: const Locale('pt', 'PT'),
-              );
+ElevatedButton(onPressed: () async {
+  final DateTime? pickedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2101),
+    locale: const Locale('pt', 'PT'),
+  );
 
-              if(pickedDate != null && pickedDate != selectedDate){
-                selectedDate = pickedDate;
-              }
+  if(pickedDate != null && pickedDate != selectedDate){
+    selectedDate = pickedDate;
+  }
 
-              globals.data = selectedDate!;
-            }, child: const Text('Escolher Data de Nascimento')),
+  globals.data = selectedDate!;
+}, child: const Text('Escolher Data de Nascimento')),
 
-            OutlinedButton(onPressed: () async {
-              if(passController.text == confPassController.text){
-                globals.email = emailController.text;
-                globals.nome = userController.text;
-                globals.password = passController.text;
+OutlinedButton(onPressed: () async {
+  if(passController.text == confPassController.text){
+    globals.email = emailController.text;
+    globals.nome = userController.text;
+    globals.password = passController.text;
 
-                await uploadImage(image!);
+    await uploadImage(image!);
 
-                await registo(globals.idCentro, globals.nome, globals.email, globals.password, globals.imagem, globals.data);
+    await registo(globals.idCentro, globals.nome, globals.email, globals.password, globals.imagem, globals.data);
 
-                Navigator.pushNamed(context, '/areas');
-              }
-            },
-
+    Navigator.pushNamed(context, '/areas');
+  }
+},
 */
