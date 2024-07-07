@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'var.dart' as globals;
 
 var baseUrl = 'https://pintbackend-w8pt.onrender.com/';
+var localhost = 'http://localhost:3000/';
 
 Future<List<Map<String, dynamic>>> fetchAreas() async {
   final response = await http.get(Uri.parse('${baseUrl}area/listPorCentro/${globals.idCentro}'));
@@ -97,11 +98,13 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
 
   var data = jsonDecode(response.body);
 
+  print(data);
+
   if (data['success']) {
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
-    throw Exception(data['error']);
+    throw Exception('Falha ao criar novo utilizador \n ${data['error']}');
   }
 }
 

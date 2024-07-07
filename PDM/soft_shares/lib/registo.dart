@@ -179,24 +179,25 @@ class Registar extends StatelessWidget {
                 }
               } catch (e) {
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        icon: const Icon(Icons.warning),
-                        title: const Text('ERRO'),
-                        content: Text('ERROR: ${e.toString()}'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      icon: const Icon(Icons.warning),
+                      title: const Text('ERRO'),
+                      content: Text('ERROR: ${e.toString()}'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
               }
+              
             },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 153),
