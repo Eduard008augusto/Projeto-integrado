@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'var.dart' as globals;
 
 var baseUrl = 'https://pintbackend-w8pt.onrender.com/';
+var localhost = 'http://localhost:3000/';
 
 Future<List<Map<String, dynamic>>> fetchAreas() async {
   final response = await http.get(Uri.parse('${baseUrl}area/listPorCentro/${globals.idCentro}'));
@@ -21,28 +22,34 @@ Future<List<Map<String, dynamic>>> fetchAreas() async {
   }
 }
 
-Future<Map<String, dynamic>> login(String email, String password) async {
-  final url = Uri.parse('${baseUrl}utilizador/loginApp');
-  final body = json.encode({
-    'EMAIL': email,
-    'PASSWORD': password,
-  });
+Future<Map<String, dynamic>> login(String? email, String password) async {
+  try {
+    final url = Uri.parse('${baseUrl}utilizador/loginApp');
+    final body = json.encode({
+      'EMAIL': email,
+      'PASSWORD': password,
+    });
 
-  final response = await http.post(
-    url,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: body,
-  );
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    );
 
-  var data = jsonDecode(response.body);
+    var data = jsonDecode(response.body);
 
-  if (data['success']) {
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
-    return res;
-  } else {
-    throw Exception('Falha ao carregar dados');
+    print(data);
+
+    if (data['success']) {
+      Map<String, dynamic> res = Map<String, dynamic>.from(data);
+      return res;
+    } else {
+      throw Exception('Email ou palavra-passe incorreto!');
+    }
+  } catch (e) {
+    throw Exception('LOGIN ERROR: ${e.toString()}');
   }
 }
 
@@ -70,16 +77,16 @@ Future<void> uploadImage(File imageFile) async {
   }
 }
 
-Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var password, var imagem, var dataNascimento) async {
-  final url = Uri.parse('${baseUrl}utilizador/create');
+Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var password) async {
+  final url = Uri.parse('${baseUrl}utilizador/createnew');
 
   final body = json.encode({
     'ID_CENTRO': idcentro,
     'NOME': nome,
     'EMAIL': email,
     'PASSWORD': password,
-    'IMAGEMPERFIL': imagem,
-    'DATANASCIMENTO': dataNascimento.toIso8601String(),
+    //'IMAGEMPERFIL': imagem,
+    //'DATANASCIMENTO': dataNascimento.toIso8601String(),
   });
 
   final response = await http.post(
@@ -92,11 +99,13 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
 
   var data = jsonDecode(response.body);
 
+  print(data);
+
   if (data['success']) {
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao carregar dados');
+    throw Exception('Falha ao criar novo utilizador \n\n${data['error']}');
   }
 }
 
@@ -126,7 +135,7 @@ Future<Map<String, dynamic>> fetchUtilizador(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}utilizador/get/$id'));
   var data = jsonDecode(response.body);
   if(data['success']){
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
     throw Exception('Falha ao carregar dados');
@@ -137,9 +146,54 @@ Future<List<Map<String, dynamic>>> fetchSubAreas(var area) async {
   final response = await http.get(Uri.parse('${baseUrl}subArea/listPorArea/$area'));
   var data = jsonDecode(response.body);
   if(data['success']){
-    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data);
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
   } else {
     throw Exception('Falha ao carregar dados');
   }
 }
+
+
+/*
+
+File? image;
+DateTime? selectedDate;
+
+
+ElevatedButton(onPressed: () async {
+  final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+  if(pickedFile != null){
+    image = File(pickedFile.path);
+  }
+}, child: const Text('Escolher Imagem')),
+
+ElevatedButton(onPressed: () async {
+  final DateTime? pickedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2101),
+    locale: const Locale('pt', 'PT'),
+  );
+
+  if(pickedDate != null && pickedDate != selectedDate){
+    selectedDate = pickedDate;
+  }
+
+  globals.data = selectedDate!;
+}, child: const Text('Escolher Data de Nascimento')),
+
+OutlinedButton(onPressed: () async {
+  if(passController.text == confPassController.text){
+    globals.email = emailController.text;
+    globals.nome = userController.text;
+    globals.password = passController.text;
+
+    await uploadImage(image!);
+
+    await registo(globals.idCentro, globals.nome, globals.email, globals.password, globals.imagem, globals.data);
+
+    Navigator.pushNamed(context, '/areas');
+  }
+},
+*/

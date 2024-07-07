@@ -1,10 +1,7 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:soft_shares/database/server.dart';
 
 import './database/var.dart' as globals;
@@ -19,7 +16,7 @@ class Registar extends StatelessWidget {
   File? image;
   DateTime? selectedDate;
 
-  TextEditingController nomeController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController userController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController confPassController = TextEditingController();
@@ -131,64 +128,92 @@ class Registar extends StatelessWidget {
               ),
             ),
 
-            ElevatedButton(
-              onPressed: () async {
-                final pickedFile =
-                    await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (pickedFile != null) {
-                  image = File(pickedFile.path);
+            OutlinedButton(onPressed: () async {
+              try{
+                if(emailController.text.isEmpty || userController.text.isEmpty || passController.text.isEmpty || confPassController.text.isEmpty){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        icon: const Icon(Icons.warning),
+                        title: const Text('ERRO'),
+                        content: const Text('Preencha todos os campos!'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                  return;
                 }
-              },
-              child: const Text('Escolher Imagem'),
-            ),
 
-            ElevatedButton(
-              onPressed: () async {
-                final DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2101),
-                  locale: const Locale('pt', 'PT'),
-                );
-
-                if (pickedDate != null && pickedDate != selectedDate) {
-                  selectedDate = pickedDate;
-                }
-
-                globals.data = selectedDate!;
-              },
-              child: const Text('Escolher Data de Nascimento'),
-            ),
-
-            OutlinedButton(
-              onPressed: () async {
-                if (passController.text == confPassController.text) {
-                  //globals.email = emailController.text;
+                if(passController.text == confPassController.text){
+                  globals.email = emailController.text;
                   globals.nome = userController.text;
                   globals.password = passController.text;
 
-                  await uploadImage(image!);
-
-                  await registo(globals.idCentro, globals.nome, globals.email,
-                      globals.password, globals.imagem, globals.data);
+                  await registo(globals.idCentro, globals.nome, globals.email, globals.password);
 
                   Navigator.pushNamed(context, '/areas');
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        icon: const Icon(Icons.warning),
+                        title: const Text('ERRO'),
+                        content: const Text('As palavras-passes devem coincidir!'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                  return;
                 }
-              },
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 153),
-                backgroundColor: const Color.fromARGB(255, 0, 184, 224),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                side: const BorderSide(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  width: 1,
-                ),
+              } catch (e) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      icon: const Icon(Icons.warning),
+                      title: const Text('ERRO'),
+                      content: Text('ERROR: ${e.toString()}'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+              
+            },
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 153),
+              backgroundColor: const Color.fromARGB(255, 0, 184, 224),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),  
               ),
-              child: const Text('Registar'),
+              side: const BorderSide(
+                color: Color.fromARGB(255, 255, 255, 255),
+                width: 1,
+              )
             ),
           ],
         ),

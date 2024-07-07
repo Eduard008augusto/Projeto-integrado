@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, avoid_print, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:soft_shares/services/auth_service.dart';
 
 import 'database/server.dart';
 import './database/var.dart' as globals;
@@ -73,7 +74,6 @@ class Login extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Palavra-passe',
                       border: OutlineInputBorder(),
-                      //errorText: 'AAAAAAAAAAA',
                     ),
                     obscureText: true,
                   ),
@@ -94,16 +94,74 @@ class Login extends StatelessWidget {
             ),
 
             OutlinedButton(onPressed: () async {
-              try{
+              if (emailController.text.isEmpty || passController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      icon: const Icon(Icons.warning),
+                      title: const Text('ERRO'),
+                      content: const Text('Preencha todos os campos!'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+                return;
+              }
+
+              try {
                 Map<String, dynamic> data = await login(emailController.text, passController.text);
 
-                if(data['success']){
+                if (data['success']) {
                   globals.idUtilizador = data['id_utilizador'];
                   Navigator.pushNamed(context, '/areas');
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        icon: const Icon(Icons.warning),
+                        title: const Text('ERRO'),
+                        content: const Text('Login falhou! Verifique suas credenciais.'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }
               } catch (e) {
-                print(e.toString());
-              }             
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      icon: const Icon(Icons.warning),
+                      title: const Text('ERRO'),
+                      content: Text(e.toString()),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 153),
@@ -147,8 +205,51 @@ class Login extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    print('Google CLICK');
+                  onTap: () async {
+                    try {
+                      bool success = await AuthService().signInWithGoogle();
+                      if (success) {
+                        Navigator.pushNamed(context, '/areas');
+                      } else {
+                        showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            icon: const Icon(Icons.warning),
+                            title: const Text('ERRO'),
+                            content: const Text('ERRO DURANTE O LOGIN'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      }
+                    } catch (e) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            icon: const Icon(Icons.warning),
+                            title: const Text('ERRO'),
+                            content: Text('ERROR: ${e.toString()}'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                   child: SvgPicture.asset(
                     'assets/images/google.svg',
@@ -160,8 +261,51 @@ class Login extends StatelessWidget {
                 const SizedBox(width: 50,),
 
                 GestureDetector(
-                  onTap: () {
-                    print('Facebook CLICK');
+                  onTap: () async {
+                    try{
+                      bool success = await AuthService().signInWithFacebook();
+                      if(success){
+                        Navigator.pushNamed(context, '/areas');
+                      } else {
+                        showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            icon: const Icon(Icons.warning),
+                            title: const Text('ERRO'),
+                            content: const Text('ERRO DURANTE O LOGIN'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      }
+                    } catch (e) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            icon: const Icon(Icons.warning),
+                            title: const Text('ERRO'),
+                            content: Text('ERROR: ${e.toString()}'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                   child: SvgPicture.asset(
                     'assets/images/facebook.svg',
