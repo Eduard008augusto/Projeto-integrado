@@ -51,7 +51,6 @@ Future<Map<String, dynamic>> login(String email, String password) async {
   }
 }
 
-
 Future<void> uploadImage(File imageFile) async {
   var stream = http.ByteStream(imageFile.openRead().cast());
   var length = await imageFile.length();
