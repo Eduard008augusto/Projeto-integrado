@@ -198,8 +198,6 @@ class Addconteudo extends StatelessWidget {
                       globals.nome,
                       globals.email,
                       globals.password,
-                      globals.imagem,
-                      globals.data,
                     );
 
                     Navigator.pushNamed(context, '/areas');

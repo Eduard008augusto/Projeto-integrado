@@ -13,8 +13,7 @@ void main() {
 class Registar extends StatelessWidget {
   Registar({super.key});
 
-  File? image;
-  DateTime? selectedDate;
+
 
   TextEditingController emailController = TextEditingController();
   TextEditingController userController = TextEditingController();
@@ -50,7 +49,7 @@ class Registar extends StatelessWidget {
                   children: [
                     const Text('Nome'),
                     TextField(
-                      controller: nomeController,
+                      controller: userController,
                       decoration: const InputDecoration(
                         hintText: 'Nome',
                         border: OutlineInputBorder(),
@@ -200,8 +199,7 @@ class Registar extends StatelessWidget {
                     );
                   },
                 );
-              }
-              
+              }    
             },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 153),
@@ -213,7 +211,8 @@ class Registar extends StatelessWidget {
               side: const BorderSide(
                 color: Color.fromARGB(255, 255, 255, 255),
                 width: 1,
-              )
+                )
+              ),
             ),
           ],
         ),
