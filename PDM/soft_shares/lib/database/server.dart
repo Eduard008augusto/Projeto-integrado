@@ -104,7 +104,7 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao criar novo utilizador \n ${data['error']}');
+    throw Exception('Falha ao criar novo utilizador \n\n${data['error']}');
   }
 }
 
