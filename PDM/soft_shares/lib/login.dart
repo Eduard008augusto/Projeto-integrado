@@ -216,9 +216,23 @@ class Login extends StatelessWidget {
                         );
                       }
                     } catch (e) {
-                      print(e.toString());
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Erro durante o login: ${e.toString()}'))
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            icon: const Icon(Icons.warning),
+                            title: const Text('ERRO'),
+                            content: Text('ERROR: ${e.toString()}'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
                       );
                     }
                   },
