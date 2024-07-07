@@ -211,9 +211,24 @@ class Login extends StatelessWidget {
                       if (success) {
                         Navigator.pushNamed(context, '/areas');
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Erro durante o login'))
-                        );
+                        showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            icon: const Icon(Icons.warning),
+                            title: const Text('ERRO'),
+                            content: const Text('ERRO DURANTE O LOGIN'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                       }
                     } catch (e) {
                       showDialog(
@@ -246,8 +261,51 @@ class Login extends StatelessWidget {
                 const SizedBox(width: 50,),
 
                 GestureDetector(
-                  onTap: () {
-                    print('Facebook CLICK');
+                  onTap: () async {
+                    try{
+                      bool success = await AuthService().signInWithFacebook();
+                      if(success){
+                        Navigator.pushNamed(context, '/areas');
+                      } else {
+                        showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            icon: const Icon(Icons.warning),
+                            title: const Text('ERRO'),
+                            content: const Text('ERRO DURANTE O LOGIN'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      }
+                    } catch (e) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            icon: const Icon(Icons.warning),
+                            title: const Text('ERRO'),
+                            content: Text('ERROR: ${e.toString()}'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                   child: SvgPicture.asset(
                     'assets/images/facebook.svg',

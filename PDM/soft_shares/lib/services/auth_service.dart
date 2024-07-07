@@ -2,63 +2,89 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-import '../database/server.dart';
+import '../database/server.dart'; 
 import '../database/var.dart' as globals;
 
 class AuthService {
 
   // Google Sign In
   signInWithGoogle() async {
-    // begin interactive sign in process
-    try {
-      // Iniciar o processo interativo de login
+
       final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
 
       if (gUser == null) {
-        // O usuário cancelou o login
         return false;
       }
 
-      // Obter detalhes de autenticação da solicitação
       final GoogleSignInAuthentication gAuth = await gUser.authentication;
 
-      // Criar uma nova credencial para o usuário
       final credential = GoogleAuthProvider.credential(
         accessToken: gAuth.accessToken,
         idToken: gAuth.idToken,
       );
 
-      // Fazer login no Firebase com a credencial
       var result = await FirebaseAuth.instance.signInWithCredential(credential);
 
-      // Obter o usuário logado
       User? user = result.user;
 
       if (user != null) {
-        // Login bem-sucedido
-        print('User ID: ${user.uid}');
-        print('User Name: ${user.displayName}');
-        print('User Email: ${user.email}');
-        print('User Photo URL: ${user.photoURL}');
-        print('Email Verificado: ${user.emailVerified}');
-        print('Número de Telefone: ${user.phoneNumber}');
-        print('Login Anônimo: ${user.isAnonymous}');
-        print('Metadata (Criação): ${user.metadata.creationTime}');
-        print('Metadata (Último Login): ${user.metadata.lastSignInTime}');
-        print('Provedores: ${user.providerData}');
-        print('ID do Locatário: ${user.tenantId}');
-        print('Token de Atualização: ${user.refreshToken}');
+        try{
+          Map<String, dynamic> regRes = await registo(globals.idCentro, user.displayName, user.email, user.uid);
 
-        await registo(globals.idCentro, user.displayName, user.email, user.uid);
+          if(regRes['success']){
+            return true;
+          }
+        } catch (e) {
+          print(e);
 
-        return true;
+          Map<String, dynamic> logRes = await login(user.email, user.uid);
+          
+          if(logRes['success']){
+            return true;
+          }
+          else{
+            throw Exception('GOOGLE: Error durante login!');
+          }
+        }
       } else {
-        // Falha no login
         return false;
       }
-    } catch (e) {
-      throw Exception('Erro durante o login: $e');
-    }
+  }
+
+  Map _userObj = {};
+
+  signInWithFacebook() async {
+      final LoginResult result = await FacebookAuth.instance.login(permissions: ['email', 'public_profile']);
+
+      if (result.status == LoginStatus.success) {
+        final userData = await FacebookAuth.instance.getUserData();
+        _userObj = userData;
+
+        try{
+          print(_userObj["id"]);
+          print(_userObj["email"]);
+          Map<String, dynamic> regRes = await registo(globals.idCentro, _userObj["name"], _userObj["email"], _userObj["id"]);
+
+          if(regRes['success']){
+            return true;
+          }
+        } catch (e) {
+          print(_userObj["id"]);
+          print(_userObj["email"]);
+          Map<String, dynamic> logRes = await login(_userObj["email"], _userObj["id"]);
+
+          if(logRes['success']){
+            return true;
+          } else {
+            throw Exception('FACEBOOK: Error durante login!');
+          }
+        }
+      } else if (result.status == LoginStatus.cancelled) {
+        return false;
+      } else {
+        throw Exception('Erro no login com Facebook: ${result.message}');
+      }
   }
 }

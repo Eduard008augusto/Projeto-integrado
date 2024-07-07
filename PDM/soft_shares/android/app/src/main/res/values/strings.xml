@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PINT Login</string> <!-- Adicione esta linha -->
+    <string name="facebook_app_id">1168527914292966</string>
+    <string name="fb_login_protocol_scheme">fb1168527914292966</string>
+    <string name="facebook_client_token">9dff2f7183f1d6c04f40438d470f476f</string>
+</resources>

@@ -22,7 +22,7 @@ Future<List<Map<String, dynamic>>> fetchAreas() async {
   }
 }
 
-Future<Map<String, dynamic>> login(String email, String password) async {
+Future<Map<String, dynamic>> login(String? email, String password) async {
   try {
     final url = Uri.parse('${baseUrl}utilizador/loginApp');
     final body = json.encode({
@@ -40,8 +40,10 @@ Future<Map<String, dynamic>> login(String email, String password) async {
 
     var data = jsonDecode(response.body);
 
+    print(data);
+
     if (data['success']) {
-      Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
+      Map<String, dynamic> res = Map<String, dynamic>.from(data);
       return res;
     } else {
       throw Exception('Email ou palavra-passe incorreto!');
