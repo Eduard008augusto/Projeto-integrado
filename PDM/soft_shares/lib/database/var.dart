@@ -1,6 +1,6 @@
 library globals;
 
-var idCentro = 0;
+var idCentro = 1;
 var idArea = 0;
 var idSubArea = 0;
 

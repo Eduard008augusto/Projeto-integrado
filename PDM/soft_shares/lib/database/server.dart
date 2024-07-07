@@ -115,7 +115,7 @@ Future<Map<String, dynamic>> fetchPublicacao(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}conteudo/get/$id'));
   var data = jsonDecode(response.body);
   if(data['success']){
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
     throw Exception('Falha ao carregar dados');

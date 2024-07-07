@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:soft_shares/conteudo.dart';
 
 import 'login.dart';
 import 'registo.dart';
@@ -8,6 +9,7 @@ import 'feed.dart';
 import 'mapa.dart';
 import 'settings.dart';
 import 'horiscroll.dart';
+import 'add_conteudo.dart';
 
 void main() async {
   runApp(const MainApp());
@@ -22,7 +24,7 @@ class MainApp extends StatelessWidget {
       title: 'Soft Shares',
       initialRoute: '/',
       routes: {
-        '/': (context) => const Mapa(),
+        '/': (context) => const Areas(),
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),
@@ -30,6 +32,8 @@ class MainApp extends StatelessWidget {
         '/mapa': (context) => const Mapa(),
         '/settings': (context) => const SettingsPage(),
         '/scroll': (context) => const MyApp(),
+        '/conteudo': (context) => const Conteudo(),
+        '/addconteudo': (context) => Addconteudo(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

@@ -29,7 +29,7 @@ class MenuDrawer extends StatelessWidget {
             thickness: 1,
             indent: 20,
             endIndent: 20,
-            color: Color.fromARGB(255, 41, 40, 40),
+            color: Color.fromARGB(136, 41, 40, 40),
           ),
           
           ListTile(
@@ -46,7 +46,7 @@ class MenuDrawer extends StatelessWidget {
             thickness: 1,
             indent: 20,
             endIndent: 20,
-            color: Color.fromARGB(255, 41, 40, 40),
+            color: Color.fromARGB(136, 41, 40, 40),
           ),
 
           ListTile(
@@ -72,7 +72,7 @@ class MenuDrawer extends StatelessWidget {
             thickness: 1,
             indent: 20,
             endIndent: 20,
-            color: Color.fromARGB(255, 41, 40, 40),
+            color: Color.fromARGB(136, 41, 40, 40),
           ),
 
           ListTile(

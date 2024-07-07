@@ -1,7 +1,8 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
-
 import './database/var.dart' as globals;
 
 void main() {
@@ -21,7 +22,7 @@ class Feed extends StatelessWidget {
         actions: const [
           Icon(Icons.search),
           SizedBox(width: 20,),
-          Icon(Icons.calendar_month),
+          Icon(Icons.calendar_month_outlined),
           SizedBox(width: 20,),
           Icon(Icons.filter_alt_outlined),
         ],
@@ -47,101 +48,115 @@ class Feed extends StatelessWidget {
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                  child: SizedBox(
-                    height: 300,
-                    child: GestureDetector(
-                      onTap: () {
-                        /*globals.idPublicacao = publicacao['ID_CONTEUDO'];
-                        Navigator.pushNamed(context, '/publicacao');*/
-                      },
-                      child: Card(
-                        elevation: 4.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(15.0),
-                                topRight: Radius.circular(15.0),
-                              ),
-                              child: Image.network(
-                                'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: 150,
-                              ),
+                  child: GestureDetector(
+                    onTap: () {
+                      globals.idPublicacao = publicacao['ID_CONTEUDO'];
+                      Navigator.pushNamed(context, '/conteudo');
+                    },
+                    child: Card(
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(15.0),
+                              topRight: Radius.circular(15.0),
                             ),
-                            // Dados do Conteudo
-                            const SizedBox(height: 3),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Image.network(
+                              'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: 150,
+                            ),
+                          ),
+                          // Dados do Conteudo
+                          const SizedBox(height: 12), 
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Text(
+                              publicacao['NOMECONTEUDO'],
+                              style: const TextStyle(fontSize: 20.0, /*fontWeight: FontWeight.bold,*/),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(height: 6), 
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Row(
                               children: [
                                 Text(
-                                  publicacao['NOMECONTEUDO'],
-                                  style: const TextStyle(fontSize: 20.0, /*fontWeight: FontWeight.bold,*/),
+                                  '(${publicacao['totalAvaliacoes']})',
+                                  style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                 ),
-                                const SizedBox(height: 3),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '(${publicacao['totalAvaliacoes']})',
-                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    ),
-                                    const SizedBox(width: 5), //estrelas
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: List.generate(5, (rating) {
-                                        return Icon(
-                                          5 < rating ? Icons.star : Icons.star_border,
-                                          color: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
-                                        );
-                                      }),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 3),
-                                //preço
+                                const SizedBox(width: 5), 
+                                //estrelas
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
-                                  children: List.generate(3, (priceRating) {
+                                  children: List.generate(5, (rating) {
                                     return Icon(
-                                      Icons.euro,
-                                      color: 3 < priceRating
-                                          ? Colors.black
-                                          : Colors.black.withOpacity(0.3),
+                                      5 < rating ? Icons.star : Icons.star_border,
+                                      color: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
                                     );
                                   }),
                                 ),
-                                const SizedBox(height: 3),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
-                                    const SizedBox(width: 3), 
-                                    Text(
-                                      publicacao['MORADA'],
-                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 3),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
-                                    const SizedBox(width: 3), 
-                                    Text(
-                                      publicacao['TELEFONE'],
-                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 3),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 6), 
+                          
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: List.generate(3, (priceRating) {
+                                return Icon(
+                                  Icons.euro,
+                                  color: 3 < priceRating
+                                      ? Colors.black
+                                      : Colors.black.withOpacity(0.3),
+                                );
+                              }),
+                            ),
+                          ),
+                          const SizedBox(height: 6), 
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                const SizedBox(width: 3), 
+                                Expanded(
+                                  child: Text(
+                                    publicacao['MORADA'],
+                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 6), 
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                const SizedBox(width: 3), 
+                                Text(
+                                  publicacao['TELEFONE'],
+                                  style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 12), 
+                        ],
                       ),
                     ),
                   ),
@@ -153,7 +168,7 @@ class Feed extends StatelessWidget {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, '/scroll'); 
+          Navigator.pushNamed(context, '/addconteudo'); 
         },
         child: Container(
           width: 56.0,

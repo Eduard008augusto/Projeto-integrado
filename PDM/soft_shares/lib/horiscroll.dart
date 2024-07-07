@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:soft_shares/database/server.dart';
 void main() {
   runApp(const MyApp());
 }
