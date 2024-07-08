@@ -10,7 +10,6 @@ import 'areas.dart';
 import 'feed.dart';
 import 'mapa.dart';
 import 'settings.dart';
-import 'horiscroll.dart';
 import 'add_conteudo.dart';
 import 'perfil.dart';
 
@@ -39,7 +38,6 @@ class MainApp extends StatelessWidget {
         '/feed': (context) => const Feed(),
         '/mapa': (context) => const Mapa(),
         '/settings': (context) => const SettingsPage(),
-        '/scroll': (context) => const MyApp(),
         '/conteudo': (context) => const Conteudo(),
         '/addconteudo': (context) => Addconteudo(),
       },
