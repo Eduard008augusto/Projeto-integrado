@@ -22,6 +22,7 @@ dependencies:
   firebase_core:
   flutter_facebook_auth:
   url_launcher:
+  flutter_rating_bar:
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,5 @@
-// ignore_for_file: unused_import
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('ListView Horizontal com PNG, Star Rating e Euro Rating'),
+          title: const Text(''),
         ),
         body: const Column(
           children: [
@@ -26,13 +26,13 @@ class MyApp extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Center(
-                child: StarRating(rating: 4), 
+                child: CustomStarRating(rating: 4), 
               ),
             ),
             Expanded(
               flex: 1,
               child: Center(
-                child: EuroRating(rating: 2),
+                child: CustomEuroRating(rating: 2),
               ),
             ),
           ],
@@ -125,42 +125,53 @@ class HorizontalListView extends StatelessWidget {
   }
 }
 
-class StarRating extends StatelessWidget {
-  final int rating;
+class CustomStarRating extends StatelessWidget {
+  final double rating;
 
-  const StarRating({required this.rating, super.key});
+  const CustomStarRating({required this.rating, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(5, (index) {
-        return Icon(
-          index < rating ? Icons.star : Icons.star_border,
-          color: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
-        );
-      }),
+    return RatingBar.builder(
+      initialRating: rating,
+      minRating: 1,
+      direction: Axis.horizontal,
+      allowHalfRating: true,
+      itemCount: 5,
+      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+      itemBuilder: (context, _) => const Icon(
+        Icons.star,
+        color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+      ),
+      unratedColor: Colors.grey.withOpacity(0.5),
+      onRatingUpdate: (rating) {
+        print(rating);
+      },
     );
   }
 }
 
-class EuroRating extends StatelessWidget {
+class CustomEuroRating extends StatelessWidget {
   final int rating;
 
-  const EuroRating({required this.rating, super.key});
+  const CustomEuroRating({required this.rating, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(3, (index) {
-        return Icon(
-          Icons.euro,
-          color: index < rating
-              ? Colors.black
-              : Colors.black.withOpacity(0.3),
-        );
-      }),
+    return RatingBar.builder(
+      initialRating: rating.toDouble(),
+      minRating: 1,
+      direction: Axis.horizontal,
+      itemCount: 3,
+      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+      itemBuilder: (context, _) => const Icon(
+        Icons.euro,
+        color: Colors.black,
+      ),
+      unratedColor: Colors.black.withOpacity(0.3),
+      onRatingUpdate: (rating) {
+        print(rating);
+      },
     );
   }
 }
