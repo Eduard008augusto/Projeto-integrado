@@ -1,11 +1,9 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'package:url_launcher/url_launcher_string.dart';
 import './database/var.dart' as globals;
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -30,40 +28,24 @@ class Conteudo extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
-                  'Criar',
+                  'Classificação Geral',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(5, (index) {
-                    return IconButton(
-                      icon: const Icon(Icons.star_border),
-                      onPressed: () {},
-                    );
-                  }),
-                ),
+                const CustomStarRating(rating: 4),
                 const SizedBox(height: 16),
                 const Text(
-                  'Preço',
+                  'Classificação do Preço',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(3, (index) {
-                    return IconButton(
-                      icon: const Icon(Icons.euro_symbol),
-                      onPressed: () {},
-                    );
-                  }),
-                ),
+                const CustomEuroRating(rating: 2),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
@@ -83,8 +65,8 @@ class Conteudo extends StatelessWidget {
     final query = Uri.encodeComponent(address);
     final googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=$query';
 
-    if (await canLaunch(googleMapsUrl)) {
-      await launch(googleMapsUrl);
+    if (await canLaunchUrlString(googleMapsUrl)) {
+      await launchUrlString(googleMapsUrl);
     } else {
       throw 'Could not launch $googleMapsUrl';
     }
@@ -131,7 +113,7 @@ class Conteudo extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 200, // Definindo altura fixa para a imagem
+                          height: 200,
                           child: Stack(
                             children: [
                               ClipRRect(
@@ -381,6 +363,7 @@ class FavoriteButton extends StatefulWidget {
   const FavoriteButton({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _FavoriteButtonState createState() => _FavoriteButtonState();
 }
 
@@ -399,6 +382,57 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         setState(() {
           isFavorite = !isFavorite;
         });
+      },
+    );
+  }
+}
+
+class CustomStarRating extends StatelessWidget {
+  final double rating;
+
+  const CustomStarRating({required this.rating, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return RatingBar.builder(
+      initialRating: rating,
+      minRating: 1,
+      direction: Axis.horizontal,
+      allowHalfRating: true,
+      itemCount: 5,
+      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+      itemBuilder: (context, _) => const Icon(
+        Icons.star,
+        color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+      ),
+      unratedColor: Colors.grey.withOpacity(0.5),
+      onRatingUpdate: (rating) {
+        print(rating);
+      },
+    );
+  }
+}
+
+class CustomEuroRating extends StatelessWidget {
+  final int rating;
+
+  const CustomEuroRating({required this.rating, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return RatingBar.builder(
+      initialRating: rating.toDouble(),
+      minRating: 1,
+      direction: Axis.horizontal,
+      itemCount: 3,
+      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+      itemBuilder: (context, _) => const Icon(
+        Icons.euro,
+        color: Colors.black,
+      ),
+      unratedColor: Colors.black.withOpacity(0.3),
+      onRatingUpdate: (rating) {
+        print(rating);
       },
     );
   }
