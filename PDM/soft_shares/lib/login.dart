@@ -144,14 +144,14 @@ class Login extends StatelessWidget {
                     },
                   );
                 }
-              } catch (e, stackTrace) {
+              } catch (e) {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
                       icon: const Icon(Icons.warning),
                       title: const Text('ERRO'),
-                      content: Text(e.toString() + '\n' + stackTrace.toString()),
+                      content: Text(e.toString()),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {
