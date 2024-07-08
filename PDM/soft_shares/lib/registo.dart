@@ -13,8 +13,6 @@ void main() {
 class Registar extends StatelessWidget {
   Registar({super.key});
 
-
-
   TextEditingController emailController = TextEditingController();
   TextEditingController userController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -72,7 +70,7 @@ class Registar extends StatelessWidget {
                   children: [
                     const Text('Telefone'), // Alteração aqui para 'Telefone'
                     TextField(
-                      controller: userController,
+                      controller: emailController, // Correção para utilizar o controlador de telefone
                       decoration: const InputDecoration(
                         hintText: 'Telefone',
                         border: OutlineInputBorder(),
@@ -127,92 +125,101 @@ class Registar extends StatelessWidget {
               ),
             ),
 
-            OutlinedButton(onPressed: () async {
-              try{
-                if(emailController.text.isEmpty || userController.text.isEmpty || passController.text.isEmpty || confPassController.text.isEmpty){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        icon: const Icon(Icons.warning),
-                        title: const Text('ERRO'),
-                        content: const Text('Preencha todos os campos!'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                  return;
-                }
+            const SizedBox(
+              height: 20,
+            ),
 
-                if(passController.text == confPassController.text){
-                  globals.email = emailController.text;
-                  globals.nome = userController.text;
-                  globals.password = passController.text;
-
-                  await registo(globals.idCentro, globals.nome, globals.email, globals.password);
-
-                  Navigator.pushNamed(context, '/areas');
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        icon: const Icon(Icons.warning),
-                        title: const Text('ERRO'),
-                        content: const Text('As palavras-passes devem coincidir!'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                  return;
-                }
-              } catch (e) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      icon: const Icon(Icons.warning),
-                      title: const Text('ERRO'),
-                      content: Text('ERROR: ${e.toString()}'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('OK'),
-                        ),
-                      ],
+            OutlinedButton(
+              onPressed: () async {
+                try {
+                  if (emailController.text.isEmpty ||
+                      userController.text.isEmpty ||
+                      passController.text.isEmpty ||
+                      confPassController.text.isEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          icon: const Icon(Icons.warning),
+                          title: const Text('ERRO'),
+                          content: const Text('Preencha todos os campos!'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
                     );
-                  },
-                );
-              }    
-            },
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 153),
-              backgroundColor: const Color.fromARGB(255, 0, 184, 224),
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),  
+                    return;
+                  }
+
+                  if (passController.text == confPassController.text) {
+                    globals.email = emailController.text;
+                    globals.nome = userController.text;
+                    globals.password = passController.text;
+
+                    await registo(globals.idCentro, globals.nome, globals.email, globals.password);
+
+                    Navigator.pushNamed(context, '/areas');
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          icon: const Icon(Icons.warning),
+                          title: const Text('ERRO'),
+                          content: const Text('As palavras-passes devem coincidir!'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    return;
+                  }
+                } catch (e) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        icon: const Icon(Icons.warning),
+                        title: const Text('ERRO'),
+                        content: Text('ERROR: ${e.toString()}'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 153),
+                backgroundColor: const Color.fromARGB(255, 0, 184, 224),
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                side: const BorderSide(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  width: 1,
+                ),
               ),
-              side: const BorderSide(
-                color: Color.fromARGB(255, 255, 255, 255),
-                width: 1,
-                )
-              ),
+              child: const Text('Registrar'),
             ),
           ],
         ),

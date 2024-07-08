@@ -168,7 +168,7 @@ class Feed extends StatelessWidget {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, '/addconteudo'); 
+          Navigator.pushNamed(context, /*'/scroll'*/'/addconteudo'); 
         },
         child: Container(
           width: 56.0,

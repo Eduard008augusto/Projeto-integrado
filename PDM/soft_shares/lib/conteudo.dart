@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import './database/var.dart' as globals;
 
@@ -29,7 +30,7 @@ class Conteudo extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
-                  'Classificar',
+                  'Criar',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -76,6 +77,17 @@ class Conteudo extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> _launchGoogleMaps(String address) async {
+    final query = Uri.encodeComponent(address);
+    final googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=$query';
+
+    if (await canLaunch(googleMapsUrl)) {
+      await launch(googleMapsUrl);
+    } else {
+      throw 'Could not launch $googleMapsUrl';
+    }
   }
 
   @override
@@ -332,24 +344,24 @@ class Conteudo extends StatelessWidget {
                       children: [
                         ElevatedButton.icon(
                           onPressed: () {
-                            // Lógica para ação do botão "Direções"
+                            _launchGoogleMaps(publicacao['MORADA']);
                           },
                           icon: const Icon(Icons.directions, color: Colors.white,),
                           label: const Text('Direções'),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), // Cor de fundo
-                            foregroundColor: Colors.white // Cor do texto
+                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                            foregroundColor: Colors.white 
                           ),
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            _showRatingDialog(context); // Chama o diálogo de classificação
+                            _showRatingDialog(context); 
                           },
                           icon: const Icon(Icons.star, color: Colors.white),
                           label: const Text('Classificar'),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), // Cor de fundo
-                            foregroundColor: Colors.white, // Cor do texto
+                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                            foregroundColor: Colors.white, 
                           ),
                         ),
                       ],
