@@ -21,6 +21,7 @@ dependencies:
   google_sign_in:
   firebase_core:
   flutter_facebook_auth:
+  url_launcher:
 
 dev_dependencies:
   flutter_test:
