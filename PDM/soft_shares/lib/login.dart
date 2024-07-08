@@ -95,6 +95,8 @@ class Login extends StatelessWidget {
               ),
             ),*/
 
+            const SizedBox(height: 20.0,),
+
             OutlinedButton(onPressed: () async {
               if (emailController.text.isEmpty || passController.text.isEmpty) {
                 showDialog(

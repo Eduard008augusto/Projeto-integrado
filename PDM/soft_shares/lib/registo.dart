@@ -125,6 +125,8 @@ class Registar extends StatelessWidget {
               ),
             ),
 
+            const SizedBox(height: 20.0,),
+
             OutlinedButton(
               onPressed: () async {
                 try{
