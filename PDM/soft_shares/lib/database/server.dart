@@ -2,6 +2,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'dart:convert';
@@ -165,11 +166,45 @@ Future<List<Map<String, dynamic>>> fetchSubAreas(var area) async {
   }
 }
 
+Future<Map<String, dynamic>> createPublicacao(var centro, var area, var subarea, var user, var nome, var morada, var horario, var telefone, var imagem, var website, var acessibilidade) async {
+  final url = Uri.parse('${baseUrl}conteudo/create');
+
+  final body = json.encode({
+    'ID_CENTRO': centro,
+    'ID_AREA': area,
+    'ID_SUBAREA': subarea,
+    'ID_UTILIZADOR': user,
+    'NOMECONTEUDO': nome,
+    'MORADA': morada,
+    'HORARIO': horario,
+    'TELEFONE': telefone,
+    'IMAGEMCONTEUDO': imagem,
+    'WEBSITE': website,
+    'ACESSIBILIDADE': acessibilidade
+  });
+
+  final response = await http.post(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body,
+  );
+
+  var data = jsonDecode(response.body);
+
+  print(data);
+
+  if (data['success']) {
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao criar nova publicação \n\n${data['error']}');
+  }
+}
+
 
 // FUNÇÃO UPDATE USER
-// FUNÇÃO CRIAR PUBLICAÇÃO
-
-
 /*
 
 File? image;
