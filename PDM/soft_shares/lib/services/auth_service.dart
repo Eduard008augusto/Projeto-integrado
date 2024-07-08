@@ -43,7 +43,7 @@ class AuthService {
           Map<String, dynamic> logRes = await login(user.email!, user.uid);
           
           if(logRes['success']){
-            globals.idUtilizador = logRes['ID_UTILIZADOR'];
+            globals.idUtilizador = logRes['id_utilizador'];
             return true;
           }
           else{
@@ -79,7 +79,7 @@ class AuthService {
           Map<String, dynamic> logRes = await login(_userObj["email"], _userObj["id"]);
 
           if(logRes['success']){
-            globals.idUtilizador = logRes['ID_UTILIZADOR'];
+            globals.idUtilizador = logRes['id_utilizador'];
             return true;
           } else {
             throw Exception('FACEBOOK: Error durante login!');

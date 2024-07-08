@@ -202,6 +202,8 @@ Future<Map<String, dynamic>> createPublicacao(var centro, var area, var subarea,
   }
 }
 
+//Future<void> updateUser()
+
 
 // FUNÇÃO UPDATE USER
 /*

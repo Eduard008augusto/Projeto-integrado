@@ -210,6 +210,7 @@ class Login extends StatelessWidget {
                   onTap: () async {
                     try {
                       bool success = await AuthService().signInWithGoogle();
+                      print(success);
                       if (success) {
                         Navigator.pushNamed(context, '/areas');
                       } else {
@@ -232,14 +233,14 @@ class Login extends StatelessWidget {
                         },
                       );
                       }
-                    } catch (e) {
+                    } catch (e, stackTrace) {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             icon: const Icon(Icons.warning),
                             title: const Text('ERRO'),
-                            content: Text('ERROR: ${e.toString()}'),
+                            content: Text('ERROR: ${e.toString()}\n\n${stackTrace.toString()}'),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
