@@ -13,8 +13,6 @@ void main() {
 class Registar extends StatelessWidget {
   Registar({super.key});
 
-
-
   TextEditingController emailController = TextEditingController();
   TextEditingController userController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -70,11 +68,11 @@ class Registar extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Telefone'), // Alteração aqui para 'Telefone'
+                    const Text('Email'),
                     TextField(
-                      controller: userController,
+                      controller: emailController,
                       decoration: const InputDecoration(
-                        hintText: 'Telefone',
+                        hintText: 'Email',
                         border: OutlineInputBorder(),
                       ),
                     ),

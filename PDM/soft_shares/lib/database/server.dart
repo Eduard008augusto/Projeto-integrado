@@ -165,6 +165,10 @@ Future<List<Map<String, dynamic>>> fetchSubAreas(var area) async {
 }
 
 
+// FUNÇÃO UPDATE USER
+// FUNÇÃO CRIAR PUBLICAÇÃO
+
+
 /*
 
 File? image;
