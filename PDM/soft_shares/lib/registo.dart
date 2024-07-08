@@ -125,17 +125,10 @@ class Registar extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(
-              height: 20,
-            ),
-
             OutlinedButton(
               onPressed: () async {
-                try {
-                  if (emailController.text.isEmpty ||
-                      userController.text.isEmpty ||
-                      passController.text.isEmpty ||
-                      confPassController.text.isEmpty) {
+                try{
+                  if(emailController.text.isEmpty || userController.text.isEmpty || passController.text.isEmpty || confPassController.text.isEmpty){
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -157,7 +150,7 @@ class Registar extends StatelessWidget {
                     return;
                   }
 
-                  if (passController.text == confPassController.text) {
+                  if(passController.text == confPassController.text){
                     globals.email = emailController.text;
                     globals.nome = userController.text;
                     globals.password = passController.text;
@@ -205,21 +198,21 @@ class Registar extends StatelessWidget {
                       );
                     },
                   );
-                }
+                }    
               },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 153),
                 backgroundColor: const Color.fromARGB(255, 0, 184, 224),
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(4),  
                 ),
                 side: const BorderSide(
                   color: Color.fromARGB(255, 255, 255, 255),
                   width: 1,
-                ),
+                )
               ),
-              child: const Text('Registrar'),
+              child: const Text('Registar'),
             ),
           ],
         ),

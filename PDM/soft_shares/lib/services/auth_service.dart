@@ -34,6 +34,7 @@ class AuthService {
           Map<String, dynamic> regRes = await registo(globals.idCentro, user.displayName, user.email, user.uid);
 
           if(regRes['success']){
+            globals.idUtilizador = regRes['ID_UTILIZADOR'];
             return true;
           }
         } catch (e) {
@@ -42,6 +43,7 @@ class AuthService {
           Map<String, dynamic> logRes = await login(user.email, user.uid);
           
           if(logRes['success']){
+            globals.idUtilizador = logRes['ID_UTILIZADOR'];
             return true;
           }
           else{
@@ -68,6 +70,7 @@ class AuthService {
           Map<String, dynamic> regRes = await registo(globals.idCentro, _userObj["name"], _userObj["email"], _userObj["id"]);
 
           if(regRes['success']){
+            globals.idUtilizador = regRes['ID_UTILIZADOR'];
             return true;
           }
         } catch (e) {
@@ -76,6 +79,7 @@ class AuthService {
           Map<String, dynamic> logRes = await login(_userObj["email"], _userObj["id"]);
 
           if(logRes['success']){
+            globals.idUtilizador = logRes['ID_UTILIZADOR'];
             return true;
           } else {
             throw Exception('FACEBOOK: Error durante login!');

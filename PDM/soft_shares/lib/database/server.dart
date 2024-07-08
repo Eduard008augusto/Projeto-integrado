@@ -131,6 +131,17 @@ Future<Map<String, dynamic>> fetchPublicacao(var id) async {
   }
 }
 
+Future<List<Map<String, dynamic>>> fetchPublicacaoUser(var id) async {
+  final response = await http.get(Uri.parse('${baseUrl}conteudo/listPorUtilizador/$id'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
 Future<Map<String, dynamic>> fetchUtilizador(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}utilizador/get/$id'));
   var data = jsonDecode(response.body);

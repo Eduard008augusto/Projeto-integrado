@@ -120,7 +120,7 @@ class Login extends StatelessWidget {
                 Map<String, dynamic> data = await login(emailController.text, passController.text);
 
                 if (data['success']) {
-                  globals.idUtilizador = data['id_utilizador'];
+                  globals.idUtilizador = data['ID_UTILIZADOR'];
                   Navigator.pushNamed(context, '/areas');
                 } else {
                   showDialog(
