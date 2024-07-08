@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:soft_shares/firebase_options.dart';
-import 'package:soft_shares/conteudo.dart';
+import './services/firebase_options.dart';
 
+import 'conteudo.dart';
 import 'login.dart';
 import 'registo.dart';
 import 'areas.dart';
@@ -12,6 +12,7 @@ import 'mapa.dart';
 import 'settings.dart';
 import 'horiscroll.dart';
 import 'add_conteudo.dart';
+import 'perfil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,7 @@ class MainApp extends StatelessWidget {
       title: 'Soft Shares',
       initialRoute: '/',
       routes: {
-        '/': (context) => const Areas(),
+        '/': (context) => const Perfil(),
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),
