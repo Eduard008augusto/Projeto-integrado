@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:soft_shares/services/auth_service.dart';
 
+
 import 'database/server.dart';
 import './database/var.dart' as globals;
+import './services/token_service.dart';
 
 void main() {
   runApp(Login());
@@ -81,7 +83,7 @@ class Login extends StatelessWidget {
               )
             ),
 
-            Container(
+            /*Container(
               margin: const EdgeInsets.only(right: 16.0, bottom: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -91,7 +93,7 @@ class Login extends StatelessWidget {
                   }, child: const Text('Esqueci-me da palavra-passe')),
                 ],
               ),
-            ),
+            ),*/
 
             OutlinedButton(onPressed: () async {
               if (emailController.text.isEmpty || passController.text.isEmpty) {
@@ -123,7 +125,8 @@ class Login extends StatelessWidget {
 
                 if (data['success']) {
                   globals.idUtilizador = data['id_utilizador'];
-                  Navigator.pushNamed(context, '/areas');
+                  await TokenManager().storeToken(data['token']);
+                  Navigator.pushReplacementNamed(context, '/mapa');
                 } else {
                   showDialog(
                     context: context,
@@ -212,7 +215,7 @@ class Login extends StatelessWidget {
                       bool success = await AuthService().signInWithGoogle();
                       print(success);
                       if (success) {
-                        Navigator.pushNamed(context, '/areas');
+                        Navigator.pushReplacementNamed(context, '/mapa');
                       } else {
                         showDialog(
                         context: context,
@@ -268,7 +271,7 @@ class Login extends StatelessWidget {
                     try{
                       bool success = await AuthService().signInWithFacebook();
                       if(success){
-                        Navigator.pushNamed(context, '/areas');
+                        Navigator.pushReplacementNamed(context, '/mapa');
                       } else {
                         showDialog(
                         context: context,

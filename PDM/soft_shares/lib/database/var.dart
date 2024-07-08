@@ -10,6 +10,8 @@ var idPublicacao = 0;
 
 var nomArea = '';
 
+String? token = '';
+
 // Registo USER
 var nome = '';
 var email = '';

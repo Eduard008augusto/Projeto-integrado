@@ -157,7 +157,7 @@ class Registar extends StatelessWidget {
 
                     await registo(globals.idCentro, globals.nome, globals.email, globals.password);
 
-                    Navigator.pushNamed(context, '/areas');
+                    Navigator.pushReplacementNamed(context, '/login');
                   } else {
                     showDialog(
                       context: context,

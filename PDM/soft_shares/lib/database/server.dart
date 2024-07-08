@@ -26,7 +26,6 @@ Future<Map<String, dynamic>> login(String email, String password) async {
   try {
     final url = Uri.parse('${baseUrl}utilizador/loginApp');
     final body = json.encode({
-      //'ID_CENTRO': globals.idCentro,
       'EMAIL': email,
       'PASSWORD': password,
     });
