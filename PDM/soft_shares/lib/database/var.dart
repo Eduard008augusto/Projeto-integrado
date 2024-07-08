@@ -8,6 +8,7 @@ var idUtilizador = 1;
 
 var idPublicacao = 0;
 
+var nomArea = '';
 
 // Registo USER
 var nome = '';
@@ -17,4 +18,11 @@ var imagem = '';
 DateTime data = DateTime.now();
 
 
-var nomArea = '';
+// Criar Publicação
+var nomeP = '';
+var moradaP = '';
+var horarioP = '';
+var telefoneP = 0;
+var imagemP = '';
+var websiteP = '';
+var acessibilidadeP = '';
