@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;

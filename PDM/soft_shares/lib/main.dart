@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import './services/firebase_options.dart';
 
+import './database/var.dart' as globals;
 import 'conteudo.dart';
 import 'login.dart';
 import 'registo.dart';
@@ -11,13 +12,17 @@ import 'feed.dart';
 import 'mapa.dart';
 import 'settings.dart';
 import 'add_conteudo.dart';
-import 'perfil.dart';
+//import 'perfil.dart';
+import 'services/token_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  globals.token = await TokenManager().getToken();
+  
   runApp(const MainApp());
 }
 
@@ -31,7 +36,7 @@ class MainApp extends StatelessWidget {
       title: 'Soft Shares',
       initialRoute: '/',
       routes: {
-        '/': (context) => const Perfil(),
+        '/': (context) => globals.token == null ? Login() : const Mapa(),
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),

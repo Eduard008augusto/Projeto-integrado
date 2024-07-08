@@ -1,5 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import './services/token_service.dart';
 
 void main() {
   runApp(const MenuDrawer());
@@ -21,7 +25,7 @@ class MenuDrawer extends StatelessWidget {
               'NOME DO UTILIZADOR',
               style: TextStyle(fontSize: 18.0),
             ),
-            onTap: () { Navigator.pushNamed(context, '/'); },
+            onTap: () { Navigator.pushNamed(context, '/perfil'); },
           ),
           
           const Divider(
@@ -35,7 +39,7 @@ class MenuDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.home_outlined, size: 30.0,),
             title: const Text(
-              'Centro Selecionado',
+              'Mapa dos Centros',
               style: TextStyle(fontSize: 18.0),
             ),
             onTap: () { Navigator.pushNamed(context, '/mapa'); },
@@ -99,7 +103,34 @@ class MenuDrawer extends StatelessWidget {
               'Terminar Sessão',
               style: TextStyle(fontSize: 18.0),
             ),
-            onTap: () { Navigator.pushNamed(context, '/login'); },
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    icon: const Icon(Icons.info),
+                    title: const Text('Deseja terminar sessão?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Cancelar'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          await TokenManager().logout();
+                          Navigator.pushReplacementNamed(context, '/login');
+                        },
+                        child: const Text('Confirmar'),
+                      ),
+                    ],
+                  );
+                },
+              );
+
+              
+            },
           ),
 
           Expanded(

@@ -6,6 +6,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 import '../database/server.dart'; 
 import '../database/var.dart' as globals;
+import 'token_service.dart';
 
 class AuthService {
 
@@ -43,7 +44,8 @@ class AuthService {
           Map<String, dynamic> logRes = await login(user.email!, user.uid);
           
           if(logRes['success']){
-            globals.idUtilizador = logRes['ID_UTILIZADOR'];
+            globals.idUtilizador = logRes['id_utilizador'];
+            await TokenManager().storeToken(logRes['token']);
             return true;
           }
           else{
@@ -79,7 +81,8 @@ class AuthService {
           Map<String, dynamic> logRes = await login(_userObj["email"], _userObj["id"]);
 
           if(logRes['success']){
-            globals.idUtilizador = logRes['ID_UTILIZADOR'];
+            globals.idUtilizador = logRes['id_utilizador'];
+            await TokenManager().storeToken(logRes['token']);
             return true;
           } else {
             throw Exception('FACEBOOK: Error durante login!');
