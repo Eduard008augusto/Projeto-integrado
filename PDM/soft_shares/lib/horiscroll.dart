@@ -79,7 +79,7 @@ class HorizontalListView extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: items.map((item) {
-                    return Container(
+                    return SizedBox(
                       width: MediaQuery.of(context).size.width / items.length,
                       child: Column(
                         children: [
