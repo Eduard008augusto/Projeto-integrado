@@ -10,7 +10,7 @@ class AtualizarPerfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ,
+      appBar: AppBar(),
     );
   }
 }

@@ -40,7 +40,7 @@ class AuthService {
         } catch (e) {
           print(e);
 
-          Map<String, dynamic> logRes = await login(user.email, user.uid);
+          Map<String, dynamic> logRes = await login(user.email!, user.uid);
           
           if(logRes['success']){
             globals.idUtilizador = logRes['ID_UTILIZADOR'];
