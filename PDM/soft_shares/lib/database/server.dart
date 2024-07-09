@@ -85,8 +85,6 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
     'NOME': nome,
     'EMAIL': email,
     'PASSWORD': password,
-    //'IMAGEMPERFIL': imagem,
-    //'DATANASCIMENTO': dataNascimento.toIso8601String(),
   });
 
   final response = await http.post(
@@ -197,16 +195,43 @@ Future<Map<String, dynamic>> createPublicacao(var centro, var area, var subarea,
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao criar nova publicação \n\n${data['error']}');
+    throw Exception('Falha ao criar nova publicação\n\n${data['error']}');
   }
 }
 
-//Future<void> updateUser()
+
+Future<Map<String, dynamic>> updateUser(var id, var nome, var desc, var morada, DateTime dataNascimento, var telefone, var imagem) async {
+  final url = Uri.parse('${baseUrl}utilizador/update/$id');
+
+  final body = json.encode({
+    'NOME': nome,
+    'DESCRICAO': desc,
+    'MORADA': morada,
+    'DATANASCIMENTO': dataNascimento.toIso8601String(),
+    'TELEFONE': telefone,
+    'IMAGEM': imagem,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body,
+  );
+
+  var data = jsonDecode(response.body);
+
+  if(data['success']){
+    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    return res;
+  } else {
+    throw Exception('Falha ao atualizar utilizador!\n\n${data['error']}');
+  }
+}
 
 
-// FUNÇÃO UPDATE USER
 /*
-
 File? image;
 DateTime? selectedDate;
 

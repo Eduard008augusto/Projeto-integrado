@@ -12,13 +12,14 @@ var nomArea = '';
 
 String? token = '';
 
+var imagem = '';
+
 // Registo USER
 var idCentroUSER = 1;
 
 var nome = '';
 var email = '';
 var password = '';
-var imagem = '';
 DateTime data = DateTime.now();
 
 
@@ -27,6 +28,5 @@ var nomeP = '';
 var moradaP = '';
 var horarioP = '';
 var telefoneP = 0;
-var imagemP = '';
 var websiteP = '';
 var acessibilidadeP = '';

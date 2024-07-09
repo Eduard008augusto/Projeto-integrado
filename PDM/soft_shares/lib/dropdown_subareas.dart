@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
@@ -46,6 +48,9 @@ class _DropdownListViewState extends State<DropdownListView> {
             isExpanded: true,
             items: items.map((item) {
               return DropdownMenuItem<String>(
+                onTap: (){
+                  globals.idSubArea = item['ID_SUBAREA'];
+                },
                 value: item['NOME'],
                 child: Row(
                   children: [
