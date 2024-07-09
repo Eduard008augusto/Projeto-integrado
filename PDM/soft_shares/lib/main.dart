@@ -12,7 +12,7 @@ import 'feed.dart';
 import 'mapa.dart';
 import 'settings.dart';
 import 'add_conteudo.dart';
-//import 'perfil.dart';
+import 'perfil.dart';
 import 'services/token_service.dart';
 
 void main() async {
@@ -45,6 +45,7 @@ class MainApp extends StatelessWidget {
         '/settings': (context) => const SettingsPage(),
         '/conteudo': (context) => const Conteudo(),
         '/addconteudo': (context) => Addconteudo(),
+        '/perfil': (context) =>Perfil(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

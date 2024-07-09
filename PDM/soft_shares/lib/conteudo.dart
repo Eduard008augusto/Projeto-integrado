@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
@@ -37,7 +35,7 @@ class Conteudo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const CustomStarRating(rating: 4),
+                const CustomStarRating(rating: 4.0), // Ajuste para número
                 const SizedBox(height: 16),
                 const Text(
                   'Classificação do Preço',
@@ -106,6 +104,10 @@ class Conteudo extends StatelessWidget {
             if (publicacao.isEmpty) {
               return const Center(child: Text('Nenhuma publicação encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
             }
+            double rating = publicacao['mediaAvaliacoesGerais']?.toDouble() ?? 0.0;
+            int priceRating = publicacao['mediaAvaliacoesPreco'] ?? 0;
+            int totalAvaliacoes = publicacao['totalAvaliacoes']?.toInt() ?? 0;
+
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -173,21 +175,13 @@ class Conteudo extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      '(${publicacao['totalAvaliacoes']})',
+                                      '($totalAvaliacoes)',
                                       style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                     ),
                                     const SizedBox(width: 5),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: List.generate(5, (rating) {
-                                        return Icon(
-                                          5 < rating ? Icons.star : Icons.star_border,
-                                          color: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
-                                        );
-                                      }),
-                                    ),
+                                    CustomStarRating(rating: rating),
                                   ],
                                 ),
                               ],
@@ -195,10 +189,10 @@ class Conteudo extends StatelessWidget {
                             const SizedBox(height: 10),
                             Row(
                               mainAxisSize: MainAxisSize.min,
-                              children: List.generate(3, (priceRating) {
+                              children: List.generate(3, (index) {
                                 return Icon(
                                   Icons.euro,
-                                  color: 3 < priceRating
+                                  color: index < priceRating
                                       ? Colors.black
                                       : Colors.black.withOpacity(0.3),
                                 );
@@ -365,7 +359,6 @@ class FavoriteButton extends StatefulWidget {
   const FavoriteButton({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _FavoriteButtonState createState() => _FavoriteButtonState();
 }
 
@@ -400,8 +393,8 @@ class CustomStarRating extends StatelessWidget {
       initialRating: rating,
       minRating: 1,
       direction: Axis.horizontal,
-      allowHalfRating: true,
       itemCount: 5,
+      itemSize: 20.0,
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
       itemBuilder: (context, _) => const Icon(
         Icons.star,
@@ -427,6 +420,7 @@ class CustomEuroRating extends StatelessWidget {
       minRating: 1,
       direction: Axis.horizontal,
       itemCount: 3,
+      itemSize: 20.0,
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
       itemBuilder: (context, _) => const Icon(
         Icons.euro,
