@@ -4,14 +4,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:soft_shares/drawer.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'dropdown_subareas.dart';
+import 'image_picker_page.dart'; // Import the new ImagePickerPage
 
 void main() {
   runApp(Addconteudo());
 }
 
-class Addconteudo extends StatelessWidget {
-  Addconteudo({super.key});
+class Addconteudo extends StatefulWidget {
+  @override
+  _AddconteudoState createState() => _AddconteudoState();
+}
 
+class _AddconteudoState extends State<Addconteudo> {
   File? image;
   DateTime? selectedDate;
 
@@ -62,11 +66,18 @@ class Addconteudo extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                             child: GestureDetector(
-                              onTap: () async {
-                                final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-                                if (pickedFile != null) {
-                                  image = File(pickedFile.path);
-                                }
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ImagePickerPage(
+                                      onImagePicked: (File? pickedImage) {
+                                        setState(() {
+                                          image = pickedImage;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                );
                               },
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -74,11 +85,18 @@ class Addconteudo extends StatelessWidget {
                                   const Icon(Icons.cloud_upload_outlined, size: 50, color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0)),
                                   const SizedBox(height: 16),
                                   ElevatedButton(
-                                    onPressed: () async {
-                                      final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-                                      if (pickedFile != null) {
-                                        image = File(pickedFile.path);
-                                      }
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => ImagePickerPage(
+                                            onImagePicked: (File? pickedImage) {
+                                              setState(() {
+                                                image = pickedImage;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      );
                                     },
                                     style: ElevatedButton.styleFrom(
                                       foregroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
@@ -86,6 +104,8 @@ class Addconteudo extends StatelessWidget {
                                     child: const Text('Escolher Imagem'),
                                   ),
                                   const SizedBox(height: 8),
+                                  if (image != null)
+                                    Image.file(image!),
                                 ],
                               ),
                             ),
@@ -229,7 +249,6 @@ class Addconteudo extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('Subárea *'),
-                              // ignore: sized_box_for_whitespace
                               Container(
                                 width: double.infinity,
                                 child: const DropdownListView(),
@@ -252,7 +271,7 @@ class Addconteudo extends StatelessWidget {
                                   onPressed: () {
                                     _showRatingDialog(context);
                                   },
-                                  icon: const Icon(Icons.star, color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),),
+                                  icon: const Icon(Icons.star, color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0)),
                                   label: const Text('Classificar'),
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
@@ -313,7 +332,7 @@ class Addconteudo extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirmar'),
-          content: const Text('Você deseja adicionar este conteúdo?'),
+          content: const Text('Deseja adicionar este conteúdo?'),
           actions: <Widget>[
             TextButton(
               child: const Text('Cancelar'),

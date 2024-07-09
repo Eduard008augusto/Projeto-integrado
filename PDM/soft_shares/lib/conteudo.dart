@@ -4,6 +4,7 @@ import 'package:soft_shares/drawer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'image_picker_page.dart'; // Import the photo picker file
 
 void main() {
   runApp(const MaterialApp(
