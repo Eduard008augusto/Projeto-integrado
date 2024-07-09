@@ -19,8 +19,6 @@ class Addconteudo extends StatelessWidget {
 
   TextEditingController nomeController = TextEditingController();
   TextEditingController localController = TextEditingController();
-  TextEditingController passController = TextEditingController();
-  TextEditingController confPassController = TextEditingController();
   TextEditingController contactoController = TextEditingController();
   TextEditingController websiteController = TextEditingController();
   TextEditingController acessibilidadeController = TextEditingController();
@@ -231,6 +229,7 @@ class Addconteudo extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('Subárea *'),
+                              // ignore: sized_box_for_whitespace
                               Container(
                                 width: double.infinity,
                                 child: const DropdownListView(),
