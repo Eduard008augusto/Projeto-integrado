@@ -57,7 +57,7 @@ class MainApp extends StatelessWidget {
         '/mapa': (context) => const Mapa(),
         '/settings': (context) => const SettingsPage(),
         '/conteudo': (context) => const Conteudo(),
-        '/addconteudo': (context) => Addconteudo(),
+        '/addconteudo': (context) => const Addconteudo(),
         '/perfil': (context) =>const Perfil(),
         '/ediperfil': (context) =>const Perfil(),
         '/feedeventos': (context) =>FeedEventos(),

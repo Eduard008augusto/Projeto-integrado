@@ -1,8 +1,7 @@
-// ignore_for_file: must_be_immutable, use_build_context_synchronously, avoid_print
+// ignore_for_file: must_be_immutable, use_build_context_synchronously, avoid_print, library_private_types_in_public_api
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:soft_shares/drawer.dart';
 import 'dropdown_subareas.dart';
 
@@ -11,10 +10,12 @@ import './database/var.dart' as globals;
 import 'image_picker_page.dart'; // Import the new ImagePickerPage
 
 void main() {
-  runApp(Addconteudo());
+  runApp(const Addconteudo());
 }
 
 class Addconteudo extends StatefulWidget {
+  const Addconteudo({super.key});
+
   @override
   _AddconteudoState createState() => _AddconteudoState();
 }
