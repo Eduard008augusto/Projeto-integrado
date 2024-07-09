@@ -230,6 +230,16 @@ Future<Map<String, dynamic>> updateUser(var id, var nome, var desc, var morada, 
   }
 }
 
+Future<List<Map<String, dynamic>>> fetchEventos(int idCentro) async {
+  final response = await http.get(Uri.parse('${baseUrl}evento/listPorCentro/$idCentro'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> eventos = List<Map<String, dynamic>>.from(data['data']);
+    return eventos;
+  } else {
+    throw Exception('Falha ao carregar eventos');
+  }
+}
 
 /*
 File? image;

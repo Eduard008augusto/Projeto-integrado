@@ -30,3 +30,7 @@ var horarioP = '';
 var telefoneP = 0;
 var websiteP = '';
 var acessibilidadeP = '';
+
+//eventos
+
+var idEvento = 0; 
