@@ -14,8 +14,6 @@ import 'settings.dart';
 import 'add_conteudo.dart';
 import 'perfil.dart';
 import 'services/token_service.dart';
-import 'edit_perfil.dart';
-import 'image_picker_page.dart';
 
 
 Future<void> initializeFirebase() async {
@@ -56,7 +54,7 @@ class MainApp extends StatelessWidget {
         '/mapa': (context) => const Mapa(),
         '/settings': (context) => const SettingsPage(),
         '/conteudo': (context) => const Conteudo(),
-        '/addconteudo': (context) => Addconteudo(),
+        '/addconteudo': (context) => const Addconteudo(),
         '/perfil': (context) =>const Perfil(),
         '/ediperfil': (context) =>const Perfil(),
       },
