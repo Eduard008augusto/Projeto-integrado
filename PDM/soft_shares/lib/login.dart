@@ -52,7 +52,7 @@ class Login extends StatelessWidget {
                   TextField(
                     controller: emailController,
                     decoration: const InputDecoration(
-                      hintText: 'Email ou Usuário',
+                      hintText: 'Email',
                       border: OutlineInputBorder(),
                     ),
                   ),

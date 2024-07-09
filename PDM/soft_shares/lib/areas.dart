@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:soft_shares/drawer.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
-import 'package:intl/intl.dart';
 
 void main() {
   runApp(const Areas());

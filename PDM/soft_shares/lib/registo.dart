@@ -157,7 +157,7 @@ class Registar extends StatelessWidget {
                     globals.nome = userController.text;
                     globals.password = passController.text;
 
-                    await registo(globals.idCentro, globals.nome, globals.email, globals.password);
+                    await registo(globals.idCentroUSER, globals.nome, globals.email, globals.password);
 
                     Navigator.pushReplacementNamed(context, '/login');
                   } else {
