@@ -85,8 +85,6 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
     'NOME': nome,
     'EMAIL': email,
     'PASSWORD': password,
-    //'IMAGEMPERFIL': imagem,
-    //'DATANASCIMENTO': dataNascimento.toIso8601String(),
   });
 
   final response = await http.post(
@@ -233,9 +231,7 @@ Future<Map<String, dynamic>> updateUser(var id, var nome, var desc, var morada, 
 }
 
 
-// FUNÇÃO UPDATE USER
 /*
-
 File? image;
 DateTime? selectedDate;
 

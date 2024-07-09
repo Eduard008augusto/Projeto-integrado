@@ -55,7 +55,7 @@ class MainApp extends StatelessWidget {
         '/settings': (context) => const SettingsPage(),
         '/conteudo': (context) => const Conteudo(),
         '/addconteudo': (context) => Addconteudo(),
-        '/perfil': (context) =>Perfil(),
+        '/perfil': (context) => const Perfil(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
