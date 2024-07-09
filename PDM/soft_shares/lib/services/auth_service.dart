@@ -32,7 +32,7 @@ class AuthService {
 
       if (user != null) {
         try{
-          Map<String, dynamic> regRes = await registo(globals.idCentro, user.displayName, user.email, user.uid);
+          Map<String, dynamic> regRes = await registo(globals.idCentroUSER, user.displayName, user.email, user.uid);
 
           if(regRes['success']){
             globals.idUtilizador = regRes['ID_UTILIZADOR'];
@@ -60,38 +60,50 @@ class AuthService {
   Map _userObj = {};
 
   signInWithFacebook() async {
+    try {
       final LoginResult result = await FacebookAuth.instance.login(permissions: ['email', 'public_profile']);
 
       if (result.status == LoginStatus.success) {
-        final userData = await FacebookAuth.instance.getUserData();
-        _userObj = userData;
+        final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(result.accessToken!.tokenString);
+        UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+        User? user = userCredential.user;
 
-        try{
-          print(_userObj["id"]);
-          print(_userObj["email"]);
-          Map<String, dynamic> regRes = await registo(globals.idCentro, _userObj["name"], _userObj["email"], _userObj["id"]);
+        if (user != null) {
+          final userData = await FacebookAuth.instance.getUserData();
+          _userObj = userData;
 
-          if(regRes['success']){
-            globals.idUtilizador = regRes['ID_UTILIZADOR'];
-            return true;
+          try {
+            print(_userObj["id"]);
+            print(_userObj["email"]);
+            Map<String, dynamic> regRes = await registo(globals.idCentroUSER, _userObj["name"], _userObj["email"], _userObj["id"]);
+
+            if (regRes['success']) {
+              globals.idUtilizador = regRes['ID_UTILIZADOR'];
+              return true;
+            }
+          } catch (e) {
+            print(_userObj["id"]);
+            print(_userObj["email"]);
+            Map<String, dynamic> logRes = await login(_userObj["email"], _userObj["id"]);
+
+            if (logRes['success']) {
+              globals.idUtilizador = logRes['id_utilizador'];
+              await TokenManager().storeToken(logRes['token']);
+              return true;
+            } else {
+              throw Exception('FACEBOOK: Error durante login!');
+            }
           }
-        } catch (e) {
-          print(_userObj["id"]);
-          print(_userObj["email"]);
-          Map<String, dynamic> logRes = await login(_userObj["email"], _userObj["id"]);
-
-          if(logRes['success']){
-            globals.idUtilizador = logRes['id_utilizador'];
-            await TokenManager().storeToken(logRes['token']);
-            return true;
-          } else {
-            throw Exception('FACEBOOK: Error durante login!');
-          }
+        } else {
+          return false;
         }
       } else if (result.status == LoginStatus.cancelled) {
         return false;
       } else {
         throw Exception('Erro no login com Facebook: ${result.message}');
       }
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }

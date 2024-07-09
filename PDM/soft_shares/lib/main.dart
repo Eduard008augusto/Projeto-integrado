@@ -15,11 +15,21 @@ import 'add_conteudo.dart';
 import 'perfil.dart';
 import 'services/token_service.dart';
 
+
+Future<void> initializeFirebase() async {
+  try {
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  } on FirebaseException catch (e) {
+    if (e.code != 'duplicate-app') {
+      rethrow;
+    }
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  
+  await initializeFirebase();
 
   globals.token = await TokenManager().getToken();
   
