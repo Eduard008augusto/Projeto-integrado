@@ -197,7 +197,7 @@ Future<Map<String, dynamic>> createPublicacao(var centro, var area, var subarea,
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao criar nova publicação \n\n${data['error']}');
+    throw Exception('Falha ao criar nova publicação\n\n${data['error']}');
   }
 }
 

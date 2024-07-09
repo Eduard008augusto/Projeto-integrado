@@ -23,8 +23,7 @@ dependencies:
   flutter_facebook_auth:
   url_launcher:
   flutter_rating_bar:
-  shared_preferences:
- 
+  shared_preferences: 
 
 dev_dependencies:
   flutter_test:

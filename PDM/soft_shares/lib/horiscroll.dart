@@ -58,16 +58,25 @@ class HorizontalListView extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.network(
-                            'https://pintbackend-w8pt.onrender.com/images/${items[index]['IMAGEMSUBAREA']}',
-                            height: 35.0,
-                            width: 35.0,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            items[index]['NOME'],
-                            textAlign: TextAlign.center,
-                          ),
+                          GestureDetector(
+                            onTap: (){
+                              globals.idSubArea = items[index]['ID_SUBAREA'];
+                            },
+                            child: Column(
+                              children: [
+                                Image.network(
+                                  'https://pintbackend-w8pt.onrender.com/images/${items[index]['IMAGEMSUBAREA']}',
+                                  height: 35.0,
+                                  width: 35.0,
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  items[index]['NOME'],
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     );
