@@ -201,7 +201,36 @@ Future<Map<String, dynamic>> createPublicacao(var centro, var area, var subarea,
   }
 }
 
-//Future<void> updateUser()
+
+Future<Map<String, dynamic>> updateUser(var id, var nome, var desc, var morada, DateTime dataNascimento, var telefone, var imagem) async {
+  final url = Uri.parse('${baseUrl}utilizador/update/$id');
+
+  final body = json.encode({
+    'NOME': nome,
+    'DESCRICAO': desc,
+    'MORADA': morada,
+    'DATANASCIMENTO': dataNascimento.toIso8601String(),
+    'TELEFONE': telefone,
+    'IMAGEM': imagem,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body,
+  );
+
+  var data = jsonDecode(response.body);
+
+  if(data['success']){
+    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    return res;
+  } else {
+    throw Exception('Falha ao atualizar utilizador!\n\n${data['error']}');
+  }
+}
 
 
 // FUNÇÃO UPDATE USER
