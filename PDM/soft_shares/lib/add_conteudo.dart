@@ -1,10 +1,9 @@
-// ignore_for_file: must_be_immutable, use_build_context_synchronously
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:soft_shares/drawer.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'dropdown_subareas.dart';
 
 void main() {
   runApp(Addconteudo());
@@ -20,9 +19,9 @@ class Addconteudo extends StatelessWidget {
 
   TextEditingController nomeController = TextEditingController();
   TextEditingController localController = TextEditingController();
-  TextEditingController passController = TextEditingController();
-  TextEditingController confPassController = TextEditingController();
   TextEditingController contactoController = TextEditingController();
+  TextEditingController websiteController = TextEditingController();
+  TextEditingController acessibilidadeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -193,11 +192,47 @@ class Addconteudo extends StatelessWidget {
                             children: [
                               const Text('Website'),
                               TextField(
-                                controller: localController,
+                                controller: websiteController,
                                 decoration: const InputDecoration(
                                   hintText: 'Website',
                                   border: OutlineInputBorder(),
                                 ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Acessibilidade'),
+                              TextFormField(
+                                controller: acessibilidadeController,
+                                decoration: const InputDecoration(
+                                  hintText: 'Acessibilidade',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Subárea *'),
+                              // ignore: sized_box_for_whitespace
+                              Container(
+                                width: double.infinity,
+                                child: const DropdownListView(),
                               ),
                             ],
                           ),
@@ -253,7 +288,7 @@ class Addconteudo extends StatelessWidget {
                   ElevatedButton.icon(
                     onPressed: () {
                       if (_formKey.currentState?.validate() == true) {
-                        // Adicione a lógica para adicionar conteúdo aqui
+                        _showConfirmationDialog(context);
                       }
                     },
                     icon: const Icon(Icons.add, color: Colors.white),
@@ -269,6 +304,33 @@ class Addconteudo extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmar'),
+          content: const Text('Você deseja adicionar este conteúdo?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Adicionar'),
+              onPressed: () {
+                // Adicione a lógica para adicionar o conteúdo aqui
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
