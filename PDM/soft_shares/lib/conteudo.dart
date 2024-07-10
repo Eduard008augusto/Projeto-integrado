@@ -107,7 +107,7 @@ class Conteudo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          globals.nomArea ?? 'Área não disponível',
+          globals.nomArea,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
