@@ -10,8 +10,21 @@ void main() {
   ));
 }
 
-class Feed extends StatelessWidget {
+class Feed extends StatefulWidget {
   const Feed({super.key});
+
+  @override
+  FeedState createState() => FeedState();
+}
+
+class FeedState extends State<Feed> {
+  int _selectedSubAreaId = 0;
+
+  void _onSubAreaSelected(int subAreaId) {
+    setState(() {
+      _selectedSubAreaId = subAreaId;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,29 +33,35 @@ class Feed extends StatelessWidget {
         title: Text(globals.nomArea),
         actions: const [
           Icon(Icons.search),
-          SizedBox(width: 20,),
+          SizedBox(width: 20),
           Icon(Icons.calendar_month_outlined),
-          SizedBox(width: 20,),
+          SizedBox(width: 20),
           Icon(Icons.filter_alt_outlined),
         ],
       ),
       drawer: const MenuDrawer(),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: fetchPublicacoes(globals.idCentro, globals.idArea, globals.idSubArea),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator(),);
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Erro: ${snapshot.error}'),);
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Nenhuma publicação encontrada'),);
-          } else {
-            final List<Map<String, dynamic>> publicacoes = snapshot.data!;
-            return Column(
-              children: [
-                const HorizontalListView(),
-                Expanded( // Envolver ListView.builder com Expanded
-                  child: ListView.builder(
+      body: Column(
+        children: [
+          HorizontalListView(onSubAreaSelected: _onSubAreaSelected),
+          Expanded(
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: fetchPublicacoes(globals.idCentro, globals.idArea, _selectedSubAreaId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Erro: ${snapshot.error}'),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(
+                    child: Text('Nenhuma publicação encontrada'),
+                  );
+                } else {
+                  final List<Map<String, dynamic>> publicacoes = snapshot.data!;
+                  return ListView.builder(
                     itemCount: publicacoes.length,
                     itemBuilder: (context, index) {
                       final publicacao = publicacoes[index];
@@ -162,12 +181,12 @@ class Feed extends StatelessWidget {
                         ),
                       );
                     },
-                  ),
-                ),
-              ],
-            );
-          }
-        },
+                  );
+                }
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: GestureDetector(
         onTap: () {

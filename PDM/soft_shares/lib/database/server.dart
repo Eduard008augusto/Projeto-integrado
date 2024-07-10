@@ -1,4 +1,3 @@
-// server.dart
 // ignore_for_file: avoid_print
 
 import 'dart:io';
@@ -200,7 +199,6 @@ Future<Map<String, dynamic>> createPublicacao(var centro, var area, var subarea,
   }
 }
 
-
 Future<Map<String, dynamic>> updateUser(var id, var nome, var desc, var morada, DateTime dataNascimento, var telefone, var imagem) async {
   final url = Uri.parse('${baseUrl}utilizador/updateApp/$id');
 
@@ -231,6 +229,7 @@ Future<Map<String, dynamic>> updateUser(var id, var nome, var desc, var morada, 
   }
 }
 
+// Fetch Eventos
 Future<List<Map<String, dynamic>>> fetchEventos(int idCentro) async {
   final response = await http.get(Uri.parse('${baseUrl}evento/listPorCentro/$idCentro'));
   var data = jsonDecode(response.body);

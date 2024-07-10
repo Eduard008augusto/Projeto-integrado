@@ -18,12 +18,17 @@ class FeedEventos extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Eventos'),
-        actions: const [
-          Icon(Icons.search),
-          SizedBox(width: 20,),
-          Icon(Icons.calendar_month_outlined),
-          SizedBox(width: 20,),
-          Icon(Icons.filter_alt_outlined),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.calendar_month_outlined),
+            onPressed: () {
+              Navigator.pushNamed(context, '/calendario');
+            },
+          ),
+          const SizedBox(width: 20,),
+          const Icon(Icons.search),
+          const SizedBox(width: 20,),
+          const Icon(Icons.filter_alt_outlined),
         ],
       ),
       drawer: const MenuDrawer(),
@@ -84,21 +89,45 @@ class FeedEventos extends StatelessWidget {
                           const SizedBox(height: 6),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: Text(
-                              DateFormat('dd/MM/yyyy').format(DateTime.parse(evento['DATA'])),
-                              style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                const SizedBox(width: 3),
+                                Expanded(
+                                  child: Text(
+                                    evento['LOCALIZACAO'],
+                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(height: 6),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12.0),
                             child: Row(
-                              children: List.generate(preco.round(), (index) {
-                                return const Icon(
-                                  Icons.euro,
-                                  color: Colors.black,
-                                );
-                              }),
+                              children: [
+                                const Icon(Icons.calendar_today_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                const SizedBox(width: 3),
+                                Text(
+                                  DateFormat('dd/MM/yyyy').format(DateTime.parse(evento['DATA'])),
+                                  style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.euro_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                const SizedBox(width: 3),
+                                Text(
+                                  'Preço: $preco€',
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(height: 12),
