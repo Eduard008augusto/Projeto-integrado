@@ -65,7 +65,7 @@ class MainApp extends StatelessWidget {
         '/addconteudo': (context) => const Addconteudo(),
         '/perfil': (context) => const Perfil(),
         '/ediperfil': (context) => const Perfil(),
-        '/feedeventos': (context) =>const  const FeedEventos(),
+        '/feedeventos': (context) => const FeedEventos(),
         '/calendario': (context) => const CalendarioEventos(),
       },
       localizationsDelegates: const [
