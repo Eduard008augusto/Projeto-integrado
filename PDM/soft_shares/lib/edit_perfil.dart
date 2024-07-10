@@ -33,8 +33,6 @@ class _EditarPerfilState extends State<EditarPerfil> {
   TextEditingController novaSenhaController = TextEditingController();
   TextEditingController confirmarSenhaController = TextEditingController();
 
-  String? imagemPerfil;
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,12 +63,11 @@ class _EditarPerfilState extends State<EditarPerfil> {
           } else {
             final Map<String, dynamic> user = snapshot.data!;
             nomeController.text = user['NOME'];
-            descricaoController.text = user['DESCRICAO'] == null ? 'Descrição' : user['DESCRICAO']!;
+            descricaoController.text = user['DESCRICAO'] ?? 'Descrição';
             moradaController.text = user['MORADA'] ?? 'Morada';
             telefoneController.text = user['TELEFONE']?.toString() ?? '000000000';
-            dataNascimentoController.text = DateFormat('dd-MM-yyyy').format(DateTime.parse(user['DATANASCIMENTO'] == null ? '1970-01-01T00:00:00.000Z' : user['DATANASCIMENTO']!));
-            selectedImage = user['IMAGEMPERFIL'];
-
+            dataNascimentoController.text = DateFormat('dd-MM-yyyy').format(DateTime.parse(user['DATANASCIMENTO'] ?? '1970-01-01T00:00:00.000Z'));
+            
             return Padding(
               padding: const EdgeInsets.all(25.0),
               child: Form(
@@ -125,10 +122,13 @@ class _EditarPerfilState extends State<EditarPerfil> {
                     ElevatedButton(onPressed: () async {
                       final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
                       if(pickedFile != null){
-                        selectedImage = File(pickedFile.path);
+                        setState(() {
+                          selectedImage = File(pickedFile.path);
+                        });
                       }
                     }, child: const Text('Escolher Imagem de Perfil')),
-
+                    
+                    const SizedBox(height: 20.0),
                     ElevatedButton(onPressed: () async {
                       final DateTime? pickedDate = await showDatePicker(
                         context: context,
@@ -139,7 +139,9 @@ class _EditarPerfilState extends State<EditarPerfil> {
                       );
                     
                       if(pickedDate != null){
-                        globals.dataNascimento = pickedDate;
+                        setState(() {
+                          globals.dataNascimento = pickedDate;
+                        });
                       }
                     }, child: const Text('Escolher Data de Nascimento')),
                     const Divider(
@@ -209,9 +211,11 @@ class _EditarPerfilState extends State<EditarPerfil> {
                 globals.nome = nomeController.text;
                 globals.descricaoU = descricaoController.text;
                 globals.moradaU = moradaController.text;
-                globals.telefoneU = int.tryParse(telefoneController.text)!;
+                globals.telefoneU = int.tryParse(telefoneController.text) ?? 0;
 
-                await uploadImage(selectedImage!);
+                if (selectedImage != null) {
+                  await uploadImage(selectedImage!);
+                }
                 
                 await updateUser(
                   globals.idUtilizador,
