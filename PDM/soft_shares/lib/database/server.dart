@@ -240,3 +240,77 @@ Future<List<Map<String, dynamic>>> fetchEventos(int idCentro) async {
     throw Exception('Falha ao carregar eventos');
   }
 }
+
+// ESTADO FAVORITO
+Future<Map<String, dynamic>> isFavorito(var idUser, var idConteudo) async {
+  final response = await http.get(Uri.parse('${baseUrl}favorito/isfavorito/$idUser/$idConteudo'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    return res;
+  } else {
+    throw Exception('Falha ao verificar favorito');
+  }
+}
+
+// FAVORITO
+Future<Map<String, dynamic>> createFavorito(var centro, var area, var subarea, var conteudo, var utilizador) async {
+  final url = Uri.parse('${baseUrl}favorito/create');
+
+  final body = json.encode({
+    'ID_CENTRO': centro,
+    'ID_AREA': area,
+    'ID_SUBAREA': subarea,
+    'ID_CONTEUDO': conteudo,
+    'ID_UTILIZADOR': utilizador,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body,
+  );
+
+  var data = jsonDecode(response.body);
+
+  print(data);
+
+  if(data['success']){
+    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    return res;
+  } else {
+    throw Exception('Falha ao criar favorito');
+  }
+}
+
+// NÃO FAVORITO
+Future<Map<String, dynamic>> deleteFavorito(var id) async {
+  final url = Uri.parse('${baseUrl}favorito/delete');
+
+  final body = json.encode({'id': id});
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  if (response.statusCode == 200) {
+    try {
+      var data = jsonDecode(response.body) as Map<String, dynamic>;
+      print(data);
+
+      if (data['success']) {
+        return data;
+      } else {
+        throw Exception('Falha ao eliminar favorito: ${data['message']}');
+      }
+    } catch (e) {
+      throw Exception('Erro ao decodificar a resposta JSON: $e');
+    }
+  } else {
+    throw Exception('Erro na solicitação: ${response.statusCode}');
+  }
+}

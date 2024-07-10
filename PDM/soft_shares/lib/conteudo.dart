@@ -8,11 +8,7 @@ import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 // Import the photo picker file
 
-void main() {
-  runApp(const MaterialApp(
-    home: Conteudo(),
-  ));
-}
+bool isFavorite = false;
 
 class Conteudo extends StatelessWidget {
   const Conteudo({super.key});
@@ -38,7 +34,7 @@ class Conteudo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const CustomStarRating(rating: 4.0), // Ajuste para número
+                const CustomStarRating(rating: 4.0),
                 const SizedBox(height: 16),
                 const Text(
                   'Classificação do Preço',
@@ -51,7 +47,12 @@ class Conteudo extends StatelessWidget {
                 const CustomEuroRating(rating: 2),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    
+                    
+                    
+                    
+                    
                     Navigator.of(context).pop();
                   },
                   child: const Text('Classificar'),
@@ -110,6 +111,8 @@ class Conteudo extends StatelessWidget {
             double rating = publicacao['mediaAvaliacoesGerais']?.toDouble() ?? 0.0;
             int priceRating = publicacao['mediaAvaliacoesPreco'] ?? 0;
             int totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']) ?? 0;
+            globals.idConteudo = publicacao['ID_CONTEUDO'];
+            globals.idSubAreaFAV = publicacao['ID_SUBAREA'];
 
             return SingleChildScrollView(
               child: Column(
@@ -374,24 +377,76 @@ class FavoriteButton extends StatefulWidget {
 }
 
 class _FavoriteButtonState extends State<FavoriteButton> {
-  bool isFavorite = false;
+  late Future<Map<String, dynamic>> _futureFavorite;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureFavorite = setFavorito();
+  }
+
+  Future<Map<String, dynamic>> setFavorito() async {
+    var data = await isFavorito(globals.idUtilizador, globals.idConteudo);
+    setState(() {
+      isFavorite = data['isFavorito'];
+      if(isFavorite){
+        globals.idFavorito = data['IDFAVORITO'];
+      }
+    });
+    return data;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        isFavorite ? Icons.favorite : Icons.favorite_border,
-        color: isFavorite ? const Color.fromARGB(0xFF, 0xF0, 0x6C, 0x9F) : Colors.white,
-        size: 30.0,
-      ),
-      onPressed: () {
-        setState(() {
-          isFavorite = !isFavorite;
-        });
+    return FutureBuilder<Map<String, dynamic>>(
+      future: _futureFavorite,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          print(snapshot.error);
+          print(snapshot.stackTrace);
+          return const Icon(Icons.error);
+        } else {
+          return IconButton(
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? const Color.fromARGB(0xFF, 0xF0, 0x6C, 0x9F) : Colors.white,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              try {
+                if (isFavorite) {
+                  var res = await deleteFavorito(globals.idFavorito);
+                  if (res['success']) {
+                    setState(() {
+                      isFavorite = false;
+                    });
+                  } else {
+                    throw Exception('Falha ao atualizar favorito');
+                  }
+                } else {
+                  var res = await createFavorito(globals.idCentro, globals.idArea, globals.idSubAreaFAV, globals.idConteudo, globals.idUtilizador);
+                  print(res);
+                  if (res['success']) {
+                    setState(() {
+                      isFavorite = true;
+                    });
+                  } else {
+                    throw Exception('Falha ao atualizar favorito');
+                  }
+                }
+              } catch (e) {
+                print('Erro: $e');
+              }
+            },
+          );
+        }
       },
     );
   }
 }
+
 
 class CustomStarRating extends StatelessWidget {
   final double rating;
