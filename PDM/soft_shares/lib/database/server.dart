@@ -532,6 +532,6 @@ Future<List<Map<String, dynamic>>> fetchEventosInscritos(var user) async {
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao carregar favoritos');
+    throw Exception('Falha ao eventos');
   }
 }
