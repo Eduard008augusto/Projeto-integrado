@@ -34,7 +34,7 @@ class Conteudo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const CustomStarRating(rating: 4.0),
+                const CustomStarRating(rating: 0.0),
                 const SizedBox(height: 16),
                 const Text(
                   'Classificação do Preço',
@@ -44,7 +44,7 @@ class Conteudo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                const CustomEuroRating(rating: 2),
+                const CustomEuroRating(rating: 0),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {

@@ -314,3 +314,14 @@ Future<Map<String, dynamic>> deleteFavorito(var id) async {
     throw Exception('Erro na solicitação: ${response.statusCode}');
   }
 }
+
+Future<List<Map<String, dynamic>>> fetchFavortios(var id) async {
+  final response = await http.get(Uri.parse('${baseUrl}favorito/listporutilizador/$id'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar favortios');
+  }
+}
