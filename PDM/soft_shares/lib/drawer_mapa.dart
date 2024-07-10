@@ -54,14 +54,14 @@ class MenuDrawer extends StatelessWidget {
             color: Color.fromARGB(136, 41, 40, 40),
           ),
 
-          ListTile(
+          /*ListTile(
             leading: const Icon(Icons.dashboard_outlined),
             title: const Text(
               'Areas',
               style: TextStyle(fontSize: 18.0),
             ),
             onTap: () { Navigator.pushNamed(context, '/areas'); },
-          ),
+          ),*/
 
           ListTile(
             leading: const Icon(Icons.favorite_border),
@@ -129,8 +129,6 @@ class MenuDrawer extends StatelessWidget {
                   );
                 },
               );
-
-              
             },
           ),
 

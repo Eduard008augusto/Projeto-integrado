@@ -122,9 +122,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                     ElevatedButton(onPressed: () async {
                       final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
                       if(pickedFile != null){
-                        setState(() {
-                          selectedImage = File(pickedFile.path);
-                        });
+                        selectedImage = File(pickedFile.path);
                       }
                     }, child: const Text('Escolher Imagem de Perfil')),
                     
