@@ -18,9 +18,12 @@ var imagem = '';
 var idCentroUSER = 1;
 
 var nome = '';
+var descricaoU = '';
+var moradaU = '';
+var telefoneU = 0;
 var email = '';
 var password = '';
-DateTime data = DateTime.now();
+DateTime dataNascimento = DateTime.now();
 
 
 // Criar Publicação

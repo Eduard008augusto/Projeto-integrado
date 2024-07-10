@@ -70,6 +70,7 @@ Future<void> uploadImage(File imageFile) async {
   if (response.statusCode == 200) {
     var responseBody = await http.Response.fromStream(response);
     var responseData = json.decode(responseBody.body);
+    print(responseData);
     globals.imagem = responseData['imageName'];
     print('Image uploaded: ${globals.imagem}');
   } else {
@@ -201,7 +202,7 @@ Future<Map<String, dynamic>> createPublicacao(var centro, var area, var subarea,
 
 
 Future<Map<String, dynamic>> updateUser(var id, var nome, var desc, var morada, DateTime dataNascimento, var telefone, var imagem) async {
-  final url = Uri.parse('${baseUrl}utilizador/update/$id');
+  final url = Uri.parse('${baseUrl}utilizador/updateApp/$id');
 
   final body = json.encode({
     'NOME': nome,

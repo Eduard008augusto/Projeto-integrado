@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'drawer.dart';
@@ -7,6 +7,7 @@ import './database/server.dart';
 import './database/var.dart' as globals;
 
 void main(){
+  print(globals.idUtilizador);
   runApp(const Perfil());
 }
 
@@ -53,7 +54,7 @@ class Perfil extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage: NetworkImage('https://pintbackend-w8pt.onrender.com/images/${user['IMAGEMPERFIL']}'),
+                        backgroundImage: NetworkImage(user['IMAGEMPERFIL'] == null ? 'https://cdn.discordapp.com/attachments/1154170394400542730/1260333904976679064/01.png?ex=668ef0ea&is=668d9f6a&hm=b909016ee5266e728eb2421b043a637a5d32156b3f0f4e9c59c4575af5208667&' : 'https://pintbackend-w8pt.onrender.com/images/${user['IMAGEMPERFIL']}'),
                       ),
                       const SizedBox(width: 30.0,),
                       Text(
@@ -67,7 +68,7 @@ class Perfil extends StatelessWidget {
                   ),
                   const SizedBox(height: 20.0,),
                   const Text('Descrição', style: TextStyle( fontSize: 16),),
-                  Text(user['DESCRICAO']),
+                  Text(user['DESCRICAO'] == null ? '' : user['DESCRICAO']!),
                   const Divider(
                     height: 70,
                     thickness: 1,
@@ -79,7 +80,7 @@ class Perfil extends StatelessWidget {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator(),);
                       } else if (snapshot.hasError) {
-                        return Center(child: Text('Erro: ${snapshot.error}'),);
+                        return Center(child: Text('Erro: ${snapshot.error}\n\n${snapshot.stackTrace}'),);
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Center(child: Text('Nenhuma publicação encontrada'),);
                       } else {
