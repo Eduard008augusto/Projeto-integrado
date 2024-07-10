@@ -134,7 +134,8 @@ class Conteudo extends StatelessWidget {
             if (publicacao.isEmpty) {
               return const Center(child: Text('Nenhuma publicação encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
             }
-            int ratingEstrela = publicacao['mediaAvaliacoesGerais']?.toDouble() ?? 0.0;
+            double mediaAvaliacoesGerais = publicacao['mediaAvaliacoesGerais'];
+            int ratingEstrela = mediaAvaliacoesGerais.toInt();
             int ratingPreco = publicacao['mediaAvaliacoesPreco'] ?? 0;
             int totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']) ?? 0;
             globals.idSubAreaFAV = publicacao['ID_SUBAREA'];
@@ -485,7 +486,7 @@ class CustomStarRating extends StatelessWidget {
       minRating: 1,
       direction: Axis.horizontal,
       itemCount: 5,
-      allowHalfRating: true,
+      //allowHalfRating: true,
       itemSize: 20.0,
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
       itemBuilder: (context, _) => const Icon(
