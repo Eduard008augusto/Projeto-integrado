@@ -4,7 +4,8 @@ var idCentro = 1;
 var idArea = 0;
 var idSubArea = 0;
 
-var idUtilizador = 1;
+int? idUtilizador = 0;
+String? nomeUtilizador = '';
 
 var idPublicacao = 0;
 
@@ -35,5 +36,4 @@ var websiteP = '';
 var acessibilidadeP = '';
 
 //eventos
-
 var idEvento = 0; 

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import './database/var.dart' as globals;
 
 import './services/token_service.dart';
 
@@ -21,9 +22,9 @@ class MenuDrawer extends StatelessWidget {
 
           ListTile(
             leading: const Icon(Icons.account_circle_outlined, size: 40.0,),
-            title: const Text(
-              'NOME DO UTILIZADOR',
-              style: TextStyle(fontSize: 18.0),
+            title: Text(
+              globals.nomeUtilizador!,
+              style: const TextStyle(fontSize: 18.0),
             ),
             onTap: () { Navigator.pushNamed(context, '/perfil'); },
           ),

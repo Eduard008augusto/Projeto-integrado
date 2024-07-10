@@ -107,9 +107,9 @@ class Conteudo extends StatelessWidget {
             if (publicacao.isEmpty) {
               return const Center(child: Text('Nenhuma publicação encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
             }
-            double rating = double.tryParse(publicacao['mediaAvaliacoesGerais']?.toString() ?? '0.0') ?? 0.0;
-            int priceRating = int.tryParse(publicacao['mediaAvaliacoesPreco']?.toString() ?? '0') ?? 0;
-            int totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']?.toString() ?? '0') ?? 0;
+            double rating = publicacao['mediaAvaliacoesGerais']?.toDouble() ?? 0.0;
+            int priceRating = publicacao['mediaAvaliacoesPreco'] ?? 0;
+            int totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']) ?? 0;
 
             return SingleChildScrollView(
               child: Column(
@@ -184,7 +184,15 @@ class Conteudo extends StatelessWidget {
                                       maxLines: 1,
                                     ),
                                     const SizedBox(width: 5),
-                                    CustomStarRating(rating: rating),
+                                    Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: List.generate(5, (index) {
+                                          return Icon(
+                                            index < rating ? Icons.star : Icons.star_border,
+                                            color: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+                                          );
+                                        }),
+                                      ),
                                   ],
                                 ),
                               ],

@@ -7,7 +7,6 @@ import './database/server.dart';
 import './database/var.dart' as globals;
 
 void main(){
-  print(globals.idUtilizador);
   runApp(const Perfil());
 }
 

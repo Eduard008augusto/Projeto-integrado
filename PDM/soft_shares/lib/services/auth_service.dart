@@ -35,7 +35,10 @@ class AuthService {
           Map<String, dynamic> regRes = await registo(globals.idCentroUSER, user.displayName, user.email, user.uid);
 
           if(regRes['success']){
-            globals.idUtilizador = regRes['ID_UTILIZADOR'];
+            await TokenManager().storeIdUtilizador(regRes['ID_UTILIZADOR']);
+            await TokenManager().storeNomeUtilizador(regRes['NOME']);
+            globals.idUtilizador = await TokenManager().getIdUtilizador();
+            globals.nomeUtilizador = await TokenManager().getNomeUtilizador();
             return true;
           }
         } catch (e) {
@@ -44,8 +47,12 @@ class AuthService {
           Map<String, dynamic> logRes = await login(user.email!, user.uid);
           
           if(logRes['success']){
-            globals.idUtilizador = logRes['id_utilizador'];
             await TokenManager().storeToken(logRes['token']);
+            await TokenManager().storeIdUtilizador(logRes['id_utilizador']);
+            await TokenManager().storeNomeUtilizador(logRes['nome']);
+            globals.idUtilizador = await TokenManager().getIdUtilizador();
+            globals.nomeUtilizador = await TokenManager().getNomeUtilizador();
+
             return true;
           }
           else{
@@ -78,7 +85,10 @@ class AuthService {
             Map<String, dynamic> regRes = await registo(globals.idCentroUSER, _userObj["name"], _userObj["email"], _userObj["id"]);
 
             if (regRes['success']) {
-              globals.idUtilizador = regRes['ID_UTILIZADOR'];
+              await TokenManager().storeIdUtilizador(regRes['ID_UTILIZADOR']);
+              await TokenManager().storeIdUtilizador(regRes['NOME']);
+              globals.idUtilizador = await TokenManager().getIdUtilizador();
+              globals.nomeUtilizador = await TokenManager().getNomeUtilizador();
               return true;
             }
           } catch (e) {
@@ -87,8 +97,11 @@ class AuthService {
             Map<String, dynamic> logRes = await login(_userObj["email"], _userObj["id"]);
 
             if (logRes['success']) {
-              globals.idUtilizador = logRes['id_utilizador'];
               await TokenManager().storeToken(logRes['token']);
+              await TokenManager().storeIdUtilizador(logRes['id_utilizador']);
+              await TokenManager().storeNomeUtilizador(logRes['nome']);
+              globals.idUtilizador = await TokenManager().getIdUtilizador();
+              globals.nomeUtilizador = await TokenManager().getNomeUtilizador();
               return true;
             } else {
               throw Exception('FACEBOOK: Error durante login!');
