@@ -107,9 +107,9 @@ class Conteudo extends StatelessWidget {
             if (publicacao.isEmpty) {
               return const Center(child: Text('Nenhuma publicação encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
             }
-            double rating = publicacao['mediaAvaliacoesGerais']?.toDouble() ?? 0.0;
-            int priceRating = publicacao['mediaAvaliacoesPreco'] ?? 0;
-            int totalAvaliacoes = publicacao['totalAvaliacoes']?.toInt() ?? 0;
+            double rating = double.tryParse(publicacao['mediaAvaliacoesGerais']?.toString() ?? '0.0') ?? 0.0;
+            int priceRating = int.tryParse(publicacao['mediaAvaliacoesPreco']?.toString() ?? '0') ?? 0;
+            int totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']?.toString() ?? '0') ?? 0;
 
             return SingleChildScrollView(
               child: Column(
