@@ -315,13 +315,90 @@ Future<Map<String, dynamic>> deleteFavorito(var id) async {
   }
 }
 
-Future<List<Map<String, dynamic>>> fetchFavortios(var id) async {
+Future<List<Map<String, dynamic>>> fetchFavoritos(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}favorito/listporutilizador/$id'));
   var data = jsonDecode(response.body);
   if(data['success']){
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao carregar favortios');
+    throw Exception('Falha ao carregar favoritos');
+  }
+}
+
+Future<Map<String, dynamic>> checkAvaliacao(var user, var conteudo) async {
+  final response = await http.get(Uri.parse('${baseUrl}avaliacao/utilizadorAvaliou/$user/$conteudo'));
+  final data = jsonDecode(response.body);
+  print(data);
+  if(data['success']){
+    globals.idAvaliacao = data['ID_AVALIACAO'];
+    return data;
+  } else {
+    throw Exception('Falha na verificação');
+  }
+}
+
+Future<Map<String, dynamic>> createAvaliacao(var conteudo, var user, var estrelas, var preco) async {
+  final url = Uri.parse('${baseUrl}avaliacao/create');
+
+  final body = json.encode({
+    'ID_CONTEUDO': conteudo,
+    'ID_UTILIZADOR': user,
+    'AVALIACAOGERAL': estrelas,
+    'AVALIACAOPRECO': preco
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  if (response.statusCode == 201) {
+    try {
+      var data = jsonDecode(response.body) as Map<String, dynamic>;
+      print(data);
+
+      if (data['success']) {
+        return data;
+      } else {
+        throw Exception('Falha ao criar avaliação: ${data['message']}');
+      }
+    } catch (e) {
+      throw Exception('Erro ao decodificar a resposta JSON: $e');
+    }
+  } else {
+    throw Exception('Erro na solicitação: ${response.statusCode}');
+  }
+}
+
+Future<Map<String, dynamic>> updateAvaliacao(var id, var conteudo, var user, var estrelas, var preco) async {
+  final url = Uri.parse('${baseUrl}avaliacao/update/$id');
+
+  final body = json.encode({
+    'ID_CONTEUDO': conteudo,
+    'ID_UTILIZADOR': user,
+    'AVALIACAOGERAL': estrelas,
+    'AVALIACAOPRECO': preco
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+    print(data);
+
+    if (data['success']) {
+      print('Avaliado com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao atualizar avaliação: ${data['message']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
   }
 }
