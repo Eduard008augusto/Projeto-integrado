@@ -18,6 +18,8 @@ import 'services/token_service.dart';
 //import 'image_picker_page.dart';
 import 'feed_eventos.dart';
 import 'calendario_eventos.dart';
+import 'add_evento.dart';
+import 'evento.dart';
 
 
 
@@ -67,6 +69,8 @@ class MainApp extends StatelessWidget {
         '/ediperfil': (context) => const Perfil(),
         '/feedeventos': (context) => const FeedEventos(),
         '/calendario': (context) => const CalendarioEventos(),
+        '/addevento': (context) => const AddEvento(),
+        '/evento': (context) => const Evento(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

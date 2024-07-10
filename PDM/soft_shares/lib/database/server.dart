@@ -240,3 +240,49 @@ Future<List<Map<String, dynamic>>> fetchEventos(int idCentro) async {
     throw Exception('Falha ao carregar eventos');
   }
 }
+
+Future<Map<String, dynamic>> fetchEvento(int idEvento) async {
+  final response = await http.get(Uri.parse('${baseUrl}evento/get/$idEvento'));
+  var data = jsonDecode(response.body);
+  if (data['success']) {
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+Future<Map<String, dynamic>> createEvento(var centro, var area, var user, var nome, var data, var localizacao, var telefone, var imagem, var descricao, var preco) async {
+  final url = Uri.parse('${baseUrl}evento/create');
+
+  final body = json.encode({
+    'ID_CENTRO': centro,
+    'ID_AREA': area,
+    'ID_UTILIZADOR': user,
+    'NOME': nome,
+    'DATA': data.toIso8601String(),
+    'LOCALIZACAO': localizacao,
+    'TELEFONE': telefone,
+    'IMAGEMEVENTO': imagem,
+    'DESCRICAO': descricao,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body,
+  );
+
+  var responseData = jsonDecode(response.body);
+
+  print(responseData);
+
+  if (responseData['success']) {
+    Map<String, dynamic> res = Map<String, dynamic>.from(responseData['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao criar novo evento\n\n${responseData['error']}');
+  }
+}

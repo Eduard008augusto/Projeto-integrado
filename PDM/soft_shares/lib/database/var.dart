@@ -26,7 +26,6 @@ var email = '';
 var password = '';
 DateTime dataNascimento = DateTime.now();
 
-
 // Criar Publicação
 var nomeP = '';
 var moradaP = '';
@@ -35,5 +34,15 @@ var telefoneP = 0;
 var websiteP = '';
 var acessibilidadeP = '';
 
-//eventos
-var idEvento = 0; 
+// Eventos
+var idEvento = 0;
+String? nomeEvento = '';
+String? localizacaoEvento = '';
+String? websiteEvento = '';
+String? acessibilidadeEvento = '';
+String? horarioEvento = '';
+int? telefoneEvento = 0;
+DateTime? dataEvento;
+double? precoEvento = 0.0;
+String? descricaoEvento = '';
+String? imagemEvento = '';

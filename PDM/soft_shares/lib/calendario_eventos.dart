@@ -101,7 +101,7 @@ class CalendarioEventosState extends State<CalendarioEventos> {
             ),
             calendarBuilders: CalendarBuilders(
               dowBuilder: (context, day) {
-                final text = DateFormat.E('pt_BR').format(day);
+                final text = DateFormat.E('pt_PT').format(day);
                 return Center(
                   child: Text(
                     text,

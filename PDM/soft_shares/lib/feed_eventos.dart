@@ -54,7 +54,7 @@ class FeedEventos extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       globals.idEvento = evento['ID_EVENTO'];
-                      Navigator.pushNamed(context, '/evento_detalhes');
+                      Navigator.pushNamed(context, '/evento');
                     },
                     child: Card(
                       elevation: 4.0,

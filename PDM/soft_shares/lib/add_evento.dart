@@ -1,42 +1,41 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:soft_shares/drawer.dart';
-import 'dropdown_subareas.dart';
-
 import './database/server.dart';
 import './database/var.dart' as globals;
 import 'image_picker_page.dart'; // Import the new ImagePickerPage
 
 void main() {
-  runApp(const Addconteudo());
+  runApp(const AddEvento());
 }
 
-class Addconteudo extends StatefulWidget {
-  const Addconteudo({super.key});
+class AddEvento extends StatefulWidget {
+  const AddEvento({super.key});
 
   @override
-  _AddconteudoState createState() => _AddconteudoState();
+  AddEventoState createState() => AddEventoState();
 }
 
-class _AddconteudoState extends State<Addconteudo> {
+class AddEventoState extends State<AddEvento> {
   File? image;
-  DateTime? selectedDate;
+  DateTime? selectedDateTime;
 
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController nomeController = TextEditingController();
-  TextEditingController localController = TextEditingController();
-  TextEditingController contactoController = TextEditingController();
-  TextEditingController websiteController = TextEditingController();
-  TextEditingController acessibilidadeController = TextEditingController();
-  TextEditingController horarioController = TextEditingController();
+  TextEditingController localizacaoController = TextEditingController();
+  TextEditingController telefoneController = TextEditingController();
+  TextEditingController descricaoController = TextEditingController();
+  TextEditingController dataHoraController = TextEditingController();
+  TextEditingController precoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Novo Conteudo'),
+          title: const Text('Novo Evento'),
           actions: const [
             Icon(Icons.search),
             SizedBox(width: 20),
@@ -144,23 +143,6 @@ class _AddconteudoState extends State<Addconteudo> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('Subárea *'),
-                              // ignore: sized_box_for_whitespace
-                              Container(
-                                width: double.infinity,
-                                child: const DropdownListView(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Center(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
                               const Text('Nome *'),
                               TextFormField(
                                 controller: nomeController,
@@ -188,7 +170,7 @@ class _AddconteudoState extends State<Addconteudo> {
                             children: [
                               const Text('Localização *'),
                               TextFormField(
-                                controller: localController,
+                                controller: localizacaoController,
                                 decoration: const InputDecoration(
                                   hintText: 'Localização',
                                   border: OutlineInputBorder(),
@@ -211,9 +193,92 @@ class _AddconteudoState extends State<Addconteudo> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              const Text('Data e Hora do Evento *'),
+                              TextFormField(
+                                controller: dataHoraController,
+                                decoration: const InputDecoration(
+                                  hintText: 'Data e Hora do Evento',
+                                  border: OutlineInputBorder(),
+                                ),
+                                onTap: () async {
+                                  FocusScope.of(context).requestFocus(FocusNode());
+
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2101),
+                                  );
+
+                                  if (pickedDate != null) {
+                                    TimeOfDay? pickedTime = await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now(),
+                                    );
+
+                                    if (pickedTime != null) {
+                                      setState(() {
+                                        selectedDateTime = DateTime(
+                                          pickedDate.year,
+                                          pickedDate.month,
+                                          pickedDate.day,
+                                          pickedTime.hour,
+                                          pickedTime.minute,
+                                        );
+                                        dataHoraController.text = DateFormat('dd/MM/yyyy HH:mm').format(selectedDateTime!);
+                                      });
+                                    }
+                                  }
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Por favor, insira a data e hora';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Preço *'),
+                              TextFormField(
+                                controller: precoController,
+                                decoration: const InputDecoration(
+                                  hintText: 'Preço',
+                                  border: OutlineInputBorder(),
+                                ),
+                                keyboardType: TextInputType.number,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Por favor, insira o preço';
+                                  } else if (double.tryParse(value) == null || double.tryParse(value)! <= 0) {
+                                    return 'Por favor, insira um preço válido';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                               const Text('Contacto'),
-                              TextField(
-                                controller: contactoController,
+                              TextFormField(
+                                controller: telefoneController,
                                 keyboardType: TextInputType.phone,
                                 decoration: const InputDecoration(
                                   hintText: 'Contacto',
@@ -231,51 +296,14 @@ class _AddconteudoState extends State<Addconteudo> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('Website'),
-                              TextField(
-                                controller: websiteController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Website',
-                                  border: OutlineInputBorder(),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Center(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Horário'),
+                              const Text('Descrição'),
                               TextFormField(
-                                controller: horarioController,
+                                controller: descricaoController,
                                 decoration: const InputDecoration(
-                                  hintText: 'Horário',
+                                  hintText: 'Descrição',
                                   border: OutlineInputBorder(),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Center(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Acessibilidade'),
-                              TextFormField(
-                                controller: acessibilidadeController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Acessibilidade',
-                                  border: OutlineInputBorder(),
-                                ),
+                                maxLines: 4,
                               ),
                             ],
                           ),
@@ -306,7 +334,7 @@ class _AddconteudoState extends State<Addconteudo> {
                   ElevatedButton.icon(
                     onPressed: () {
                       if (_formKey.currentState?.validate() == true) {
-                        _showConfirmationDialog(context);
+                        _showConfirmationDialog();
                       }
                     },
                     icon: const Icon(Icons.add, color: Colors.white),
@@ -325,13 +353,13 @@ class _AddconteudoState extends State<Addconteudo> {
     );
   }
 
-  void _showConfirmationDialog(BuildContext context) {
+  void _showConfirmationDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirmar'),
-          content: const Text('Deseja adicionar este conteúdo?'),
+          content: const Text('Deseja adicionar este evento?'),
           actions: <Widget>[
             TextButton(
               child: const Text('Cancelar'),
@@ -342,44 +370,45 @@ class _AddconteudoState extends State<Addconteudo> {
             TextButton(
               child: const Text('Adicionar'),
               onPressed: () async {
-                globals.nomeP = nomeController.text;
-                globals.moradaP = localController.text;
-                globals.websiteP = websiteController.text.isNotEmpty ? websiteController.text : '';
-                globals.acessibilidadeP = acessibilidadeController.text.isNotEmpty ? acessibilidadeController.text : '';
-                globals.horarioP = horarioController.text.isNotEmpty ? horarioController.text : '';
-                globals.telefoneP = int.tryParse(contactoController.text) ?? 0;
+                globals.nomeEvento = nomeController.text;
+                globals.localizacaoEvento = localizacaoController.text;
+                globals.telefoneEvento = int.tryParse(telefoneController.text) ?? 0;
+                globals.descricaoEvento = descricaoController.text;
+                globals.dataEvento = selectedDateTime ?? DateTime.now();
+                globals.precoEvento = double.tryParse(precoController.text) ?? 0.0;
 
                 try {
                   if (image != null) {
                     await uploadImage(image!);
+                    await createEvento(
+                      globals.idCentro,
+                      globals.idArea,
+                      globals.idUtilizador,
+                      globals.nomeEvento,
+                      globals.dataEvento,
+                      globals.localizacaoEvento,
+                      globals.telefoneEvento,
+                      globals.imagem,
+                      globals.descricaoEvento,
+                      globals.precoEvento,
+                    );
+
+                    if (mounted) {
+                      Navigator.pushReplacementNamed(context, '/eventos');
+                    }
                   } else {
-                    globals.imagem = ''; // Default value if no image is selected
-                  }
-
-                  await createPublicacao(
-                    globals.idCentro,
-                    globals.idArea,
-                    globals.idSubArea,
-                    globals.idUtilizador,
-                    globals.nomeP,
-                    globals.moradaP,
-                    globals.horarioP,
-                    globals.telefoneP,
-                    globals.imagem,
-                    globals.websiteP,
-                    globals.acessibilidadeP,
-                  );
-
-                  if (context.mounted) {
-                    Navigator.pushReplacementNamed(context, '/areas');
+                    print("Imagem não foi selecionada");
+                    throw Exception("Imagem não foi selecionada");
                   }
                 } catch (e) {
-                  print(e);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Erro ao adicionar conteúdo: $e'),
-                    ),
-                  );
+                  print('Erro ao adicionar evento: $e');
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Erro ao adicionar evento: $e'),
+                      ),
+                    );
+                  }
                 }
               },
             ),
