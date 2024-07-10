@@ -154,7 +154,7 @@ class Areas extends StatelessWidget {
                                         topRight: Radius.circular(15.0),
                                       ),
                                       child: Image.network(
-                                        'https://pintbackend-w8pt.onrender.com/images/76b54e6938a0220c8504c1ef8ef80335',
+                                        'https://pintbackend-w8pt.onrender.com/images/b107a49cf3374120243ca15c81b760ac',
                                         fit: BoxFit.cover,
                                         width: double.infinity,
                                       ),

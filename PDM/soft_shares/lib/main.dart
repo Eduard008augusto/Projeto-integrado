@@ -17,6 +17,9 @@ import 'services/token_service.dart';
 //import 'edit_perfil.dart';
 //import 'image_picker_page.dart';
 import 'feed_eventos.dart';
+import 'calendario_eventos.dart';
+
+
 
 
 Future<void> initializeFirebase() async {
@@ -61,6 +64,7 @@ class MainApp extends StatelessWidget {
         '/perfil': (context) =>const Perfil(),
         '/ediperfil': (context) =>const Perfil(),
         '/feedeventos': (context) =>const FeedEventos(),
+        '/calendario': (context) => const CalendarioEventos(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
