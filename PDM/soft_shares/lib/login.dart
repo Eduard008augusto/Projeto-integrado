@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:soft_shares/services/auth_service.dart';
+import './database/var.dart' as globals;
 
 
 import 'database/server.dart';
-import './database/var.dart' as globals;
 import './services/token_service.dart';
 
 void main() {
@@ -83,18 +83,6 @@ class Login extends StatelessWidget {
               )
             ),
 
-            /*Container(
-              margin: const EdgeInsets.only(right: 16.0, bottom: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(onPressed: (){
-                    print('HALLO :)');
-                  }, child: const Text('Esqueci-me da palavra-passe')),
-                ],
-              ),
-            ),*/
-
             const SizedBox(height: 20.0,),
 
             OutlinedButton(onPressed: () async {
@@ -126,8 +114,12 @@ class Login extends StatelessWidget {
                 print(data);
 
                 if (data['success']) {
-                  globals.idUtilizador = data['id_utilizador'];
+                  await TokenManager().storeIdUtilizador(data['id_utilizador']);
+                  globals.idUtilizador = await TokenManager().getIdUtilizador();
                   await TokenManager().storeToken(data['token']);
+                  await TokenManager().storeNomeUtilizador(data['nome']);
+                  globals.nomeUtilizador = await TokenManager().getNomeUtilizador();
+
                   Navigator.pushReplacementNamed(context, '/mapa');
                 } else {
                   showDialog(

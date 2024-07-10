@@ -35,6 +35,8 @@ void main() async {
   await initializeFirebase();
 
   globals.token = await TokenManager().getToken();
+  globals.idUtilizador = await TokenManager().getIdUtilizador();
+  globals.nomeUtilizador = await TokenManager().getNomeUtilizador();
   
   runApp(const MainApp());
 }
@@ -58,9 +60,9 @@ class MainApp extends StatelessWidget {
         '/settings': (context) => const SettingsPage(),
         '/conteudo': (context) => const Conteudo(),
         '/addconteudo': (context) => const Addconteudo(),
-        '/perfil': (context) =>const Perfil(),
-        '/ediperfil': (context) =>const Perfil(),
-        '/feedeventos': (context) =>FeedEventos(),
+        '/perfil': (context) => const Perfil(),
+        '/ediperfil': (context) => const Perfil(),
+        '/feedeventos': (context) => const FeedEventos(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
