@@ -15,6 +15,11 @@ String? token = '';
 
 var imagem = '';
 
+var idFavorito = 0;
+var idConteudo = 0;
+var idSubAreaFAV = 0;
+var idAvaliacao = 0;
+
 // Registo USER
 var idCentroUSER = 1;
 

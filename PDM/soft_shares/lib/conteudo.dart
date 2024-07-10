@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, library_private_types_in_public_api
+// ignore_for_file: avoid_print, library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
@@ -8,16 +8,16 @@ import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 // Import the photo picker file
 
-void main() {
-  runApp(const MaterialApp(
-    home: Conteudo(),
-  ));
-}
+bool isFavorite = false;
+bool avaliado = false;
+
+int estrela = 0;
+int preco = 0;
 
 class Conteudo extends StatelessWidget {
   const Conteudo({super.key});
 
-  void _showRatingDialog(BuildContext context) {
+  void _showRatingDialog(BuildContext context, int estrelas, int preco) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -38,7 +38,7 @@ class Conteudo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const CustomStarRating(rating: 4.0), // Ajuste para número
+                CustomStarRating(rating: estrela),
                 const SizedBox(height: 16),
                 const Text(
                   'Classificação do Preço',
@@ -48,10 +48,17 @@ class Conteudo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                const CustomEuroRating(rating: 2),
+                CustomEuroRating(rating: preco),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    
+                    if(avaliado){
+                      await updateAvaliacao(globals.idAvaliacao, globals.idPublicacao, globals.idUtilizador, estrelas, preco);
+                    } else {
+                      await createAvaliacao(globals.idPublicacao, globals.idUtilizador, estrelas, preco);
+                    }
+
                     Navigator.of(context).pop();
                   },
                   child: const Text('Classificar'),
@@ -77,6 +84,26 @@ class Conteudo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> check() async {
+      try {
+        var data = await checkAvaliacao(globals.idUtilizador, globals.idPublicacao);
+        if(data['Avaliou']){
+          avaliado = true;
+          Map<String, dynamic> res = Map<String, dynamic>.from(data['avaliacao']);
+          estrela = res['AVALIACAOGERAL']!;
+          print(estrela);
+          preco = res['AVALIACAOPRECO'];
+        } else {
+          avaliado = false;
+        }
+      } catch (e) {
+        print('Erro ao verificar avaliação: $e');
+      }
+    }
+
+
+    check();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -107,9 +134,11 @@ class Conteudo extends StatelessWidget {
             if (publicacao.isEmpty) {
               return const Center(child: Text('Nenhuma publicação encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
             }
-            double rating = publicacao['mediaAvaliacoesGerais']?.toDouble() ?? 0.0;
-            int priceRating = publicacao['mediaAvaliacoesPreco'] ?? 0;
-            int totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']?.toString() ?? '0') ?? 0;
+            double mediaAvaliacoesGerais = publicacao['mediaAvaliacoesGerais'];
+            int ratingEstrela = mediaAvaliacoesGerais.toInt();
+            int ratingPreco = publicacao['mediaAvaliacoesPreco'] ?? 0;
+            int totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']) ?? 0;
+            globals.idSubAreaFAV = publicacao['ID_SUBAREA'];
 
             return SingleChildScrollView(
               child: Column(
@@ -187,14 +216,14 @@ class Conteudo extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 5),
                                     Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: List.generate(5, (index) {
-                                        return Icon(
-                                          index < rating ? Icons.star : Icons.star_border,
-                                          color: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
-                                        );
-                                      }),
-                                    ),
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: List.generate(5, (index) {
+                                          return Icon(
+                                            index < ratingEstrela ? Icons.star : Icons.star_border,
+                                            color: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+                                          );
+                                        }),
+                                      ),
                                   ],
                                 ),
                               ],
@@ -205,7 +234,7 @@ class Conteudo extends StatelessWidget {
                               children: List.generate(3, (index) {
                                 return Icon(
                                   Icons.euro,
-                                  color: index < priceRating
+                                  color: index < ratingPreco
                                       ? Colors.black
                                       : Colors.black.withOpacity(0.3),
                                 );
@@ -346,7 +375,7 @@ class Conteudo extends StatelessWidget {
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            _showRatingDialog(context); 
+                            _showRatingDialog(context, ratingEstrela, ratingPreco); 
                           },
                           icon: const Icon(Icons.star, color: Colors.white),
                           label: const Text('Classificar'),
@@ -376,37 +405,90 @@ class FavoriteButton extends StatefulWidget {
 }
 
 class _FavoriteButtonState extends State<FavoriteButton> {
-  bool isFavorite = false;
+  late Future<Map<String, dynamic>> _futureFavorite;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureFavorite = setFavorito();
+  }
+
+  Future<Map<String, dynamic>> setFavorito() async {
+    var data = await isFavorito(globals.idUtilizador, globals.idPublicacao);
+    setState(() {
+      isFavorite = data['isFavorito'];
+      if(isFavorite){
+        globals.idFavorito = data['IDFAVORITO'];
+      }
+    });
+    return data;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        isFavorite ? Icons.favorite : Icons.favorite_border,
-        color: isFavorite ? const Color.fromARGB(0xFF, 0xF0, 0x6C, 0x9F) : Colors.white,
-        size: 30.0,
-      ),
-      onPressed: () {
-        setState(() {
-          isFavorite = !isFavorite;
-        });
+    return FutureBuilder<Map<String, dynamic>>(
+      future: _futureFavorite,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          print(snapshot.error);
+          print(snapshot.stackTrace);
+          return const Icon(Icons.error);
+        } else {
+          return IconButton(
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? const Color.fromARGB(0xFF, 0xF0, 0x6C, 0x9F) : Colors.white,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              try {
+                if (isFavorite) {
+                  var res = await deleteFavorito(globals.idFavorito);
+                  if (res['success']) {
+                    setState(() {
+                      isFavorite = false;
+                    });
+                  } else {
+                    throw Exception('Falha ao atualizar favorito');
+                  }
+                } else {
+                  var res = await createFavorito(globals.idCentro, globals.idArea, globals.idSubAreaFAV, globals.idPublicacao, globals.idUtilizador);
+                  print(res);
+                  if (res['success']) {
+                    setState(() {
+                      isFavorite = true;
+                    });
+                  } else {
+                    throw Exception('Falha ao atualizar favorito');
+                  }
+                }
+              } catch (e) {
+                print('Erro: $e');
+              }
+            },
+          );
+        }
       },
     );
   }
 }
 
+
 class CustomStarRating extends StatelessWidget {
-  final double rating;
+  final int rating;
 
   const CustomStarRating({required this.rating, super.key});
 
   @override
   Widget build(BuildContext context) {
     return RatingBar.builder(
-      initialRating: rating,
+      initialRating: rating.toDouble(),
       minRating: 1,
       direction: Axis.horizontal,
       itemCount: 5,
+      //allowHalfRating: true,
       itemSize: 20.0,
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
       itemBuilder: (context, _) => const Icon(
