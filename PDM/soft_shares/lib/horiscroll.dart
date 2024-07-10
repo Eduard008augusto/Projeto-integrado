@@ -6,7 +6,7 @@ import './database/var.dart' as globals;
 
 class HorizontalListView extends StatelessWidget {
   const HorizontalListView({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,7 +21,15 @@ class HorizontalListView extends StatelessWidget {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Nenhum dado disponível'));
           } else {
-            final items = snapshot.data!;
+            final items = [
+              {
+                'ID_SUBAREA': 0,
+                'NOME': 'Todos',
+                'IMAGEMSUBAREA': '82af5c884b93402a7cc253a3f105d291'
+              },
+              ...snapshot.data!
+            ];
+
             if (items.length <= 5) {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -47,7 +55,7 @@ class HorizontalListView extends StatelessWidget {
               );
             } else {
               return SizedBox(
-                height: 100, 
+                height: 100,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: items.length,
@@ -59,7 +67,7 @@ class HorizontalListView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               globals.idSubArea = items[index]['ID_SUBAREA'];
                             },
                             child: Column(
