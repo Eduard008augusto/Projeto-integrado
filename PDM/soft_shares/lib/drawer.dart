@@ -85,7 +85,7 @@ class MenuDrawer extends StatelessWidget {
               'Eventos',
               style: TextStyle(fontSize: 18.0),
             ),
-            onTap: () { Navigator.pushNamed(context, '/feed'); },
+            onTap: () { Navigator.pushNamed(context, '/feedeventos'); },
           ),
           
           ListTile(

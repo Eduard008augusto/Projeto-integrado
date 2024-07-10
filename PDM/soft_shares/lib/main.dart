@@ -60,7 +60,7 @@ class MainApp extends StatelessWidget {
         '/addconteudo': (context) => const Addconteudo(),
         '/perfil': (context) =>const Perfil(),
         '/ediperfil': (context) =>const Perfil(),
-        '/feedeventos': (context) =>FeedEventos(),
+        '/feedeventos': (context) =>const FeedEventos(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
