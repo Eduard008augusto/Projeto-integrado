@@ -355,7 +355,7 @@ class _AddconteudoState extends State<Addconteudo> {
                   if (image != null) {
                     await uploadImage(image!);
                   } else {
-                    globals.imagem = ''; // Default value if no image is selected
+                    globals.imagem = '';
                   }
 
                   await createPublicacao(

@@ -241,7 +241,7 @@ Future<List<Map<String, dynamic>>> fetchEventos(int idCentro) async {
   }
 }
 
-Future<Map<String, dynamic>> fetchEvento(int idEvento) async {
+Future<Map<String, dynamic>> fetchEvento(var idEvento) async {
   final response = await http.get(Uri.parse('${baseUrl}evento/get/$idEvento'));
   var data = jsonDecode(response.body);
   if (data['success']) {
@@ -447,5 +447,91 @@ Future<Map<String, dynamic>> updateAvaliacao(var id, var conteudo, var user, var
     }
   } catch (e) {
     throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+Future<Map<String, dynamic>> checkInscricao(var user, var evento) async {
+  final response = await http.get(Uri.parse('${baseUrl}inscricaoevento/isInscrito/$user/$evento'));
+  final data = jsonDecode(response.body);
+  print(data);
+  if(data['success']){
+    if(data['isInscrito']){
+      globals.idEventoINSC = data['ID_INSCRICAO'];
+    }
+    return data;
+  } else {
+    throw Exception('Falha na verificação');
+  }
+}
+
+Future<Map<String, dynamic>> createInscricao(var evento, var user) async {
+  final url = Uri.parse('${baseUrl}inscricaoevento/create');
+
+  final body = json.encode({
+    'ID_EVENTO': evento,
+    'ID_UTILIZADOR': user
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  if (response.statusCode == 201) {
+    try {
+      var data = jsonDecode(response.body) as Map<String, dynamic>;
+      print(data);
+
+      if (data['success']) {
+        return data;
+      } else {
+        throw Exception('Falha ao criar avaliação: ${data['message']}');
+      }
+    } catch (e) {
+      throw Exception('Erro ao decodificar a resposta JSON: $e');
+    }
+  } else {
+    throw Exception('Erro na solicitação: ${response.statusCode}');
+  }
+}
+
+Future<Map<String, dynamic>> deleteInscricao(var id) async {
+  final url = Uri.parse('${baseUrl}inscricaoevento/delete');
+
+  final body = json.encode({'id': id});
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  if (response.statusCode == 200) {
+    try {
+      var data = jsonDecode(response.body) as Map<String, dynamic>;
+      print(data);
+
+      if (data['success']) {
+        return data;
+      } else {
+        throw Exception('Falha ao eliminar favorito: ${data['message']}');
+      }
+    } catch (e) {
+      throw Exception('Erro ao decodificar a resposta JSON: $e');
+    }
+  } else {
+    throw Exception('Erro na solicitação: ${response.statusCode}');
+  }
+}
+
+Future<List<Map<String, dynamic>>> fetchEventosInscritos(var user) async {
+  final response = await http.get(Uri.parse('${baseUrl}inscricaoevento/inscricoes/$user'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar favoritos');
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
@@ -68,9 +70,9 @@ class Evento extends StatelessWidget {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(15.0),
-                                child: evento['imagem'] != null 
+                                child: evento['IMAGEMEVENTO'] != null 
                                   ? Image.network(
-                                      'https://pintbackend-w8pt.onrender.com/images/${evento['imagem']}',
+                                      'https://pintbackend-w8pt.onrender.com/images/${evento['IMAGEMEVENTO']}',
                                       fit: BoxFit.cover,
                                       width: double.infinity,
                                     )
@@ -105,14 +107,14 @@ class Evento extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              evento['nome'] ?? 'Nome não disponível',
+                              evento['NOME'] ?? 'Nome não disponível',
                               style: const TextStyle(fontSize: 20.0),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              evento['descricao'] ?? 'Descrição não disponível',
+                              evento['DESCRICAO'] ?? 'Descrição não disponível',
                               style: const TextStyle(fontSize: 16.0),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 4,
@@ -130,7 +132,7 @@ class Evento extends StatelessWidget {
                                 const SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    evento['localizacao'] ?? 'Localização não disponível',
+                                    evento['LOCALIZACAO'] ?? 'Localização não disponível',
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
@@ -151,8 +153,8 @@ class Evento extends StatelessWidget {
                                 const SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    evento['dataHora'] != null
-                                      ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.parse(evento['dataHora']))
+                                    evento['DATA'] != null
+                                      ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.parse(evento['DATA']))
                                       : 'Data e hora não disponíveis',
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
@@ -174,7 +176,7 @@ class Evento extends StatelessWidget {
                                 const SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    evento['telefone'] ?? 'Telefone não disponível',
+                                    evento['TELEFONE'].toString(),
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
@@ -195,8 +197,8 @@ class Evento extends StatelessWidget {
                                 const SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    evento['preco'] != null 
-                                      ? evento['preco'].toString() 
+                                    evento['PRECO'] != null 
+                                      ? evento['PRECO'].toString() 
                                       : 'Preço não disponível',
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
@@ -217,7 +219,7 @@ class Evento extends StatelessWidget {
                       children: [
                         ElevatedButton.icon(
                           onPressed: () {
-                            _launchGoogleMaps(evento['localizacao']);
+                            _launchGoogleMaps(evento['LOCALIZACAO']);
                           },
                           icon: const Icon(Icons.directions, color: Colors.white),
                           label: const Text('Direções'),
@@ -227,8 +229,50 @@ class Evento extends StatelessWidget {
                           ),
                         ),
                         ElevatedButton.icon(
-                          onPressed: () {
-                            // Lógica de inscrição
+                          onPressed: () async {
+                            var data = await checkInscricao(globals.idUtilizador, evento['ID_EVENTO']);
+                            bool inscrito = data['isInscrito'];
+                            if(inscrito){
+                              await deleteInscricao(data['ID_INSCRICAO']);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    icon: const Icon(Icons.check),
+                                    title: const Text('Sucesso'),
+                                    content: const Text('Você está inscrito!'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            } else {
+                              await createInscricao(evento['ID_EVENTO'], globals.idUtilizador);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    icon: const Icon(Icons.check),
+                                    title: const Text('Sucesso'),
+                                    content: const Text('Sua inscrição foi anulada!'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                           },
                           icon: const Icon(Icons.how_to_reg, color: Colors.white),
                           label: const Text('Inscrever'),
