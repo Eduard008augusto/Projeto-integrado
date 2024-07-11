@@ -80,7 +80,7 @@ class Perfil extends StatelessWidget {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator(),);
                       } else if (snapshot.hasError) {
-                        return Center(child: Text('Erro: ${snapshot.error}\n\n${snapshot.stackTrace}'),);
+                        return Center(child: Text('Erro: ${snapshot.error}'),);
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Center(child: Text('Nenhuma publicação encontrada'),);
                       } else {
