@@ -85,16 +85,6 @@ class MenuDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.settings_outlined, size: 30.0),
-            title: const Text(
-              "Definições",
-              style: TextStyle(fontSize: 18.0),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/settings');
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.logout_outlined),
             title: const Text(
               'Terminar Sessão',

@@ -38,12 +38,11 @@ class AddEventoState extends State<AddEvento> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Novo Evento'),
-          actions: const [
-            Icon(Icons.search),
-            SizedBox(width: 20),
-            Icon(Icons.calendar_month_outlined),
-            SizedBox(width: 20),
-            Icon(Icons.filter_alt_outlined),
+          actions: [
+            IconButton(onPressed: (){
+              Navigator.pushNamed(context, '/calendario');
+            }, icon: const Icon(Icons.calendar_month_outlined),),
+            const SizedBox(width: 20),
           ],
         ),
         drawer: const MenuDrawer(),

@@ -95,11 +95,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
             endIndent: 20,
             color: Color.fromARGB(136, 41, 40, 40),
           ),
-          _buildListTile(
-            icon: Icons.settings_outlined,
-            title: 'Definições',
-            routeName: '/settings',
-          ),
           ListTile(
             leading: const Icon(Icons.logout_outlined),
             title: const Text(

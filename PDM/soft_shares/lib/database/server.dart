@@ -380,7 +380,9 @@ Future<Map<String, dynamic>> checkAvaliacao(var user, var conteudo) async {
   final data = jsonDecode(response.body);
   print(data);
   if(data['success']){
-    globals.idAvaliacao = data['ID_AVALIACAO'];
+    if(data['Avaliou']){
+      globals.idAvaliacao = data['ID_AVALIACAO'];
+    }
     return data;
   } else {
     throw Exception('Falha na verificação');
