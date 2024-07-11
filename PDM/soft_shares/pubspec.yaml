@@ -48,6 +48,17 @@ flutter:
     - assets/images/Distritos/VilaReal.svg
     - assets/images/Distritos/Viseu.svg
     - assets/images/Distritos/Lisboa.svg
+    - assets/images/Banner/lisboa.png
+    - assets/images/Banner/fundao.png
+    - assets/images/Banner/portalegre.png
+    - assets/images/Banner/santarem.png
+    - assets/images/Banner/viseu.png
+    - assets/images/Banner/vilareal.png
+
+
+
+
+
 
 flutter_icons:
   android: true
