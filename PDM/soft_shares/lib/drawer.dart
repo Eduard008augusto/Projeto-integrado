@@ -15,9 +15,9 @@ class MenuDrawer extends StatelessWidget {
           const SizedBox(height: 40.0),
           ListTile(
             leading: const Icon(Icons.account_circle_outlined, size: 40.0),
-            title: Text(
-              globals.nomeUtilizador!,
-              style: const TextStyle(fontSize: 18.0),
+            title: const Text(
+              "Perfil",
+              style: TextStyle(fontSize: 18.0),
             ),
             onTap: () {
               Navigator.pushNamed(context, '/perfil');
