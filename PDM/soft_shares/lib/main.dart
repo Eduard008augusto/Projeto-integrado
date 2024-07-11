@@ -52,7 +52,7 @@ class MainApp extends StatelessWidget {
       title: 'Soft Shares',
       initialRoute: '/',
       routes: {
-        '/': (context) => globals.token == null ? Login() : const Mapa(),
+        '/': (context) => globals.token == null || globals.token!.isEmpty ? Login() : const Mapa(),
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),

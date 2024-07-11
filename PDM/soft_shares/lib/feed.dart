@@ -63,7 +63,6 @@ class FeedState extends State<Feed> {
                     itemBuilder: (context, index) {
                       final publicacao = publicacoes[index];
                       var rating = publicacao['mediaAvaliacoesGerais'];
-                      print(rating);
                       var priceRating = publicacao['mediaAvaliacoesPreco'];
 
                       return Padding(
@@ -129,16 +128,15 @@ class FeedState extends State<Feed> {
                                 const SizedBox(height: 6),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: List.generate(3, (index) {
-                                      return Icon(
-                                        Icons.euro,
-                                        color: index < priceRating
-                                            ? Colors.black
-                                            : Colors.black.withOpacity(0.3),
-                                      );
-                                    }),
+                                  child: RatingBarIndicator(
+                                    rating: priceRating.toDouble(),
+                                    itemBuilder: (context, index) => const Icon(
+                                      Icons.euro,
+                                      color: Colors.black,
+                                    ),
+                                    itemCount: 3,
+                                    itemSize: 20.0,
+                                    direction: Axis.horizontal,
                                   ),
                                 ),
                                 const SizedBox(height: 6),
