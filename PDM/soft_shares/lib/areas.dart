@@ -56,7 +56,7 @@ class Areas extends StatelessWidget {
           ),
           Expanded(
             child: FutureBuilder<List<Map<String, dynamic>>>(
-              future: fetchAreas(),
+              future: fetchAreas(globals.idCentro),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());

@@ -52,6 +52,9 @@ class Conteudo extends StatelessWidget {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {
+
+                    print(estrelas);
+                    print(preco);
                     
                     if(avaliado){
                       await updateAvaliacao(globals.idAvaliacao, globals.idPublicacao, globals.idUtilizador, estrelas, preco);
@@ -101,7 +104,6 @@ class Conteudo extends StatelessWidget {
       }
     }
 
-
     check();
 
     return Scaffold(
@@ -134,7 +136,7 @@ class Conteudo extends StatelessWidget {
             if (publicacao.isEmpty) {
               return const Center(child: Text('Nenhuma publicação encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
             }
-            double mediaAvaliacoesGerais = publicacao['mediaAvaliacoesGerais'];
+            var mediaAvaliacoesGerais = publicacao['mediaAvaliacoesGerais'];
             int ratingEstrela = mediaAvaliacoesGerais.toInt();
             int ratingPreco = publicacao['mediaAvaliacoesPreco'] ?? 0;
             int totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']) ?? 0;
