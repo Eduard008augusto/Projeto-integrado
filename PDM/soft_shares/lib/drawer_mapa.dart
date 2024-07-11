@@ -55,15 +55,6 @@ class MenuDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            leading: const Icon(Icons.dashboard_outlined),
-            title: const Text(
-              'Areas',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            onTap: () { Navigator.pushNamed(context, '/areas'); },
-          ),
-
-          ListTile(
             leading: const Icon(Icons.favorite_border),
             title: const Text(
               'Favoritos',
@@ -78,15 +69,6 @@ class MenuDrawer extends StatelessWidget {
             indent: 20,
             endIndent: 20,
             color: Color.fromARGB(136, 41, 40, 40),
-          ),
-
-          ListTile(
-            leading: const Icon(Icons.calendar_month_outlined),
-            title: const Text(
-              'Eventos',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            onTap: () { Navigator.pushNamed(context, '/feedeventos'); },
           ),
           
           ListTile(
@@ -129,8 +111,6 @@ class MenuDrawer extends StatelessWidget {
                   );
                 },
               );
-
-              
             },
           ),
 
