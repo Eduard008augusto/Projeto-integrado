@@ -1,12 +1,9 @@
-// ignore_for_file: avoid_print, library_private_types_in_public_api, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-// Import the photo picker file
 
 bool isFavorite = false;
 bool avaliado = false;
@@ -55,8 +52,7 @@ class Conteudo extends StatelessWidget {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {
-                    
-                    if(avaliado){
+                    if (avaliado) {
                       await updateAvaliacao(globals.idAvaliacao, globals.idPublicacao, globals.idUtilizador, estrelaBD, precoBD);
                     } else {
                       await createAvaliacao(globals.idPublicacao, globals.idUtilizador, estrelaBD, precoBD);
@@ -76,13 +72,9 @@ class Conteudo extends StatelessWidget {
 
   Future<void> _launchGoogleMaps(String address) async {
     final query = Uri.encodeComponent(address);
-    final googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=$query';
+    final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
 
-    if (await canLaunchUrlString(googleMapsUrl)) {
-      await launchUrlString(googleMapsUrl);
-    } else {
-      throw 'Could not launch $googleMapsUrl';
-    }
+    await launchUrl(googleMapsUrl);
   }
 
   @override
@@ -90,7 +82,7 @@ class Conteudo extends StatelessWidget {
     Future<void> check() async {
       try {
         var data = await checkAvaliacao(globals.idUtilizador, globals.idPublicacao);
-        if(data['Avaliou']){
+        if (data['Avaliou']) {
           avaliado = true;
           Map<String, dynamic> res = Map<String, dynamic>.from(data['avaliacao']);
           estrela = res['AVALIACAOGERAL']!;
@@ -412,7 +404,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     var data = await isFavorito(globals.idUtilizador, globals.idPublicacao);
     setState(() {
       isFavorite = data['isFavorito'];
-      if(isFavorite){
+      if (isFavorite) {
         globals.idFavorito = data['IDFAVORITO'];
       }
     });
@@ -476,7 +468,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   }
 }
 
-
 class CustomStarRating extends StatelessWidget {
   final int rating;
 
@@ -489,7 +480,6 @@ class CustomStarRating extends StatelessWidget {
       minRating: 1,
       direction: Axis.horizontal,
       itemCount: 5,
-      //allowHalfRating: true,
       itemSize: 20.0,
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
       itemBuilder: (context, _) => const Icon(
