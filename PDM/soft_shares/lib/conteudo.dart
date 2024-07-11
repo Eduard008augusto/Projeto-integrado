@@ -20,7 +20,7 @@ int precoBD = 0;
 class Conteudo extends StatelessWidget {
   const Conteudo({super.key});
 
-  void _showRatingDialog(BuildContext context, int estrelas, int preco) {
+  void _showRatingDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -41,7 +41,7 @@ class Conteudo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                CustomStarRating(rating: estrela),
+                CustomStarRating(rating: estrelaBD),
                 const SizedBox(height: 16),
                 const Text(
                   'Classificação do Preço',
@@ -51,7 +51,7 @@ class Conteudo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                CustomEuroRating(rating: preco),
+                CustomEuroRating(rating: precoBD),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {
@@ -99,8 +99,8 @@ class Conteudo extends StatelessWidget {
         } else {
           avaliado = false;
         }
-      } catch (e) {
-        print('Erro ao verificar avaliação: $e');
+      } catch (e, stackTrace) {
+        print('Erro ao verificar avaliação: $e\n\n$stackTrace');
       }
     }
 
@@ -370,7 +370,7 @@ class Conteudo extends StatelessWidget {
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            _showRatingDialog(context, ratingEstrela, ratingPreco); 
+                            _showRatingDialog(context); 
                           },
                           icon: const Icon(Icons.star, color: Colors.white),
                           label: const Text('Classificar'),
@@ -489,7 +489,6 @@ class CustomStarRating extends StatelessWidget {
       minRating: 1,
       direction: Axis.horizontal,
       itemCount: 5,
-      //allowHalfRating: true,
       itemSize: 20.0,
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
       itemBuilder: (context, _) => const Icon(

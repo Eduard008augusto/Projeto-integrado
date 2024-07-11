@@ -98,7 +98,7 @@ class Favoritos extends StatelessWidget {
                                     Icons.star,
                                     color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
                                   ),
-                                  itemCount: 3,
+                                  itemCount: 5,
                                   itemSize: 20.0,
                                   direction: Axis.horizontal,
                                 ),

@@ -10,7 +10,6 @@ import 'registo.dart';
 import 'areas.dart';
 import 'feed.dart';
 import 'mapa.dart';
-import 'settings.dart';
 import 'add_conteudo.dart';
 import 'perfil.dart';
 import 'services/token_service.dart';
@@ -58,7 +57,6 @@ class MainApp extends StatelessWidget {
         '/registo': (context) => Registar(),
         '/feed': (context) => const Feed(),
         '/mapa': (context) => const Mapa(),
-        '/settings': (context) => const SettingsPage(),
         '/conteudo': (context) => const Conteudo(),
         '/addconteudo': (context) => const Addconteudo(),
         '/perfil': (context) => const Perfil(),
