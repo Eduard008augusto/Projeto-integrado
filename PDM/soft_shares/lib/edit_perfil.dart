@@ -128,18 +128,16 @@ class _EditarPerfilState extends State<EditarPerfil> {
                     
                     const SizedBox(height: 20.0),
                     ElevatedButton(onPressed: () async {
-                      final DateTime? pickedDate = await showDatePicker(
+                      pickedDate = await showDatePicker(
                         context: context,
-                        initialDate: DateTime.now(),
+                        initialDate: pickedDate,
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2101),
                         locale: const Locale('pt', 'PT'),
                       );
                     
                       if(pickedDate != null){
-                        setState(() {
-                          globals.dataNascimento = pickedDate;
-                        });
+                        globals.dataNascimento = pickedDate!;
                       }
                     }, child: const Text('Escolher Data de Nascimento')),
                     const Divider(
@@ -214,6 +212,8 @@ class _EditarPerfilState extends State<EditarPerfil> {
                 if (selectedImage != null) {
                   await uploadImage(selectedImage!);
                 }
+
+                print(globals.imagem);
                 
                 await updateUser(
                   globals.idUtilizador,
