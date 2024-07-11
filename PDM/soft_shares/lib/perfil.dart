@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'drawer.dart';
 import 'package:soft_shares/edit_perfil.dart';
 import './database/server.dart';
@@ -93,7 +94,7 @@ class Perfil extends StatelessWidget {
                               var priceRating = publicacao['mediaAvaliacoesPreco'] ?? 0; 
 
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
                                 child: GestureDetector(
                                   onTap: () {
                                     globals.idPublicacao = publicacao['ID_CONTEUDO'];
@@ -139,14 +140,15 @@ class Perfil extends StatelessWidget {
                                                 style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                               ),
                                               const SizedBox(width: 5), 
-                                              Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: List.generate(5, (rating) {
-                                                  return Icon(
-                                                    5 < rating ? Icons.star : Icons.star_border,
-                                                    color: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
-                                                  );
-                                                }),
+                                              RatingBarIndicator(
+                                                rating: rating.toDouble(),
+                                                itemBuilder: (context, index) => const Icon(
+                                                  Icons.star,
+                                                  color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+                                                ),
+                                                itemCount: 5,
+                                                itemSize: 20.0,
+                                                direction: Axis.horizontal,
                                               ),
                                             ],
                                           ),
@@ -154,16 +156,15 @@ class Perfil extends StatelessWidget {
                                         const SizedBox(height: 6), 
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: List.generate(3, (priceRating) {
-                                              return Icon(
-                                                Icons.euro,
-                                                color: 3 < priceRating
-                                                    ? Colors.black
-                                                    : Colors.black.withOpacity(0.3),
-                                              );
-                                            }),
+                                          child: RatingBarIndicator(
+                                            rating: rating.toDouble(),
+                                            itemBuilder: (context, index) => const Icon(
+                                              Icons.euro,
+                                              color: Colors.black,
+                                            ),
+                                            itemCount: 3,
+                                            itemSize: 20.0,
+                                            direction: Axis.horizontal,
                                           ),
                                         ),
                                         const SizedBox(height: 6), 

@@ -240,7 +240,7 @@ class Evento extends StatelessWidget {
                                   return AlertDialog(
                                     icon: const Icon(Icons.check),
                                     title: const Text('Sucesso'),
-                                    content: const Text('Você está inscrito!'),
+                                    content: const Text('Sua inscrição foi anulada!'),
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
@@ -260,7 +260,7 @@ class Evento extends StatelessWidget {
                                   return AlertDialog(
                                     icon: const Icon(Icons.check),
                                     title: const Text('Sucesso'),
-                                    content: const Text('Sua inscrição foi anulada!Você está inscrito!'),
+                                    content: const Text('Você está inscrito!'),
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
