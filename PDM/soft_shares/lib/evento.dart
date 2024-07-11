@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
-import 'package:intl/intl.dart';  
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -18,13 +18,9 @@ class Evento extends StatelessWidget {
 
   Future<void> _launchGoogleMaps(String address) async {
     final query = Uri.encodeComponent(address);
-    final googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=$query';
+    final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
 
-    if (await canLaunchUrlString(googleMapsUrl)) {
-      await launchUrlString(googleMapsUrl);
-    } else {
-      throw 'Could not launch $googleMapsUrl';
-    }
+    await launchUrl(googleMapsUrl);
   }
 
   @override
@@ -70,13 +66,13 @@ class Evento extends StatelessWidget {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(15.0),
-                                child: evento['IMAGEMEVENTO'] != null 
-                                  ? Image.network(
-                                      'https://pintbackend-w8pt.onrender.com/images/${evento['IMAGEMEVENTO']}',
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                    )
-                                  : const Placeholder(),
+                                child: evento['IMAGEMEVENTO'] != null
+                                    ? Image.network(
+                                        'https://pintbackend-w8pt.onrender.com/images/${evento['IMAGEMEVENTO']}',
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                      )
+                                    : const Placeholder(),
                               ),
                               Positioned(
                                 top: 10.0,
@@ -129,7 +125,7 @@ class Evento extends StatelessWidget {
                             Row(
                               children: [
                                 const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                const SizedBox(width: 3),
                                 Expanded(
                                   child: Text(
                                     evento['LOCALIZACAO'] ?? 'Localização não disponível',
@@ -150,12 +146,12 @@ class Evento extends StatelessWidget {
                             Row(
                               children: [
                                 const Icon(Icons.access_time, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                const SizedBox(width: 3),
                                 Expanded(
                                   child: Text(
                                     evento['DATA'] != null
-                                      ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.parse(evento['DATA']))
-                                      : 'Data e hora não disponíveis',
+                                        ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.parse(evento['DATA']))
+                                        : 'Data e hora não disponíveis',
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
@@ -173,7 +169,7 @@ class Evento extends StatelessWidget {
                             Row(
                               children: [
                                 const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                const SizedBox(width: 3),
                                 Expanded(
                                   child: Text(
                                     evento['TELEFONE'].toString(),
@@ -194,12 +190,12 @@ class Evento extends StatelessWidget {
                             Row(
                               children: [
                                 const Icon(Icons.euro, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                const SizedBox(width: 3),
                                 Expanded(
                                   child: Text(
-                                    evento['PRECO'] != null 
-                                      ? evento['PRECO'].toString() 
-                                      : 'Preço não disponível',
+                                    evento['PRECO'] != null
+                                        ? evento['PRECO'].toString()
+                                        : 'Preço não disponível',
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
@@ -232,7 +228,7 @@ class Evento extends StatelessWidget {
                           onPressed: () async {
                             var data = await checkInscricao(globals.idUtilizador, evento['ID_EVENTO']);
                             bool inscrito = data['isInscrito'];
-                            if(inscrito){
+                            if (inscrito) {
                               await deleteInscricao(data['ID_INSCRICAO']);
                               showDialog(
                                 context: context,
