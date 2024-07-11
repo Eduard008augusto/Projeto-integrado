@@ -26,6 +26,7 @@ dependencies:
   flutter_rating_bar:
   shared_preferences:
   table_calendar:
+  connectivity_plus:
 
 dev_dependencies:
   flutter_test:

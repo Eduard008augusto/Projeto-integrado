@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:soft_shares/database/connection_check.dart';
+import 'package:soft_shares/database/database.dart';
 import 'firebase_options.dart';
 
 import './database/var.dart' as globals;
@@ -37,6 +39,14 @@ void main() async {
   globals.token = await TokenManager().getToken();
   globals.idUtilizador = await TokenManager().getIdUtilizador();
   globals.nomeUtilizador = await TokenManager().getNomeUtilizador();
+
+  final DatabaseHelper bd = DatabaseHelper.instance;
+
+  int result =  await ConnectionTeste().testConnection();
+  
+  if(result == 1){
+    await bd.atualizarDados();
+  }
   
   runApp(const MainApp());
 }
