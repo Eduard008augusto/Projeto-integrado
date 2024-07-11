@@ -157,7 +157,7 @@ class Perfil extends StatelessWidget {
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                           child: RatingBarIndicator(
-                                            rating: rating.toDouble(),
+                                            rating: priceRating.toDouble(),
                                             itemBuilder: (context, index) => const Icon(
                                               Icons.euro,
                                               color: Colors.black,
