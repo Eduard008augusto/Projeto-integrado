@@ -14,6 +14,9 @@ bool avaliado = false;
 int estrela = 0;
 int preco = 0;
 
+int estrelaBD = 0;
+int precoBD = 0;
+
 class Conteudo extends StatelessWidget {
   const Conteudo({super.key});
 
@@ -52,14 +55,11 @@ class Conteudo extends StatelessWidget {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {
-
-                    print(estrelas);
-                    print(preco);
                     
                     if(avaliado){
-                      await updateAvaliacao(globals.idAvaliacao, globals.idPublicacao, globals.idUtilizador, estrelas, preco);
+                      await updateAvaliacao(globals.idAvaliacao, globals.idPublicacao, globals.idUtilizador, estrelaBD, precoBD);
                     } else {
-                      await createAvaliacao(globals.idPublicacao, globals.idUtilizador, estrelas, preco);
+                      await createAvaliacao(globals.idPublicacao, globals.idUtilizador, estrelaBD, precoBD);
                     }
 
                     Navigator.of(context).pop();
@@ -113,13 +113,6 @@ class Conteudo extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
-        actions: const [
-          Icon(Icons.search),
-          SizedBox(width: 20),
-          Icon(Icons.calendar_month_outlined),
-          SizedBox(width: 20),
-          Icon(Icons.filter_alt_outlined),
-        ],
       ),
       drawer: const MenuDrawer(),
       body: FutureBuilder<Map<String, dynamic>>(
@@ -137,9 +130,9 @@ class Conteudo extends StatelessWidget {
               return const Center(child: Text('Nenhuma publicação encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
             }
             var mediaAvaliacoesGerais = publicacao['mediaAvaliacoesGerais'];
-            int ratingEstrela = mediaAvaliacoesGerais.toInt();
-            int ratingPreco = publicacao['mediaAvaliacoesPreco'] ?? 0;
-            int totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']) ?? 0;
+            var ratingEstrela = mediaAvaliacoesGerais.toInt();
+            var ratingPreco = publicacao['mediaAvaliacoesPreco'];
+            var totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']);
             globals.idSubAreaFAV = publicacao['ID_SUBAREA'];
 
             return SingleChildScrollView(
@@ -438,38 +431,44 @@ class _FavoriteButtonState extends State<FavoriteButton> {
           print(snapshot.stackTrace);
           return const Icon(Icons.error);
         } else {
-          return IconButton(
-            icon: Icon(
-              isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: isFavorite ? const Color.fromARGB(0xFF, 0xF0, 0x6C, 0x9F) : Colors.white,
-              size: 30.0,
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.7),
+              shape: BoxShape.circle,
             ),
-            onPressed: () async {
-              try {
-                if (isFavorite) {
-                  var res = await deleteFavorito(globals.idFavorito);
-                  if (res['success']) {
-                    setState(() {
-                      isFavorite = false;
-                    });
+            child: IconButton(
+              icon: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? const Color.fromARGB(0xFF, 0xF0, 0x6C, 0x9F) : Colors.white,
+                size: 30.0,
+              ),
+              onPressed: () async {
+                try {
+                  if (isFavorite) {
+                    var res = await deleteFavorito(globals.idFavorito);
+                    if (res['success']) {
+                      setState(() {
+                        isFavorite = false;
+                      });
+                    } else {
+                      throw Exception('Falha ao atualizar favorito');
+                    }
                   } else {
-                    throw Exception('Falha ao atualizar favorito');
+                    var res = await createFavorito(globals.idCentro, globals.idArea, globals.idSubAreaFAV, globals.idPublicacao, globals.idUtilizador);
+                    print(res);
+                    if (res['success']) {
+                      setState(() {
+                        isFavorite = true;
+                      });
+                    } else {
+                      throw Exception('Falha ao atualizar favorito');
+                    }
                   }
-                } else {
-                  var res = await createFavorito(globals.idCentro, globals.idArea, globals.idSubAreaFAV, globals.idPublicacao, globals.idUtilizador);
-                  print(res);
-                  if (res['success']) {
-                    setState(() {
-                      isFavorite = true;
-                    });
-                  } else {
-                    throw Exception('Falha ao atualizar favorito');
-                  }
+                } catch (e) {
+                  print('Erro: $e');
                 }
-              } catch (e) {
-                print('Erro: $e');
-              }
-            },
+              },
+            ),
           );
         }
       },
@@ -499,7 +498,7 @@ class CustomStarRating extends StatelessWidget {
       ),
       unratedColor: Colors.grey.withOpacity(0.5),
       onRatingUpdate: (rating) {
-        print(rating);
+        estrelaBD = rating.toInt();
       },
     );
   }
@@ -525,7 +524,7 @@ class CustomEuroRating extends StatelessWidget {
       ),
       unratedColor: Colors.black.withOpacity(0.3),
       onRatingUpdate: (rating) {
-        print(rating);
+        precoBD = rating.toInt();
       },
     );
   }

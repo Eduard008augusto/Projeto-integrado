@@ -17,13 +17,7 @@ class Favoritos extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favoritos'),
-        actions: const [
-          Icon(Icons.search),
-          SizedBox(width: 20),
-          Icon(Icons.calendar_month_outlined),
-          SizedBox(width: 20),
-          Icon(Icons.filter_alt_outlined),
-        ],
+        
       ),
       drawer: const MenuDrawer(),
       body: FutureBuilder<List<Map<String, dynamic>>>(

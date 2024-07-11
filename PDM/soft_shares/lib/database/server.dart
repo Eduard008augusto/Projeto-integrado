@@ -528,10 +528,10 @@ Future<Map<String, dynamic>> deleteInscricao(var id) async {
 Future<List<Map<String, dynamic>>> fetchEventosInscritos(var user) async {
   final response = await http.get(Uri.parse('${baseUrl}inscricaoevento/inscricoes/$user'));
   var data = jsonDecode(response.body);
-  if(data['success']){
-    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+  if (data['success']) {
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data'].map((item) => item['evento']));
     return res;
   } else {
-    throw Exception('Falha ao eventos');
+    throw Exception('Falha ao obter eventos');
   }
 }

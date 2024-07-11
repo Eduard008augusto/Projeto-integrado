@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:soft_shares/database/server.dart';
@@ -32,13 +34,7 @@ class FeedState extends State<Feed> {
     return Scaffold(
       appBar: AppBar(
         title: Text(globals.nomArea),
-        actions: const [
-          Icon(Icons.search),
-          SizedBox(width: 20),
-          Icon(Icons.calendar_month_outlined),
-          SizedBox(width: 20),
-          Icon(Icons.filter_alt_outlined),
-        ],
+        
       ),
       drawer: const MenuDrawer(),
       body: Column(
