@@ -7,7 +7,7 @@ import 'package:soft_shares/edit_perfil.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
 
-void main(){
+void main() {
   runApp(const Perfil());
 }
 
@@ -57,17 +57,21 @@ class Perfil extends StatelessWidget {
                         backgroundImage: NetworkImage(user['IMAGEMPERFIL'] == null ? 'https://cdn.discordapp.com/attachments/1154170394400542730/1260333904976679064/01.png?ex=668ef0ea&is=668d9f6a&hm=b909016ee5266e728eb2421b043a637a5d32156b3f0f4e9c59c4575af5208667&' : 'https://pintbackend-w8pt.onrender.com/images/${user['IMAGEMPERFIL']}'),
                       ),
                       const SizedBox(width: 30.0,),
-                      Text(
-                        user['NOME'],
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          user['NOME'],
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20.0,),
-                  const Text('Descrição', style: TextStyle( fontSize: 16),),
+                  const Text('Descrição', style: TextStyle(fontSize: 16),),
                   Text(user['DESCRICAO'] == null ? '' : user['DESCRICAO']!),
                   const Divider(
                     height: 70,
