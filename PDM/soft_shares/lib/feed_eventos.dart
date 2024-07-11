@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:soft_shares/database/server.dart';
@@ -49,7 +51,7 @@ class _FeedEventosState extends State<FeedEventos> {
       drawer: const MenuDrawer(),
       body: Column(
         children: [
-          Container(
+          SizedBox(
             height: 80,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
