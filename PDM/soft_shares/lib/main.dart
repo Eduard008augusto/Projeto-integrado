@@ -14,16 +14,11 @@ import 'settings.dart';
 import 'add_conteudo.dart';
 import 'perfil.dart';
 import 'services/token_service.dart';
-//import 'edit_perfil.dart';
-//import 'image_picker_page.dart';
 import 'feed_eventos.dart';
 import 'calendario_eventos.dart';
 import 'add_evento.dart';
 import 'evento.dart';
 import 'favoritos.dart';
-
-
-
 
 Future<void> initializeFirebase() async {
   try {

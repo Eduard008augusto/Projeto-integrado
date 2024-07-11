@@ -7,7 +7,7 @@ import 'dropdown_subareas.dart';
 
 import './database/server.dart';
 import './database/var.dart' as globals;
-import 'image_picker_page.dart'; // Import the new ImagePickerPage
+import 'image_picker_page.dart';
 
 void main() {
   runApp(const Addconteudo());
@@ -35,17 +35,9 @@ class _AddconteudoState extends State<Addconteudo> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('Novo Conteudo'),
-          actions: const [
-            Icon(Icons.search),
-            SizedBox(width: 20),
-            Icon(Icons.calendar_month_outlined),
-            SizedBox(width: 20),
-            Icon(Icons.filter_alt_outlined),
-          ],
         ),
         drawer: const MenuDrawer(),
         body: Column(
@@ -323,8 +315,7 @@ class _AddconteudoState extends State<Addconteudo> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 
   void _showConfirmationDialog(BuildContext context) {

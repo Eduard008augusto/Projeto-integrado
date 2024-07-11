@@ -4,9 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:soft_shares/drawer.dart';
+import 'package:soft_shares/dropdown_subareas.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
-import 'image_picker_page.dart'; // Import the new ImagePickerPage
+import 'image_picker_page.dart';
 
 void main() {
   runApp(const AddEvento());
@@ -34,8 +35,7 @@ class AddEventoState extends State<AddEvento> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('Novo Evento'),
           actions: const [
@@ -145,6 +145,23 @@ class AddEventoState extends State<AddEvento> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              const Text('Subárea *'),
+                              // ignore: sized_box_for_whitespace
+                              Container(
+                                width: double.infinity,
+                                child: const DropdownListView(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                               const Text('Nome *'),
                               TextFormField(
                                 controller: nomeController,
@@ -208,7 +225,7 @@ class AddEventoState extends State<AddEvento> {
                                   DateTime? pickedDate = await showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
-                                    firstDate: DateTime(2000),
+                                    firstDate: DateTime.now(),
                                     lastDate: DateTime(2101),
                                   );
 
@@ -351,8 +368,7 @@ class AddEventoState extends State<AddEvento> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 
   void _showConfirmationDialog() {
@@ -385,6 +401,7 @@ class AddEventoState extends State<AddEvento> {
                     await createEvento(
                       globals.idCentro,
                       globals.idArea,
+                      globals.idSubArea,
                       globals.idUtilizador,
                       globals.nomeEvento,
                       globals.dataEvento,
@@ -399,8 +416,25 @@ class AddEventoState extends State<AddEvento> {
                       Navigator.pushReplacementNamed(context, '/eventos');
                     }
                   } else {
-                    print("Imagem não foi selecionada");
-                    throw Exception("Imagem não foi selecionada");
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          icon: const Icon(Icons.warning),
+                          title: const Text('ERRO'),
+                          content: const Text('Adicione uma imagem!'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   }
                 } catch (e) {
                   print('Erro ao adicionar evento: $e');

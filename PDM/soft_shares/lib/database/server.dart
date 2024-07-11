@@ -252,12 +252,13 @@ Future<Map<String, dynamic>> fetchEvento(var idEvento) async {
   }
 }
 
-Future<Map<String, dynamic>> createEvento(var centro, var area, var user, var nome, var data, var localizacao, var telefone, var imagem, var descricao, var preco) async {
+Future<Map<String, dynamic>> createEvento(var centro, var area, var subArea, var user, var nome, var data, var localizacao, var telefone, var imagem, var descricao, var preco) async {
   final url = Uri.parse('${baseUrl}evento/create');
 
   final body = json.encode({
     'ID_CENTRO': centro,
     'ID_AREA': area,
+    'ID_SUBAREA': subArea,
     'ID_UTILIZADOR': user,
     'NOME': nome,
     'DATA': data.toIso8601String(),
@@ -265,6 +266,7 @@ Future<Map<String, dynamic>> createEvento(var centro, var area, var user, var no
     'TELEFONE': telefone,
     'IMAGEMEVENTO': imagem,
     'DESCRICAO': descricao,
+    'PRECO': preco,
   });
 
   final response = await http.post(

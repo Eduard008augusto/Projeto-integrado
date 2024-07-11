@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soft_shares/drawer.dart';
+import 'package:soft_shares/drawer_mapa.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
 
@@ -119,9 +119,8 @@ class Areas extends StatelessWidget {
                         mainAxisSpacing: 10.0,
                         childAspectRatio: 0.75,
                       ),
-                      itemCount: areas.length + 1, // + 1 é por causa de Eventos
+                      itemCount: areas.length,
                       itemBuilder: (context, index) {
-                        if (index < areas.length) {
                           final area = areas[index];
                           return GestureDetector(
                             onTap: () {
@@ -172,56 +171,6 @@ class Areas extends StatelessWidget {
                               ),
                             ),
                           );
-                        } else {
-                          // Card fixo "Eventos"
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/feedeventos');
-                            },
-                            child: Card(
-                              elevation: 4.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(15.0),
-                                          topRight: Radius.circular(15.0),
-                                        ),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(15.0),
-                                          topRight: Radius.circular(15.0),
-                                        ),
-                                        child: Image.network(
-                                          'https://pintbackend-w8pt.onrender.com/images/b107a49cf3374120243ca15c81b760ac',
-                                          fit: BoxFit.cover,
-                                          width: double.infinity,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Eventos',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }
                       },
                     );
                   }

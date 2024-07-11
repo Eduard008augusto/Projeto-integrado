@@ -20,8 +20,7 @@ class Registar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         body: Column(
           children: [
             Center(
@@ -218,7 +217,6 @@ class Registar extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }
