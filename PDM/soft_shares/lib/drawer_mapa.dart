@@ -1,34 +1,67 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import './database/var.dart' as globals;
-
 import './services/token_service.dart';
 
 void main() {
   runApp(const MenuDrawer());
 }
 
-class MenuDrawer extends StatelessWidget {
+class MenuDrawer extends StatefulWidget {
   const MenuDrawer({super.key});
+
+  @override
+  _MenuDrawerState createState() => _MenuDrawerState();
+}
+
+class _MenuDrawerState extends State<MenuDrawer> {
+  String _selectedRoute = '';
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _selectedRoute = ModalRoute.of(context)?.settings.name ?? '';
+  }
+
+  Widget _buildListTile({required IconData icon, required String title, required String routeName}) {
+    bool isSelected = _selectedRoute == routeName;
+    return ListTile(
+      leading: Icon(icon, size: 30.0, color: isSelected ? const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0) : Colors.black),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 18.0,
+          color: isSelected ? const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0) : Colors.black,
+        ),
+      ),
+      onTap: () {
+        setState(() {
+          _selectedRoute = routeName;
+        });
+        Navigator.pushNamed(context, routeName);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
-          const SizedBox(height: 20.0,),
-
+          const SizedBox(height: 20.0),
           ListTile(
-            leading: const Icon(Icons.account_circle_outlined, size: 40.0,),
+            leading: const Icon(Icons.account_circle_outlined, size: 40.0),
             title: Text(
               globals.nomeUtilizador!,
               style: const TextStyle(fontSize: 18.0),
             ),
-            onTap: () { Navigator.pushNamed(context, '/perfil'); },
+            onTap: () {
+              setState(() {
+                _selectedRoute = '/perfil';
+              });
+              Navigator.pushNamed(context, '/perfil');
+            },
           ),
-          
           const Divider(
             height: 50,
             thickness: 1,
@@ -36,16 +69,11 @@ class MenuDrawer extends StatelessWidget {
             endIndent: 20,
             color: Color.fromARGB(136, 41, 40, 40),
           ),
-          
-          ListTile(
-            leading: const Icon(Icons.home_outlined, size: 30.0,),
-            title: const Text(
-              'Mapa dos Centros',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            onTap: () { Navigator.pushNamed(context, '/mapa'); },
+          _buildListTile(
+            icon: Icons.home_outlined,
+            title: 'Mapa dos Centros',
+            routeName: '/mapa',
           ),
-
           const Divider(
             height: 50,
             thickness: 1,
@@ -53,16 +81,11 @@ class MenuDrawer extends StatelessWidget {
             endIndent: 20,
             color: Color.fromARGB(136, 41, 40, 40),
           ),
-
-          ListTile(
-            leading: const Icon(Icons.favorite_border),
-            title: const Text(
-              'Favoritos',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            onTap: () { Navigator.pushNamed(context, '/scroll'); },
+          _buildListTile(
+            icon: Icons.favorite_border,
+            title: 'Favoritos',
+            routeName: '/favoritos',
           ),
-
           const Divider(
             height: 50,
             thickness: 1,
@@ -70,16 +93,11 @@ class MenuDrawer extends StatelessWidget {
             endIndent: 20,
             color: Color.fromARGB(136, 41, 40, 40),
           ),
-          
-          ListTile(
-            leading: const Icon(Icons.settings_outlined),
-            title: const Text(
-              'Definições',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            onTap: () { Navigator.pushNamed(context, '/settings'); },
+          _buildListTile(
+            icon: Icons.settings_outlined,
+            title: 'Definições',
+            routeName: '/settings',
           ),
-
           ListTile(
             leading: const Icon(Icons.logout_outlined),
             title: const Text(
@@ -113,16 +131,15 @@ class MenuDrawer extends StatelessWidget {
               );
             },
           ),
-
           Expanded(
-             child: Align(
+            child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: Opacity(
                   opacity: 0.3,
                   child: SvgPicture.asset(
-                    'assets/images/logo.svg', 
+                    'assets/images/logo.svg',
                     height: 90.0,
                     width: 90.0,
                   ),

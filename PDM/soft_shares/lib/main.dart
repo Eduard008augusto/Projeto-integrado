@@ -20,6 +20,7 @@ import 'feed_eventos.dart';
 import 'calendario_eventos.dart';
 import 'add_evento.dart';
 import 'evento.dart';
+import 'favoritos.dart';
 
 
 
@@ -71,6 +72,7 @@ class MainApp extends StatelessWidget {
         '/calendario': (context) => const CalendarioEventos(),
         '/addevento': (context) => const AddEvento(),
         '/evento': (context) => const Evento(),
+        '/favoritos': (context) => const Favoritos(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
