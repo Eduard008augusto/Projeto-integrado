@@ -32,12 +32,11 @@ class Evento extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
-        actions: const [
-          Icon(Icons.search),
-          SizedBox(width: 20),
-          Icon(Icons.calendar_month_outlined),
-          SizedBox(width: 20),
-          Icon(Icons.filter_alt_outlined),
+        actions: [
+          IconButton(onPressed: () {
+            Navigator.pushNamed(context, '/calendario');
+          }, icon: const Icon(Icons.calendar_month_outlined),),
+          const SizedBox(width: 20),
         ],
       ),
       drawer: const MenuDrawer(),
@@ -194,8 +193,31 @@ class Evento extends StatelessWidget {
                                 Expanded(
                                   child: Text(
                                     evento['PRECO'] != null
-                                        ? evento['PRECO'].toString()
+                                        ? '${evento['PRECO'].toString()}€'
                                         : 'Preço não disponível',
+                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(
+                              height: 50,
+                              thickness: 1,
+                              indent: 20,
+                              endIndent: 20,
+                              color: Color.fromARGB(136, 41, 40, 40),
+                            ),
+                            Row(
+                              children: [
+                                const Icon(Icons.groups, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                const SizedBox(width: 3),
+                                Expanded(
+                                  child: Text(
+                                    evento['totalInscritos'] != null ?
+                                    '${evento['totalInscritos'].toString()} pessoas inscritas'
+                                    : 'Total de inscrições',
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,

@@ -539,3 +539,149 @@ Future<List<Map<String, dynamic>>> fetchEventosInscritos(var user) async {
     throw Exception('Falha ao obter eventos');
   }
 }
+
+//retorna os centros
+Future<List<Map<String, dynamic>>> getCentros() async{
+  final response = await http.get(Uri.parse('${baseUrl}centro/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+//retorna os utilizadores
+Future<List<Map<String, dynamic>>> getUtilizadores() async{
+  final response = await http.get(Uri.parse('${baseUrl}utilizador/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+//retorna os administradores
+Future<List<Map<String, dynamic>>> getAdmins() async{
+  final response = await http.get(Uri.parse('${baseUrl}administrador/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+//retorna as areas
+Future<List<Map<String, dynamic>>> getAreas() async{
+  final response = await http.get(Uri.parse('${baseUrl}area/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+//retorna as subareas
+Future<List<Map<String, dynamic>>> getSubAreas() async{
+  final response = await http.get(Uri.parse('${baseUrl}subArea/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+//retorna os conteudos
+Future<List<Map<String, dynamic>>> getConteudos() async{
+  final response = await http.get(Uri.parse('${baseUrl}conteudo/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+//retorna as avaliacoes
+Future<List<Map<String, dynamic>>> getAvaliacoes() async{
+  final response = await http.get(Uri.parse('${baseUrl}avaliacao/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+//retorna os eventos
+Future<List<Map<String, dynamic>>> getEventos() async{
+  final response = await http.get(Uri.parse('${baseUrl}evento/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+//retorna os favoritos
+Future<List<Map<String, dynamic>>> getFavoritos() async{
+  final response = await http.get(Uri.parse('${baseUrl}favorito/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+//retorna as fotografias_conteudo
+Future<List<Map<String, dynamic>>> getFotografiasConteudo() async{
+  final response = await http.get(Uri.parse('${baseUrl}fotoconteudo/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+//retorna as fotografias_eventos
+Future<List<Map<String, dynamic>>> getFotografiasEventos() async{
+  final response = await http.get(Uri.parse('${baseUrl}fotoevento/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+
+
+//retorna as inscrições eventos
+Future<List<Map<String, dynamic>>> getInscricoesEventos() async{
+  final response = await http.get(Uri.parse('${baseUrl}inscricaoevento/list'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}

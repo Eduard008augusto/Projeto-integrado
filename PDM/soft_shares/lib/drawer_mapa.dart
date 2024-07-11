@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import './database/var.dart' as globals;
 import './services/token_service.dart';
 
 void main() {
