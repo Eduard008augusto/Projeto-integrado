@@ -277,7 +277,7 @@ class AddEventoState extends State<AddEvento> {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Por favor, insira o preço';
-                                  } else if (double.tryParse(value) == null || double.tryParse(value)! <= 0) {
+                                  } else if (double.tryParse(value) == null || double.tryParse(value)! < 0) {
                                     return 'Por favor, insira um preço válido';
                                   }
                                   return null;
@@ -412,7 +412,7 @@ class AddEventoState extends State<AddEvento> {
                     );
 
                     if (mounted) {
-                      Navigator.pushReplacementNamed(context, '/eventos');
+                      Navigator.pushReplacementNamed(context, '/feedeventos');
                     }
                   } else {
                     showDialog(
@@ -438,9 +438,10 @@ class AddEventoState extends State<AddEvento> {
                 } catch (e, stackTrace) {
                   print('Erro ao adicionar evento: $e');
                   if (mounted) {
+                    print('Erro ao adicionar evento: $e\n\n$stackTrace');
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Erro ao adicionar evento: $e\n\n$stackTrace'),
+                        content: Text('Erro ao adicionar evento: $e'),
                       ),
                     );
                   }
