@@ -435,12 +435,12 @@ class AddEventoState extends State<AddEvento> {
                       },
                     );
                   }
-                } catch (e) {
+                } catch (e, stackTrace) {
                   print('Erro ao adicionar evento: $e');
                   if (mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Erro ao adicionar evento: $e'),
+                        content: Text('Erro ao adicionar evento: $e\n\n$stackTrace'),
                       ),
                     );
                   }

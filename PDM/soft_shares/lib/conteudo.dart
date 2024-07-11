@@ -93,8 +93,8 @@ class Conteudo extends StatelessWidget {
         } else {
           avaliado = false;
         }
-      } catch (e, stackTrace) {
-        print('Erro ao verificar avaliação: $e\n\n$stackTrace');
+      } catch (e) {
+        print('Erro ao verificar avaliação: $e');
       }
     }
 
