@@ -562,8 +562,8 @@ Future<List<Map<String, dynamic>>> fetchEventosInscritos(var user) async {
 }
 
 // retorna publicações do user por rever
-Future<List<Map<String, dynamic>>> getConteudoRever(var user, var centro) async {
-  final response = await http.get(Uri.parse('${baseUrl}conteudo/listReverCentroUser/$centro/$user'));
+Future<List<Map<String, dynamic>>> getConteudoRever(var user, var centro, var area) async {
+  final response = await http.get(Uri.parse('${baseUrl}conteudo/listReverCentroUser/$centro/$user/$area'));
   var data = jsonDecode(response.body);
   if(data['success']){
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
