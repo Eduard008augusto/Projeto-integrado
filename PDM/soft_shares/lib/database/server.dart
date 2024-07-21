@@ -574,7 +574,7 @@ Future<List<Map<String, dynamic>>> getConteudoRever(var user, var centro, var ar
 }
 
 Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subarea, var nome, var morada, var horario, var telefone, var imagem, var website, var acessibilidade) async {
-  final url = Uri.parse('${baseUrl}conteudo/update/$idConteudo');
+  final url = Uri.parse('${baseUrl}conteudo/updateMobile/$idConteudo');
 
   final body = json.encode({
     'ID_AREA': area,
