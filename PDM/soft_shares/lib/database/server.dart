@@ -573,7 +573,41 @@ Future<List<Map<String, dynamic>>> getConteudoRever(var user, var centro, var ar
   }
 }
 
+Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subarea, var nome, var morada, var horario, var telefone, var imagem, var website, var acessibilidade) async {
+  final url = Uri.parse('${baseUrl}conteudo/update/$idConteudo');
 
+  final body = json.encode({
+    'ID_AREA': area,
+    'ID_SUBAREA': area,
+    'NOMECONTEUDO': nome,
+    'MORADA': morada,
+    'HORARIO': horario,
+    'TELEFONE': telefone,
+    'IMAGEMCONTEUDO': imagem,
+    'WEBSITE': website,
+    'ACESSIBILIDADE': acessibilidade,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+    print(data);
+
+    if (data['success']) {
+      print('Atualizado com sucess!');
+      return data;
+    } else {
+      throw Exception('Falha ao atualizar avaliação: ${data['error']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
 
 
 
