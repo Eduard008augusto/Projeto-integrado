@@ -130,7 +130,7 @@ Future<Map<String, dynamic>> fetchPublicacao(var id) async {
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao carregar dados');
+    throw Exception('Falha ao carregar dados: ${data['error_mobile']}');
   }
 }
 
@@ -562,8 +562,8 @@ Future<List<Map<String, dynamic>>> fetchEventosInscritos(var user) async {
 }
 
 // retorna publicações do user por rever
-Future<List<Map<String, dynamic>>> getConteudoRever(var user, var centro, var area) async {
-  final response = await http.get(Uri.parse('${baseUrl}conteudo/listReverCentroUser/$centro/$user/$area'));
+Future<List<Map<String, dynamic>>> getConteudoRever(var user, var centro) async {
+  final response = await http.get(Uri.parse('${baseUrl}conteudo/listReverCentroUser/$centro/$user'));
   var data = jsonDecode(response.body);
   if(data['success']){
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
@@ -608,6 +608,45 @@ Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subare
     throw Exception('Erro ao decodificar a resposta JSON: $e');
   }
 }
+
+Future<List<Map<String, dynamic>>> getAlbumConteudo(var conteudo) async {
+  print('\n\nCONTEUDO == $conteudo\n\n');
+  final response = await http.get(Uri.parse('${baseUrl}fotoconteudo/listporconteudo/$conteudo'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if (data['success']) {
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao obter imagens: ${data['erro_mobile']}');
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

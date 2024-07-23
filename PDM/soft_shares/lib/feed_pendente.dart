@@ -23,7 +23,7 @@ class Pendente extends StatelessWidget {
         children: [
           Expanded(
             child: FutureBuilder<List<Map<String, dynamic>>>(
-              future: getConteudoRever(globals.idUtilizador, globals.idCentro, globals.idArea),
+              future: getConteudoRever(globals.idUtilizador, globals.idCentro),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -49,7 +49,7 @@ class Pendente extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () {
                             globals.idPublicacao = publicacao['ID_CONTEUDO'];
-                            Navigator.pushNamed(context, '/conteudo');
+                            Navigator.pushNamed(context, '/conteudo_to_edit');
                           },
                           child: Card(
                             elevation: 4.0,
@@ -126,20 +126,6 @@ class Pendente extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      floatingActionButton: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, '/addconteudo');
-        },
-        child: Container(
-          width: 56.0,
-          height: 56.0,
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(Icons.add, color: Colors.white),
-        ),
       ),
     );
   }

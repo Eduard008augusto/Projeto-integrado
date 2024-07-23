@@ -21,6 +21,8 @@ var idSubAreaFAV = 0;
 var idAvaliacao = 0;
 var idEventoINSC = 0;
 
+var idAreaEdit = 0;
+
 // Registo USER
 var idCentroUSER = 1;
 

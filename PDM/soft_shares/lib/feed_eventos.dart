@@ -70,7 +70,6 @@ class _FeedEventosState extends State<FeedEventos> {
               ],
             ),
           ),
-          // Event List Section
           Expanded(
             child: FutureBuilder<List<Map<String, dynamic>>>(
               future: fetchEventosComFiltro(),

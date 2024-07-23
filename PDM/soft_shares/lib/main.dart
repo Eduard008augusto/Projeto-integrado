@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:soft_shares/conteudo_to_edit.dart';
 import 'package:soft_shares/database/connection_check.dart';
 import 'package:soft_shares/database/database.dart';
+import 'package:soft_shares/edit_conteudo.dart';
 import 'package:soft_shares/feed_pendente.dart';
 import 'firebase_options.dart';
 
@@ -70,6 +72,8 @@ class MainApp extends StatelessWidget {
         '/mapa': (context) => const Mapa(),
         '/conteudo': (context) => const Conteudo(),
         '/addconteudo': (context) => const Addconteudo(),
+        '/editconteudo': (context) => const EditConteudo(),
+        '/conteudo_to_edit': (context) => const ConteudoToEdit(),
         '/perfil': (context) => const Perfil(),
         '/ediperfil': (context) => const Perfil(),
         '/feedeventos': (context) => const FeedEventos(),

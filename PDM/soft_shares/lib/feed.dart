@@ -32,12 +32,6 @@ class FeedState extends State<Feed> {
     return Scaffold(
       appBar: AppBar(
         title: Text(globals.nomArea),
-        actions: [
-          IconButton(onPressed: (){
-            Navigator.pushNamed(context, '/pendente');
-          }, icon: const Icon(Icons.pending_actions),),
-          const SizedBox(width: 30,),
-        ],
       ),
       drawer: const MenuDrawer(),
       body: Column(

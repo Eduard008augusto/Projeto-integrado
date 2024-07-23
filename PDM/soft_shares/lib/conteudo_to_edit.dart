@@ -16,8 +16,8 @@ int preco = 0;
 int estrelaBD = 0;
 int precoBD = 0;
 
-class Conteudo extends StatelessWidget {
-  const Conteudo({super.key});
+class ConteudoToEdit extends StatelessWidget {
+  const ConteudoToEdit({super.key});
 
   void _showRatingDialog(BuildContext context) {
     showDialog(
@@ -364,8 +364,7 @@ class Conteudo extends StatelessWidget {
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/editconteudo');
-                            //_showRatingDialog(context); 
+                            _showRatingDialog(context); 
                           },
                           icon: const Icon(Icons.star, color: Colors.white),
                           label: const Text('Classificar'),
@@ -389,6 +388,20 @@ class Conteudo extends StatelessWidget {
             );
           }
         },
+      ),
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/editconteudo');
+        },
+        child: Container(
+          width: 56.0,
+          height: 56.0,
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.edit, color: Colors.white),
+        ),
       ),
     );
   }

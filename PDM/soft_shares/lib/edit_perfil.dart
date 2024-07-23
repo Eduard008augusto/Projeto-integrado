@@ -29,9 +29,6 @@ class _EditarPerfilState extends State<EditarPerfil> {
   TextEditingController moradaController = TextEditingController();
   TextEditingController telefoneController = TextEditingController();
   TextEditingController dataNascimentoController = TextEditingController();
-  TextEditingController senhaAtualController = TextEditingController();
-  TextEditingController novaSenhaController = TextEditingController();
-  TextEditingController confirmarSenhaController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
