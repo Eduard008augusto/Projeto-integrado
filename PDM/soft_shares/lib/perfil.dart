@@ -20,6 +20,10 @@ class Perfil extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Perfil'),
         actions: [
+          IconButton(onPressed: (){
+            Navigator.pushNamed(context, '/pendente');
+          }, icon: const Icon(Icons.pending_actions),),
+          const SizedBox(width: 30,),
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {

@@ -8,8 +8,8 @@ import 'dart:convert';
 import 'var.dart' as globals;
 
 var baseUrl = 'https://pintbackend-w8pt.onrender.com/';
-//var localhost = 'http://localhost:3000/';
 
+// receber áreas
 Future<List<Map<String, dynamic>>> fetchAreas() async {
   final response = await http.get(Uri.parse('${baseUrl}area/listPorCentro/${globals.idCentro}'));
   var data = jsonDecode(response.body);
@@ -21,6 +21,7 @@ Future<List<Map<String, dynamic>>> fetchAreas() async {
   }
 }
 
+// login
 Future<Map<String, dynamic>> login(String email, String password) async {
   try {
     final url = Uri.parse('${baseUrl}utilizador/loginApp');
@@ -52,6 +53,7 @@ Future<Map<String, dynamic>> login(String email, String password) async {
   }
 }
 
+// enviar imagem
 Future<void> uploadImage(File imageFile) async {
   var stream = http.ByteStream(imageFile.openRead().cast());
   var length = await imageFile.length();
@@ -77,6 +79,7 @@ Future<void> uploadImage(File imageFile) async {
   }
 }
 
+// registar um user
 Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var password) async {
   final url = Uri.parse('${baseUrl}utilizador/createnew');
 
@@ -107,6 +110,7 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
   }
 }
 
+// receber publicações
 Future<List<Map<String, dynamic>>> fetchPublicacoes(var centro, var area, var subarea) async {
   final response = await http.get(Uri.parse('${baseUrl}conteudo/listPorCentroAreaSubArea/$centro/$area/$subarea'));
   var data = jsonDecode(response.body);
@@ -118,6 +122,7 @@ Future<List<Map<String, dynamic>>> fetchPublicacoes(var centro, var area, var su
   }
 }
 
+// receber publicações
 Future<Map<String, dynamic>> fetchPublicacao(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}conteudo/get/$id'));
   var data = jsonDecode(response.body);
@@ -125,10 +130,11 @@ Future<Map<String, dynamic>> fetchPublicacao(var id) async {
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao carregar dados');
+    throw Exception('Falha ao carregar dados: ${data['error_mobile']}');
   }
 }
 
+// receber publicação do user
 Future<List<Map<String, dynamic>>> fetchPublicacaoUser(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}conteudo/listPorUtilizador/$id'));
   var data = jsonDecode(response.body);
@@ -140,6 +146,7 @@ Future<List<Map<String, dynamic>>> fetchPublicacaoUser(var id) async {
   }
 }
 
+// receber utilizador
 Future<Map<String, dynamic>> fetchUtilizador(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}utilizador/get/$id'));
   var data = jsonDecode(response.body);
@@ -151,6 +158,7 @@ Future<Map<String, dynamic>> fetchUtilizador(var id) async {
   }
 }
 
+// receber subarea
 Future<List<Map<String, dynamic>>> fetchSubAreas(var area) async {
   final response = await http.get(Uri.parse('${baseUrl}subArea/listPorArea/$area'));
   var data = jsonDecode(response.body);
@@ -162,6 +170,7 @@ Future<List<Map<String, dynamic>>> fetchSubAreas(var area) async {
   }
 }
 
+// Criar publicação
 Future<Map<String, dynamic>> createPublicacao(var centro, var area, var subarea, var user, var nome, var morada, var horario, var telefone, var imagem, var website, var acessibilidade) async {
   final url = Uri.parse('${baseUrl}conteudo/create');
 
@@ -199,6 +208,7 @@ Future<Map<String, dynamic>> createPublicacao(var centro, var area, var subarea,
   }
 }
 
+// Atualizar utilizador
 Future<Map<String, dynamic>> updateUser(var id, var nome, var desc, var morada, DateTime dataNascimento, var telefone, var imagem) async {
   final url = Uri.parse('${baseUrl}utilizador/updateApp/$id');
 
@@ -229,7 +239,7 @@ Future<Map<String, dynamic>> updateUser(var id, var nome, var desc, var morada, 
   }
 }
 
-// Fetch Eventos
+// Receber Eventos
 Future<List<Map<String, dynamic>>> fetchEventos(int idCentro) async {
   final response = await http.get(Uri.parse('${baseUrl}evento/listPorCentro/$idCentro'));
   var data = jsonDecode(response.body);
@@ -241,6 +251,7 @@ Future<List<Map<String, dynamic>>> fetchEventos(int idCentro) async {
   }
 }
 
+// Receber evento especifico
 Future<Map<String, dynamic>> fetchEvento(var idEvento) async {
   final response = await http.get(Uri.parse('${baseUrl}evento/get/$idEvento'));
   var data = jsonDecode(response.body);
@@ -252,6 +263,7 @@ Future<Map<String, dynamic>> fetchEvento(var idEvento) async {
   }
 }
 
+// Criar evento
 Future<Map<String, dynamic>> createEvento(var centro, var area, var subArea, var user, var nome, var data, var localizacao, var telefone, var imagem, var descricao, var preco) async {
   final url = Uri.parse('${baseUrl}evento/create');
 
@@ -364,6 +376,7 @@ Future<Map<String, dynamic>> deleteFavorito(var id) async {
   }
 }
 
+// receber os favoritos
 Future<List<Map<String, dynamic>>> fetchFavoritos(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}favorito/listporutilizador/$id'));
   var data = jsonDecode(response.body);
@@ -375,6 +388,7 @@ Future<List<Map<String, dynamic>>> fetchFavoritos(var id) async {
   }
 }
 
+// verificar uma avaliação
 Future<Map<String, dynamic>> checkAvaliacao(var user, var conteudo) async {
   final response = await http.get(Uri.parse('${baseUrl}avaliacao/utilizadorAvaliou/$user/$conteudo'));
   final data = jsonDecode(response.body);
@@ -389,6 +403,7 @@ Future<Map<String, dynamic>> checkAvaliacao(var user, var conteudo) async {
   }
 }
 
+// criar uma avaliação
 Future<Map<String, dynamic>> createAvaliacao(var conteudo, var user, var estrelas, var preco) async {
   final url = Uri.parse('${baseUrl}avaliacao/create');
 
@@ -423,6 +438,7 @@ Future<Map<String, dynamic>> createAvaliacao(var conteudo, var user, var estrela
   }
 }
 
+// atualizar uma avaliação
 Future<Map<String, dynamic>> updateAvaliacao(var id, var conteudo, var user, var estrelas, var preco) async {
   final url = Uri.parse('${baseUrl}avaliacao/update/$id');
 
@@ -454,6 +470,7 @@ Future<Map<String, dynamic>> updateAvaliacao(var id, var conteudo, var user, var
   }
 }
 
+// verificar o estado de inscrição
 Future<Map<String, dynamic>> checkInscricao(var user, var evento) async {
   final response = await http.get(Uri.parse('${baseUrl}inscricaoevento/isInscrito/$user/$evento'));
   final data = jsonDecode(response.body);
@@ -468,6 +485,7 @@ Future<Map<String, dynamic>> checkInscricao(var user, var evento) async {
   }
 }
 
+// inscrever em um evento
 Future<Map<String, dynamic>> createInscricao(var evento, var user) async {
   final url = Uri.parse('${baseUrl}inscricaoevento/create');
 
@@ -500,6 +518,8 @@ Future<Map<String, dynamic>> createInscricao(var evento, var user) async {
   }
 }
 
+
+// remove uma inscrição
 Future<Map<String, dynamic>> deleteInscricao(var id) async {
   final url = Uri.parse('${baseUrl}inscricaoevento/delete');
 
@@ -529,6 +549,7 @@ Future<Map<String, dynamic>> deleteInscricao(var id) async {
   }
 }
 
+// retorna eventos inscritos
 Future<List<Map<String, dynamic>>> fetchEventosInscritos(var user) async {
   final response = await http.get(Uri.parse('${baseUrl}inscricaoevento/inscricoes/$user'));
   var data = jsonDecode(response.body);
@@ -539,6 +560,104 @@ Future<List<Map<String, dynamic>>> fetchEventosInscritos(var user) async {
     throw Exception('Falha ao obter eventos');
   }
 }
+
+// retorna publicações do user por rever
+Future<List<Map<String, dynamic>>> getConteudoRever(var user, var centro) async {
+  final response = await http.get(Uri.parse('${baseUrl}conteudo/listReverCentroUser/$centro/$user'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados: ${data.error}');
+  }
+}
+
+Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subarea, var nome, var morada, var horario, var telefone, var imagem, var website, var acessibilidade) async {
+  final url = Uri.parse('${baseUrl}conteudo/updateMobile/$idConteudo');
+
+  final body = json.encode({
+    'ID_AREA': area,
+    'ID_SUBAREA': area,
+    'NOMECONTEUDO': nome,
+    'MORADA': morada,
+    'HORARIO': horario,
+    'TELEFONE': telefone,
+    'IMAGEMCONTEUDO': imagem,
+    'WEBSITE': website,
+    'ACESSIBILIDADE': acessibilidade,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+    print(data);
+
+    if (data['success']) {
+      print('Atualizado com sucess!');
+      return data;
+    } else {
+      throw Exception('Falha ao atualizar avaliação: ${data['error']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+Future<List<Map<String, dynamic>>> getAlbumConteudo(var conteudo) async {
+  print('\n\nCONTEUDO == $conteudo\n\n');
+  final response = await http.get(Uri.parse('${baseUrl}fotoconteudo/listporconteudo/$conteudo'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if (data['success']) {
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao obter imagens: ${data['erro_mobile']}');
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //retorna os centros
 Future<List<Map<String, dynamic>>> getCentros() async{
@@ -672,10 +791,8 @@ Future<List<Map<String, dynamic>>> getFotografiasEventos() async{
   }
 }
 
-
-
 //retorna as inscrições eventos
-Future<List<Map<String, dynamic>>> getInscricoesEventos() async{
+Future<List<Map<String, dynamic>>> getInscricoesEventos() async {
   final response = await http.get(Uri.parse('${baseUrl}inscricaoevento/list'));
   var data = jsonDecode(response.body);
   if(data['success']){

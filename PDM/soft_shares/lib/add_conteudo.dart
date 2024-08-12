@@ -22,7 +22,6 @@ class Addconteudo extends StatefulWidget {
 
 class _AddconteudoState extends State<Addconteudo> {
   File? image;
-  DateTime? selectedDate;
 
   final _formKey = GlobalKey<FormState>();
 

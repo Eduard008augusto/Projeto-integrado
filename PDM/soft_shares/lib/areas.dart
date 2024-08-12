@@ -36,7 +36,7 @@ class Areas extends StatelessWidget {
       case 5:
         return 'assets/images/Banner/vilareal.png';
       default:
-        return 'assets/images/Banner/default.png'; // Add a default image if necessary
+        return 'assets/images/Banner/default.png';
     }
   }
 
@@ -51,11 +51,10 @@ class Areas extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            // Display the banner image with the greeting text
             Stack(
               children: [
                 Container(
-                  height: 180, // Reduced height for smaller size
+                  height: 180,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15.0),
