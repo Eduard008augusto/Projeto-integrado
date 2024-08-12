@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'var.dart' as globals;
 
 var baseUrl = 'https://pintbackend-w8pt.onrender.com/';
-var localhost = 'http://localhost:3000/';
+//var localhost = 'http://localhost:3000/';
 
 Future<List<Map<String, dynamic>>> fetchAreas() async {
   final response = await http.get(Uri.parse('${baseUrl}area/listPorCentro/${globals.idCentro}'));
