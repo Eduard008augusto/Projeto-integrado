@@ -7,6 +7,8 @@ import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import 'test.dart';
+
 bool isFavorite = false;
 bool avaliado = false;
 
@@ -364,8 +366,8 @@ class Conteudo extends StatelessWidget {
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/editconteudo');
-                            //_showRatingDialog(context); 
+                            //Navigator.pushNamed(context, '/editconteudo');
+                            _showRatingDialog(context); 
                           },
                           icon: const Icon(Icons.star, color: Colors.white),
                           label: const Text('Classificar'),
@@ -382,6 +384,14 @@ class Conteudo extends StatelessWidget {
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),),
+
+                  ElevatedButton(onPressed: (){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const MultipleImagePickerPage(),
+                      ),
+                    );
+                  }, child: const Text('Add Message')),
 
                   buildAlbum(),
                 ],

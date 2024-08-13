@@ -610,7 +610,6 @@ Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subare
 }
 
 Future<List<Map<String, dynamic>>> getAlbumConteudo(var conteudo) async {
-  print('\n\nCONTEUDO == $conteudo\n\n');
   final response = await http.get(Uri.parse('${baseUrl}fotoconteudo/listporconteudo/$conteudo'));
   var data = jsonDecode(response.body);
   print(data);
@@ -618,11 +617,43 @@ Future<List<Map<String, dynamic>>> getAlbumConteudo(var conteudo) async {
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao obter imagens: ${data['erro_mobile']}');
+    throw Exception('Falha ao obter imagens: ${data['error']}');
   }
 }
 
+Future<Map<String, dynamic>> uploadImagemConteudo(var conteudo, var user, var imagem) async {
+  final url = Uri.parse('${baseUrl}fotoconteudo/create');
 
+  final body = json.encode({
+    'ID_CONTEUDO': conteudo,
+    'ID_UTILIZADOR': user,
+    'DESCRICAO': " ",
+    'LOCALIZACAO': " ",
+    'IMAGEM': imagem,
+    'VISIBILIDADE': 1,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Imagem enviada com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao enviar imagem: ${data['error']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
 
 
 
