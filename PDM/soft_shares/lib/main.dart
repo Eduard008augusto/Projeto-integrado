@@ -24,6 +24,7 @@ import 'calendario_eventos.dart';
 import 'add_evento.dart';
 import 'evento.dart';
 import 'favoritos.dart';
+import 'uploadimg.dart';
 
 Future<void> initializeFirebase() async {
   try {
@@ -83,6 +84,7 @@ class MainApp extends StatelessWidget {
         '/evento': (context) => const Evento(),
         '/favoritos': (context) => const Favoritos(),
         '/pendente': (context) => const Pendente(),
+        '/uppl': (context) => const UploadImagePage(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
