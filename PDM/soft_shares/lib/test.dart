@@ -3,6 +3,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:soft_shares/database/server.dart';
+import 'package:soft_shares/database/var.dart' as globals;
 
 class MultipleImagePickerPage extends StatefulWidget {
   const MultipleImagePickerPage({super.key});
@@ -64,7 +66,10 @@ class _MultipleImagePickerPageState extends State<MultipleImagePickerPage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    _selectedImages!.map((image) async {
+                      await uploadImage(image);
+                      await uploadImagemConteudo(2, 1, globals.imagem);
+                    }).toList();
                   },
                   child: const Text('Cancelar'),
                 ),
