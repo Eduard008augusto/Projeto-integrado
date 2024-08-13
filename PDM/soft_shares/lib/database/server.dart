@@ -656,7 +656,7 @@ Future<Map<String, dynamic>> uploadImagemConteudo(var conteudo, var user, var im
 }
 
 Future<Map<String, dynamic>> uploadImagemEvento(var evento, var user, var imagem) async {
-  final url = Uri.parse('${baseUrl}fotoconteudo/create');
+  final url = Uri.parse('${baseUrl}fotoevento/create');
 
   final body = json.encode({
     'ID_EVENTO': evento,
