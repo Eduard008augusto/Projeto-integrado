@@ -116,6 +116,16 @@ class MenuDrawer extends StatelessWidget {
               );
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.upload_file, size: 30.0),
+            title: const Text(
+              "Upload",
+              style: TextStyle(fontSize: 18.0),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/uppl');
+            },
+          ),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
