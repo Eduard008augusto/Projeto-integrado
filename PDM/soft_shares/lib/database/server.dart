@@ -655,7 +655,39 @@ Future<Map<String, dynamic>> uploadImagemConteudo(var conteudo, var user, var im
   }
 }
 
+Future<Map<String, dynamic>> uploadImagemEvento(var evento, var user, var imagem) async {
+  final url = Uri.parse('${baseUrl}fotoconteudo/create');
 
+  final body = json.encode({
+    'ID_EVENTO': evento,
+    'ID_UTILIZADOR': user,
+    'DESCRICAO': " ",
+    'LOCALIZACAO': " ",
+    'IMAGEM': imagem,
+    'VISIBILIDADE': 1,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Imagem enviada com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao enviar imagem: ${data['error']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
 
 
 
