@@ -689,7 +689,93 @@ Future<Map<String, dynamic>> uploadImagemEvento(var evento, var user, var imagem
   }
 }
 
+Future<List<Map<String, dynamic>>> getComentarioConteudo(var conteudo) async {
+  final response = await http.get(Uri.parse('${baseUrl}comentarioconteudo/list/$conteudo'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if (data['success']) {
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao obter imagens: ${data['erro']}');
+  }
+}
 
+Future<Map<String, dynamic>> createComentarioConteudo(var centro, var conteudo, var user, var comentario) async {
+  final url = Uri.parse('${baseUrl}comentarioconteudo/create');
+
+  final body = json.encode({
+    'ID_CENTRO': centro,
+    'ID_CONTEUDO': conteudo,
+    'ID_UTILIZADOR': user,
+    'COMENTARIO': comentario,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Comentário criado com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao criar comentário: ${data['erro']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+Future<List<Map<String, dynamic>>> getComentarioEvento(var evento) async {
+  final response = await http.get(Uri.parse('${baseUrl}comentarioevento/list/$evento'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if (data['success']) {
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao obter imagens: ${data['erro']}');
+  }
+}
+
+Future<Map<String, dynamic>> createComentarioEvento(var centro, var evento, var user, var comentario) async {
+  final url = Uri.parse('${baseUrl}comentarioevento/create');
+
+  final body = json.encode({
+    'ID_CENTRO': centro,
+    'ID_EVENTO': evento,
+    'ID_UTILIZADOR': user,
+    'COMENTARIO': comentario,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Comentário criado com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao criar comentário: ${data['erro']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
 
 
 
