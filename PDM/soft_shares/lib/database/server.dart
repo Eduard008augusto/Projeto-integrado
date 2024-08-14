@@ -573,6 +573,19 @@ Future<List<Map<String, dynamic>>> getConteudoRever(var user, var centro) async 
   }
 }
 
+// retorna eventos do user por rever
+Future<List<Map<String, dynamic>>> getEventoRever(var user, var centro) async {
+  final response = await http.get(Uri.parse('${baseUrl}evento/listReverPorUtilizadorECentro/$centro/$user'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar dados: ${data.error}');
+  }
+}
+
+// editar conteudo por rever
 Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subarea, var nome, var morada, var horario, var telefone, var imagem, var website, var acessibilidade) async {
   final url = Uri.parse('${baseUrl}conteudo/updateMobile/$idConteudo');
 
@@ -599,7 +612,7 @@ Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subare
     print(data);
 
     if (data['success']) {
-      print('Atualizado com sucess!');
+      print('Atualizado com sucesso!');
       return data;
     } else {
       throw Exception('Falha ao atualizar avaliação: ${data['error']}');
@@ -609,8 +622,8 @@ Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subare
   }
 }
 
+// retornar o album do conteudo
 Future<List<Map<String, dynamic>>> getAlbumConteudo(var conteudo) async {
-  print('\n\nCONTEUDO == $conteudo\n\n');
   final response = await http.get(Uri.parse('${baseUrl}fotoconteudo/listporconteudo/$conteudo'));
   var data = jsonDecode(response.body);
   print(data);
@@ -618,18 +631,270 @@ Future<List<Map<String, dynamic>>> getAlbumConteudo(var conteudo) async {
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
   } else {
-    throw Exception('Falha ao obter imagens: ${data['erro_mobile']}');
+    throw Exception('Falha ao obter imagens: ${data['error']}');
   }
 }
 
+// upload de imagens para o album do conteudo
+Future<Map<String, dynamic>> uploadImagemConteudo(var conteudo, var user, var imagem) async {
+  final url = Uri.parse('${baseUrl}fotoconteudo/create');
 
+  final body = json.encode({
+    'ID_CONTEUDO': conteudo,
+    'ID_UTILIZADOR': user,
+    'DESCRICAO': " ",
+    'LOCALIZACAO': " ",
+    'IMAGEM': imagem,
+    'VISIBILIDADE': 1,
+  });
 
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
 
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
 
+    print(data);
 
+    if (data['success']) {
+      print('Imagem enviada com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao enviar imagem: ${data['error']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
 
+// retornar o album do evento
+Future<List<Map<String, dynamic>>> getAlbumEvento(var evento) async {
+  final response = await http.get(Uri.parse('${baseUrl}fotoevento/listporevento/$evento'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if (data['success']) {
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao obter imagens: ${data['error']}');
+  }
+}
 
+// upload de imagens para o album do evento
+Future<Map<String, dynamic>> uploadImagemEvento(var evento, var user, var imagem) async {
+  final url = Uri.parse('${baseUrl}fotoevento/create');
 
+  final body = json.encode({
+    'ID_EVENTO': evento,
+    'ID_UTILIZADOR': user,
+    'DESCRICAO': " ",
+    'LOCALIZACAO': " ",
+    'IMAGEM': imagem,
+    'VISIBILIDADE': 1,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Imagem enviada com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao enviar imagem: ${data['error']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+// retorna os comentários do conteudo
+Future<List<Map<String, dynamic>>> getComentarioConteudo(var conteudo) async {
+  final response = await http.get(Uri.parse('${baseUrl}comentarioconteudo/list/$conteudo'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if (data['success']) {
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao obter imagens: ${data['erro']}');
+  }
+}
+
+// cria os comentários do conteudo
+Future<Map<String, dynamic>> createComentarioConteudo(var centro, var conteudo, var user, var comentario) async {
+  final url = Uri.parse('${baseUrl}comentarioconteudo/create');
+
+  final body = json.encode({
+    'ID_CENTRO': centro,
+    'ID_CONTEUDO': conteudo,
+    'ID_UTILIZADOR': user,
+    'COMENTARIO': comentario,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Comentário criado com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao criar comentário: ${data['erro']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+// denunciar um comentário de um conteudo
+Future<Map<String, dynamic>> denunciarComentarioConteudo(var conteudo) async {
+  final response = await http.post(Uri.parse('${baseUrl}comentarioconteudo/denunciar/$conteudo'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if (data['success']) {
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao obter imagens: ${data['error']}');
+  }
+}
+
+// update comentário de um evento
+Future<Map<String, dynamic>> updateComentarioConteudo(var comentario, var texto) async {
+  final url = Uri.parse('${baseUrl}comentarioconteudo/update/$comentario');
+
+  final body = json.encode({
+    'COMENTARIO': texto,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Comentário atualizado com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao atualizar comentário: ${data['erro']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+// retorna os comentários do evento
+Future<List<Map<String, dynamic>>> getComentarioEvento(var evento) async {
+  final response = await http.get(Uri.parse('${baseUrl}comentarioevento/list/$evento'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if (data['success']) {
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao obter imagens: ${data['erro']}');
+  }
+}
+
+// cria os comentários do evento
+Future<Map<String, dynamic>> createComentarioEvento(var centro, var evento, var user, var comentario) async {
+  final url = Uri.parse('${baseUrl}comentarioevento/create');
+
+  final body = json.encode({
+    'ID_CENTRO': centro,
+    'ID_EVENTO': evento,
+    'ID_UTILIZADOR': user,
+    'COMENTARIO': comentario,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Comentário criado com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao criar comentário: ${data['erro']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+// denunciar um comentário de um evento
+Future<Map<String, dynamic>> denunciarComentarioEvento(var evento) async {
+  final response = await http.post(Uri.parse('${baseUrl}comentarioevento/denunciar/$evento'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if (data['success']) {
+    Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao obter imagens: ${data['error']}');
+  }
+}
+
+// update comentário de um evento
+Future<Map<String, dynamic>> updateComentarioEvento(var comentario, var texto) async {
+  final url = Uri.parse('${baseUrl}comentarioevento/update/$comentario');
+
+  final body = json.encode({
+    'COMENTARIO': texto,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Comentário atualizado com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao atualizar comentário: ${data['erro']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
 
 
 

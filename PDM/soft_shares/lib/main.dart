@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:soft_shares/conteudo_to_edit.dart';
 import 'package:soft_shares/database/connection_check.dart';
-import 'package:soft_shares/database/database.dart';
+//import 'package:soft_shares/database/database.dart';
 import 'package:soft_shares/edit_conteudo.dart';
 import 'package:soft_shares/feed_pendente.dart';
 import 'firebase_options.dart';
