@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api
+// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
@@ -127,6 +127,12 @@ class Conteudo extends StatelessWidget {
             var ratingEstrela = mediaAvaliacoesGerais.toInt();
             var ratingPreco = publicacao['mediaAvaliacoesPreco'];
             var totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']);
+            String  morada = publicacao['MORADA'] ?? ' não disponível';
+            String  horario = publicacao['HORARIO'] ?? ' não disponível';
+            String  telefone = publicacao['TELEFONE'] ?? ' não disponível';
+            String  website = publicacao['WEBSITE'] ?? ' não disponível';
+            String  acessibilidade = publicacao['ACESSIBILIDADE'] ?? 'Acessibilidade não disponível';
+
             globals.idSubAreaFAV = publicacao['ID_SUBAREA'];
 
             return SingleChildScrollView(
@@ -229,7 +235,47 @@ class Conteudo extends StatelessWidget {
                               itemSize: 20.0,
                               direction: Axis.horizontal,
                             ),
-                            const Divider(
+                              Container(
+                                padding: const EdgeInsets.all(4.0),
+                                child: /*const*/ DefaultTabController(
+                                  initialIndex: 0,
+                                  length: 3, 
+                                  child: Column(
+                                    children: [
+                                      TabBar(
+                                        labelColor: const Color.fromARGB(255, 57, 99, 156),
+                                        unselectedLabelColor: Colors.grey,
+                                        indicatorColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+                                        tabs: const [
+                                          Tab(icon: Icon(Icons.info_outline),),
+                                          Tab(icon: Icon(Icons.chat_outlined),),
+                                          Tab(icon: Icon(Icons.photo_library_outlined),),
+                                        ],
+                                      ),
+                                      SizedBox(height: 16),
+                                      SizedBox(
+                                        height: 400,
+                                        child: TabBarView(
+                                          children: [
+                                            Center(child: 
+                                          Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [                           
+                            Row(
+                              children: [
+                                Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                SizedBox(width: 3), 
+                                Expanded(
+                                  child: Text(
+                                    morada,
+                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Divider(
                               height: 50,
                               thickness: 1,
                               indent: 20,
@@ -238,19 +284,19 @@ class Conteudo extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                Icon(Icons.access_time, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    publicacao['MORADA'] ?? 'Morada não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    horario,
+                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
                             ),
-                            const Divider(
+                            Divider(
                               height: 50,
                               thickness: 1,
                               indent: 20,
@@ -259,19 +305,19 @@ class Conteudo extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.access_time, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    publicacao['HORARIO'] ?? 'Horário não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    telefone,
+                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
                             ),
-                            const Divider(
+                            Divider(
                               height: 50,
                               thickness: 1,
                               indent: 20,
@@ -280,19 +326,19 @@ class Conteudo extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                Icon(Icons.web, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    publicacao['TELEFONE'] ?? 'Telefone não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    website,
+                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
                             ),
-                            const Divider(
+                            Divider(
                               height: 50,
                               thickness: 1,
                               indent: 20,
@@ -301,39 +347,30 @@ class Conteudo extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.web, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                Icon(Icons.accessibility, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    publicacao['WEBSITE'] ?? 'Website não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    acessibilidade,
+                                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
                             ),
-                            const Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                            Row(
-                              children: [
-                                const Icon(Icons.accessibility, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    publicacao['ACESSIBILIDADE'] ?? 'Acessibilidade não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          ],
+                        ),
+                      ),
+                                 Center(child: Text('Comentários')),
+                                 Center(child: Text('Fotos')),
+                               ],
+                             ),
+                           ),
+                         ],
+                       ),
+                     ),
+                   ),
                             const Divider(
                               height: 50,
                               thickness: 1,
