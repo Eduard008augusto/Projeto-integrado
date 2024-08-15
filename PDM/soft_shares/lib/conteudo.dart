@@ -364,8 +364,91 @@ class Conteudo extends StatelessWidget {
                           ],
                         ),
                       ),
-                                 Center(child: Text('Comentários')),
-                                 Center(child: Text('Fotos')),
+                                 Column(
+                                  children: [
+                                    FutureBuilder<List<Map<String, dynamic>>>(
+                                      future: getComentarioConteudo(globals.idPublicacao),
+                                      builder: (context, snapshot) {
+                                        if(snapshot.connectionState == ConnectionState.waiting){
+                                          return Center(child: CircularProgressIndicator(),);
+                                        } else if(!snapshot.hasData || snapshot.data!.isEmpty){
+                                          return const Center(child: Text('Nenhum comentário encontrado!', overflow: TextOverflow.ellipsis, maxLines: 2));
+                                        } else if(snapshot.hasError){
+                                          return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
+                                        } else {
+                                          final List<Map<String, dynamic>> comentarios = snapshot.data!;
+
+                                          TextEditingController comentarioController = TextEditingController();
+
+                                          return Column(
+                                            children: [
+                                              Column(
+                                                children: comentarios.map((comentario) {
+                                                  return Column(
+                                                    children: [
+                                                      Text('Comentário: ${comentario['COMENTARIO']}               Likes: ${comentario['totalLikes']}'),
+                                                    ],
+                                                  );
+                                                }).toList(),
+                                              ),
+
+                                              ElevatedButton(onPressed: (){
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) {
+                                                    return Dialog(
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(16.0),
+                                                        child: Column(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            const Text(
+                                                              'Comentário',
+                                                              style: TextStyle(
+                                                                fontSize: 20,
+                                                                fontWeight: FontWeight.bold,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(height: 16),
+
+                                                            TextField(
+                                                              controller: comentarioController,
+                                                              keyboardType: TextInputType.text,
+                                                              decoration: const InputDecoration(
+                                                                hintText: 'Comentário',
+                                                                border: OutlineInputBorder(),
+                                                              ),
+                                                            ),
+
+                                                            const SizedBox(height: 16),
+                                                            
+                                                            ElevatedButton(
+                                                              onPressed: () async {
+                                                                await createComentarioConteudo(globals.idCentro, globals.idPublicacao, globals.idUtilizador, comentarioController.text);
+
+                                                                Navigator.of(context).pop();
+                                                                Navigator.pushNamed(context, '/conteudo');
+                                                              },
+                                                              child: const Text('Classificar'),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              }, child: const Text("Comentar"))
+                                            ],
+                                          );
+                                        }
+                                      }
+                                    )
+                                  ],
+                                 ),
+                                 Center(child: Text('TESTE4')),
                                ],
                              ),
                            ),
@@ -507,7 +590,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           print(snapshot.error);
-          print(snapshot.stackTrace);
           return const Icon(Icons.error);
         } else {
           return Container(

@@ -473,7 +473,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           print(snapshot.error);
-          print(snapshot.stackTrace);
           return const Icon(Icons.error);
         } else {
           return Container(
