@@ -35,6 +35,7 @@ var password = '';
 DateTime dataNascimento = DateTime.now();
 
 // Criar Publicação
+//var areaP = '';
 var nomeP = '';
 var moradaP = '';
 var horarioP = '';

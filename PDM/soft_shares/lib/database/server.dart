@@ -591,7 +591,7 @@ Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subare
 
   final body = json.encode({
     'ID_AREA': area,
-    'ID_SUBAREA': area,
+    'ID_SUBAREA': subarea,
     'NOMECONTEUDO': nome,
     'MORADA': morada,
     'HORARIO': horario,

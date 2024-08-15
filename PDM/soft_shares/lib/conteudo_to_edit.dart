@@ -103,7 +103,7 @@ class ConteudoToEdit extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          globals.nomArea,
+          globals.nomArea ,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
@@ -391,6 +391,7 @@ class ConteudoToEdit extends StatelessWidget {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
+          //globals.idArea = publicacao['ID_AREA'];//teste
           Navigator.pushNamed(context, '/editconteudo');
         },
         child: Container(
