@@ -338,7 +338,7 @@ class _EditConteudoState extends State<EditConteudo> {
                           }
                         },
                         icon: const Icon(Icons.edit, color: Colors.white),
-                        label: const Text('eDITAR'),
+                        label: const Text('Editar'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
                           foregroundColor: Colors.white,
@@ -386,11 +386,12 @@ class _EditConteudoState extends State<EditConteudo> {
                     globals.imagem = '';
                   }
 
-                  await createPublicacao(
-                    globals.idCentro,
+                  print('ID AREA: ${globals.idAreaEdit}\nID SUBAREA: ${globals.idSubArea}\nID SUBAREA: ${globals.idUtilizador}\n');
+
+                  await updateConteudo(
+                    globals.idPublicacao,
                     globals.idAreaEdit,
                     globals.idSubArea,
-                    globals.idUtilizador,
                     globals.nomeP,
                     globals.moradaP,
                     globals.horarioP,
@@ -407,7 +408,7 @@ class _EditConteudoState extends State<EditConteudo> {
                   print(e);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Erro ao adicionar conteúdo: $e'),
+                      content: Text('Erro ao editar conteúdo: $e'),
                     ),
                   );
                 }

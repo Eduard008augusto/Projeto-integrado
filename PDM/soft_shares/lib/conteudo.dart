@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api
+// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
@@ -6,6 +6,8 @@ import 'package:soft_shares/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+import 'test.dart';
 
 bool isFavorite = false;
 bool avaliado = false;
@@ -127,6 +129,12 @@ class Conteudo extends StatelessWidget {
             var ratingEstrela = mediaAvaliacoesGerais.toInt();
             var ratingPreco = publicacao['mediaAvaliacoesPreco'];
             var totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']);
+            String  morada = publicacao['MORADA'] ?? ' não disponível';
+            String  horario = publicacao['HORARIO'] ?? ' não disponível';
+            String  telefone = publicacao['TELEFONE'] ?? ' não disponível';
+            String  website = publicacao['WEBSITE'] ?? ' não disponível';
+            String  acessibilidade = publicacao['ACESSIBILIDADE'] ?? 'Acessibilidade não disponível';
+
             globals.idSubAreaFAV = publicacao['ID_SUBAREA'];
 
             return SingleChildScrollView(
@@ -229,7 +237,47 @@ class Conteudo extends StatelessWidget {
                               itemSize: 20.0,
                               direction: Axis.horizontal,
                             ),
-                            const Divider(
+                              Container(
+                                padding: const EdgeInsets.all(4.0),
+                                child: /*const*/ DefaultTabController(
+                                  initialIndex: 0,
+                                  length: 3, 
+                                  child: Column(
+                                    children: [
+                                      TabBar(
+                                        labelColor: const Color.fromARGB(255, 57, 99, 156),
+                                        unselectedLabelColor: Colors.grey,
+                                        indicatorColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+                                        tabs: const [
+                                          Tab(icon: Icon(Icons.info_outline),),
+                                          Tab(icon: Icon(Icons.chat_outlined),),
+                                          Tab(icon: Icon(Icons.photo_library_outlined),),
+                                        ],
+                                      ),
+                                      SizedBox(height: 16),
+                                      SizedBox(
+                                        height: 400,
+                                        child: TabBarView(
+                                          children: [
+                                            Center(child: 
+                                          Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [                           
+                            Row(
+                              children: [
+                                Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                SizedBox(width: 3), 
+                                Expanded(
+                                  child: Text(
+                                    morada,
+                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Divider(
                               height: 50,
                               thickness: 1,
                               indent: 20,
@@ -238,19 +286,19 @@ class Conteudo extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                Icon(Icons.access_time, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    publicacao['MORADA'] ?? 'Morada não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    horario,
+                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
                             ),
-                            const Divider(
+                            Divider(
                               height: 50,
                               thickness: 1,
                               indent: 20,
@@ -259,19 +307,19 @@ class Conteudo extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.access_time, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    publicacao['HORARIO'] ?? 'Horário não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    telefone,
+                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
                             ),
-                            const Divider(
+                            Divider(
                               height: 50,
                               thickness: 1,
                               indent: 20,
@@ -280,19 +328,19 @@ class Conteudo extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                Icon(Icons.web, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    publicacao['TELEFONE'] ?? 'Telefone não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    website,
+                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
                             ),
-                            const Divider(
+                            Divider(
                               height: 50,
                               thickness: 1,
                               indent: 20,
@@ -301,39 +349,113 @@ class Conteudo extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.web, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                Icon(Icons.accessibility, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                SizedBox(width: 3), 
                                 Expanded(
                                   child: Text(
-                                    publicacao['WEBSITE'] ?? 'Website não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                    acessibilidade,
+                                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
                             ),
-                            const Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                            Row(
-                              children: [
-                                const Icon(Icons.accessibility, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    publicacao['ACESSIBILIDADE'] ?? 'Acessibilidade não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          ],
+                        ),
+                      ),
+                                 Column(
+                                  children: [
+                                    FutureBuilder<List<Map<String, dynamic>>>(
+                                      future: getComentarioConteudo(globals.idPublicacao),
+                                      builder: (context, snapshot) {
+                                        if(snapshot.connectionState == ConnectionState.waiting){
+                                          return Center(child: CircularProgressIndicator(),);
+                                        } else if(!snapshot.hasData || snapshot.data!.isEmpty){
+                                          return const Center(child: Text('Nenhum comentário encontrado!', overflow: TextOverflow.ellipsis, maxLines: 2));
+                                        } else if(snapshot.hasError){
+                                          return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
+                                        } else {
+                                          final List<Map<String, dynamic>> comentarios = snapshot.data!;
+
+                                          TextEditingController comentarioController = TextEditingController();
+
+                                          return Column(
+                                            children: [
+                                              Column(
+                                                children: comentarios.map((comentario) {
+                                                  return Column(
+                                                    children: [
+                                                      Text('Comentário: ${comentario['COMENTARIO']}               Likes: ${comentario['totalLikes']}'),
+                                                    ],
+                                                  );
+                                                }).toList(),
+                                              ),
+
+                                              ElevatedButton(onPressed: (){
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) {
+                                                    return Dialog(
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(16.0),
+                                                        child: Column(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            const Text(
+                                                              'Comentário',
+                                                              style: TextStyle(
+                                                                fontSize: 20,
+                                                                fontWeight: FontWeight.bold,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(height: 16),
+
+                                                            TextField(
+                                                              controller: comentarioController,
+                                                              keyboardType: TextInputType.text,
+                                                              decoration: const InputDecoration(
+                                                                hintText: 'Comentário',
+                                                                border: OutlineInputBorder(),
+                                                              ),
+                                                            ),
+
+                                                            const SizedBox(height: 16),
+                                                            
+                                                            ElevatedButton(
+                                                              onPressed: () async {
+                                                                await createComentarioConteudo(globals.idCentro, globals.idPublicacao, globals.idUtilizador, comentarioController.text);
+
+                                                                Navigator.of(context).pop();
+                                                                Navigator.pushNamed(context, '/conteudo');
+                                                              },
+                                                              child: const Text('Classificar'),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              }, child: const Text("Comentar"))
+                                            ],
+                                          );
+                                        }
+                                      }
+                                    )
+                                  ],
+                                 ),
+                                 Center(child: Text('TESTE4')),
+                               ],
+                             ),
+                           ),
+                         ],
+                       ),
+                     ),
+                   ),
                             const Divider(
                               height: 50,
                               thickness: 1,
@@ -364,8 +486,8 @@ class Conteudo extends StatelessWidget {
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/editconteudo');
-                            //_showRatingDialog(context); 
+                            //Navigator.pushNamed(context, '/editconteudo');
+                            _showRatingDialog(context); 
                           },
                           icon: const Icon(Icons.star, color: Colors.white),
                           label: const Text('Classificar'),
@@ -382,6 +504,14 @@ class Conteudo extends StatelessWidget {
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),),
+
+                  ElevatedButton(onPressed: (){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const MultipleImagePickerPage(),
+                      ),
+                    );
+                  }, child: const Text('Add Message')),
 
                   buildAlbum(),
                 ],
@@ -460,7 +590,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           print(snapshot.error);
-          print(snapshot.stackTrace);
           return const Icon(Icons.error);
         } else {
           return Container(
