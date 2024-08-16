@@ -615,7 +615,7 @@ Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subare
       print('Atualizado com sucesso!');
       return data;
     } else {
-      throw Exception('Falha ao atualizar avaliação: ${data['error']}');
+      throw Exception('Falha ao atualizar conteudo: ${data['error']}');
     }
   } catch (e) {
     throw Exception('Erro ao decodificar a resposta JSON: $e');

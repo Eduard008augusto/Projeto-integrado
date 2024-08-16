@@ -386,11 +386,12 @@ class _EditConteudoState extends State<EditConteudo> {
                     globals.imagem = '';
                   }
 
+                  print('ID AREA: ${globals.idAreaEdit}\nID SUBAREA: ${globals.idSubArea}\nID SUBAREA: ${globals.idUtilizador}\n');
+
                   await updateConteudo(
-                    //globals.idCentro,
+                    globals.idPublicacao,
                     globals.idAreaEdit,
                     globals.idSubArea,
-                    globals.idUtilizador,
                     globals.nomeP,
                     globals.moradaP,
                     globals.horarioP,
