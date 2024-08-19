@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -239,7 +240,7 @@ class Conteudo extends StatelessWidget {
                             ),
                               Container(
                                 padding: const EdgeInsets.all(4.0),
-                                child: /*const*/ DefaultTabController(
+                                child: DefaultTabController(
                                   initialIndex: 0,
                                   length: 3, 
                                   child: Column(
@@ -470,7 +471,9 @@ class Conteudo extends StatelessWidget {
                   ),
                   Container(
                     padding: const EdgeInsets.all(16.0),
-                    child: Row(
+                    child: Column(
+                      children: [
+                        Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton.icon(
@@ -496,8 +499,25 @@ class Conteudo extends StatelessWidget {
                             foregroundColor: Colors.white, 
                           ),
                         ),
+                        Center(
+                          child: ElevatedButton.icon(
+                          onPressed: () {
+                            final query = Uri.encodeComponent(publicacao['MORADA']);
+                            final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
+                            Share.shareUri(googleMapsUrl);
+                          },
+                          icon: const Icon(Icons.share, color: Colors.white),
+                          label: const Text('Partilhar'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                            foregroundColor: Colors.white, 
+                          ),
+                        ),
+                        )
                       ],
                     ),
+                      ],
+                    )
                   ),
 
                   const Text('ALBUM', style: TextStyle(
