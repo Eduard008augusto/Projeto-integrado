@@ -470,7 +470,7 @@ class Conteudo extends StatelessWidget {
                                                                                         },
                                                                                         icon: Icon(Icons.report_outlined, color: Color.fromARGB(255, 57, 99, 156)),
                                                                                         label: Text(
-                                                                                          'Reportar',
+                                                                                          'Denunciar',
                                                                                             style: TextStyle(
                                                                                             color:Color.fromARGB(255, 57, 99, 156), 
                                                                                             ),
