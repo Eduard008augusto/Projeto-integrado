@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'dart:convert';
@@ -615,7 +616,7 @@ Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subare
       print('Atualizado com sucesso!');
       return data;
     } else {
-      throw Exception('Falha ao atualizar avaliação: ${data['error']}');
+      throw Exception('Falha ao atualizar conteudo: ${data['error']}');
     }
   } catch (e) {
     throw Exception('Erro ao decodificar a resposta JSON: $e');
@@ -896,8 +897,44 @@ Future<Map<String, dynamic>> updateComentarioEvento(var comentario, var texto) a
   }
 }
 
+// retorna a quantidade de notifcações
+Future<Map<String, dynamic>> quantidadeNotificacoes(var centro, var user) async {
+  final response = await http.get(Uri.parse('${baseUrl}notificacao/NumeroNotifCentroUser/$centro/$user'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if (data['success']) {
+    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    return res;
+  } else {
+    throw Exception('Falha ao obter quantidade de notificações: ${data['error']}');
+  }
+}
 
+// retorna as notifcações
+Future<List<Map<String, dynamic>>> getNotificacoes(var centro, var user) async {
+  final response = await http.get(Uri.parse('${baseUrl}notificacao/ListPorCentroUser/$centro/$user'));
+  var data = jsonDecode(response.body);
+  print(data);
+  if(data['success']){
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao obter notificações: ${data['error']}');
+  }
+}
 
+// apaga as notificações de um user
+Future<Map<String, dynamic>> deleteNotificacoes(var centro, var user) async {
+  final response = await http.get(Uri.parse('${baseUrl}notificacao/delete/$centro/$user'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    print(data['message']);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    return res;
+  } else {
+    throw Exception('Falha ao apagar notifcações: ${data['error']}');
+  }
+}
 
 
 

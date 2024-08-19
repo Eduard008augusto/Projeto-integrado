@@ -46,7 +46,7 @@ class Areas extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Areas'),
       ),
-      drawer: const MenuDrawer(),
+      drawer: const MenuDrawerMapa(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
