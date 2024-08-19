@@ -27,6 +27,7 @@ dependencies:
   shared_preferences:
   table_calendar:
   connectivity_plus:
+  comment_box: 
 
 dev_dependencies:
   flutter_test:

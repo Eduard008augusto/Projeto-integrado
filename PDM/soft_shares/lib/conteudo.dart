@@ -1,15 +1,19 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+//import 'package:path/path.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'like_bttn.dart';
+//import 'package:comment_box/comment/comment.dart';
 
 import 'test.dart';
 
 bool isFavorite = false;
+bool isLiked = false;
 bool avaliado = false;
 
 int estrela = 0;
@@ -256,7 +260,7 @@ class Conteudo extends StatelessWidget {
                                       ),
                                       SizedBox(height: 16),
                                       SizedBox(
-                                        height: 400,
+                                        height: 350,
                                         child: TabBarView(
                                           children: [
                                             Center(child: 
@@ -366,96 +370,294 @@ class Conteudo extends StatelessWidget {
                       ),
                                  Column(
                                   children: [
-                                    FutureBuilder<List<Map<String, dynamic>>>(
-                                      future: getComentarioConteudo(globals.idPublicacao),
-                                      builder: (context, snapshot) {
-                                        if(snapshot.connectionState == ConnectionState.waiting){
-                                          return Center(child: CircularProgressIndicator(),);
-                                        } else if(!snapshot.hasData || snapshot.data!.isEmpty){
-                                          return const Center(child: Text('Nenhum comentário encontrado!', overflow: TextOverflow.ellipsis, maxLines: 2));
-                                        } else if(snapshot.hasError){
-                                          return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
-                                        } else {
-                                          final List<Map<String, dynamic>> comentarios = snapshot.data!;
+                                    Expanded(
+                                     child: FutureBuilder<List<Map<String, dynamic>>>(
+                                        future: getComentarioConteudo(globals.idPublicacao),
+                                        builder: (context, snapshot) {
+                                          if(snapshot.connectionState == ConnectionState.waiting){
+                                            return Center(child: CircularProgressIndicator(),);
+                                          } else if(!snapshot.hasData || snapshot.data!.isEmpty){
+                                            return const Center(child: Text('Nenhum comentário encontrado!', overflow: TextOverflow.ellipsis, maxLines: 2));
+                                          } else if(snapshot.hasError){
+                                            return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
+                                          } else {
+                                            final List<Map<String, dynamic>> comentarios = snapshot.data!;
 
-                                          TextEditingController comentarioController = TextEditingController();
+                                            TextEditingController comentarioController = TextEditingController();
 
-                                          return Column(
-                                            children: [
-                                              Column(
-                                                children: comentarios.map((comentario) {
-                                                  return Column(
-                                                    children: [
-                                                      Text('Comentário: ${comentario['COMENTARIO']}               Likes: ${comentario['totalLikes']}'),
+                                        return Stack(
+                                          children: [
+                                           SingleChildScrollView(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(16.0),
+                                            child :Column(
+                                              children: [
+                                                Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: comentarios.map((comentario) {
+                                                    return FutureBuilder<Map<String, dynamic>>(
+                                                      future: fetchUtilizador(comentario['ID_UTILIZADOR']),
+                                                      builder: (context, snapshot) {
+                                                        if (snapshot.connectionState == ConnectionState.waiting) {
+                                                          return CircularProgressIndicator(); 
+                                                        } else if (snapshot.hasError) {
+                                                          return Text('Erro ao carregar dados do user'); 
+                                                        } else if (!snapshot.hasData) {
+                                                          return Text('Nenhum dado encontrado para este user'); 
+                                                        } else {
+                                                          final Map<String, dynamic> user = snapshot.data!; 
+                                                          return Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Row(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.only(top: 10.0), 
+                                                                      child: CircleAvatar(
+                                                                        radius: 18,
+                                                                        backgroundImage: NetworkImage(
+                                                                          user['IMAGEMPERFIL'] == null 
+                                                                            ? 'https://cdn.discordapp.com/attachments/1154170394400542730/1260333904976679064/01.png?ex=668ef0ea&is=668d9f6a&hm=b909016ee5266e728eb2421b043a637a5d32156b3f0f4e9c59c4575af5208667&' 
+                                                                            : 'https://pintbackend-w8pt.onrender.com/images/${user['IMAGEMPERFIL']}'),
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(width: 10),
+                                                                    Expanded(
+                                                                      child: Column(
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          Row(
+                                                                            children: [
+                                                                               Text(
+                                                                            '${user['NOME']}',
+                                                                              style: TextStyle(
+                                                                              fontSize: 14.0, 
+                                                                              color: Colors.black.withOpacity(0.6), 
+                                                                            ),
+                                                                          ),
+                                                                          Spacer(),
+                                                                          
+                                                                          // botao de denuncia "...""
+                                                                          IconButton(
+                                                                            icon: Icon(Icons.more_vert, size: 16.0),
+                                                                            padding: EdgeInsets.all(0),
+                                                                            constraints: BoxConstraints(), 
+                                                                            onPressed:(){
+                                                                              showDialog(
+                                                                                context: context,
+                                                                                builder: (BuildContext context) {
+                                                                                  return AlertDialog(
+                                                                                    //title: Text('Denunciar comentário'),
+                                                                                    content: Text('Deseja denunciar este comentário?'),
+                                                                                    actions: [
+                                                                                      TextButton.icon(
+                                                                                        onPressed: () {
+                                                                                          Navigator.of(context).pop();
+                                                                                        },
+                                                                                        icon: const Icon(Icons.cancel_outlined, color: Color.fromARGB(255, 57, 99, 156)),
+                                                                                        label: Text(
+                                                                                          'Cancelar',
+                                                                                            style: TextStyle(
+                                                                                            color:Color.fromARGB(255, 57, 99, 156)
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                      TextButton.icon(
+                                                                                        onPressed: () {
+                                                                                          //denuncia
+                                                                                          Navigator.of(context).pop();
+                                                                                        },
+                                                                                        icon: Icon(Icons.report_outlined, color: Color.fromARGB(255, 57, 99, 156)),
+                                                                                        label: Text(
+                                                                                          'Reportar',
+                                                                                            style: TextStyle(
+                                                                                            color:Color.fromARGB(255, 57, 99, 156), 
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    );
+                                                                                  }
+                                                                                );
+                                                                              },
+                                                                            ),
+                                                                          ],
+                                                                        ),
+
+                                                                          //corpo do comentario
+                                                                          //SizedBox(height: 4),
+                                                                          Text('${comentario['COMENTARIO']}'),
+                                                                          //SizedBox(height: 4),
+                                                                          Row(
+                                                                           children: [
+                                                                            LikeButton(),
+                                                                            Text('${comentario['totalLikes']}'),
+                                                                            /*
+                                                                             Icon(Icons.thumb_up_outlined, size: 16.0, color:Color.fromARGB(255, 57, 99, 156)),  
+                                                                             SizedBox(width: 5),  
+                                                                             Text('${comentario['totalLikes']}'),
+                                                                             */
+                                                                          ],
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              SizedBox(height: 20),  // entre coment
+                                                            ],
+                                                          );                                   
+                                                        } 
+                                                      } 
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                                SizedBox(height: 50), // no fim
                                                     ],
-                                                  );
-                                                }).toList(),
+                                                  ),
+                                                )
                                               ),
 
-                                              ElevatedButton(onPressed: (){
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (BuildContext context) {
-                                                    return Dialog(
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                
+                                             Positioned(
+                                              bottom: 0,
+                                              left: 10,
+                                              right: 10,
+                                              child: Container( 
+                                                color: Color.fromARGB(255, 254, 247, 255),
+                                                width: double.infinity,  
+                                                padding: EdgeInsets.all(10.0),
+                                                child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextFormField(
+                                              controller: comentarioController,
+                                              decoration: InputDecoration(
+                                                hintText: 'Adicione um comentário...',
+                                                border: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: Colors.grey),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.send),
+                                            onPressed: () async {
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return Dialog(
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(16.0),
+                                                      child: Column(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          const SizedBox(height: 16),
+                                                          TextField(
+                                                            controller: comentarioController,
+                                                            keyboardType: TextInputType.text,
+                                                            decoration: const InputDecoration(
+                                                              hintText: 'Adicione um comentário...',
+                                                              border: OutlineInputBorder(),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(height: 16),
+                                                          ElevatedButton(
+                                                            onPressed: () async {
+                                                              await createComentarioConteudo(
+                                                                globals.idCentro,
+                                                                globals.idPublicacao,
+                                                                globals.idUtilizador,
+                                                                comentarioController.text,
+                                                              );
+                                                              Navigator.of(context).pop();
+                                                              Navigator.pushNamed(context, '/conteudo');
+                                                            },
+                                                            child: const Text('Confirmar'),
+                                                          ),
+                                                        ],
                                                       ),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(16.0),
-                                                        child: Column(
-                                                          mainAxisSize: MainAxisSize.min,
-                                                          children: [
-                                                            const Text(
-                                                              'Comentário',
-                                                              style: TextStyle(
-                                                                fontSize: 20,
-                                                                fontWeight: FontWeight.bold,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(height: 16),
-
-                                                            TextField(
-                                                              controller: comentarioController,
-                                                              keyboardType: TextInputType.text,
-                                                              decoration: const InputDecoration(
-                                                                hintText: 'Comentário',
-                                                                border: OutlineInputBorder(),
-                                                              ),
-                                                            ),
-
-                                                            const SizedBox(height: 16),
-                                                            
-                                                            ElevatedButton(
-                                                              onPressed: () async {
-                                                                await createComentarioConteudo(globals.idCentro, globals.idPublicacao, globals.idUtilizador, comentarioController.text);
-
-                                                                Navigator.of(context).pop();
-                                                                Navigator.pushNamed(context, '/conteudo');
-                                                              },
-                                                              child: const Text('Classificar'),
-                                                            ),
-                                                          ],
+                                                    ),
+                                                  );
+                                                },
+                                                /*child: ElevatedButton(onPressed: (){
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return Dialog(
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(10),
                                                         ),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              }, child: const Text("Comentar"))
-                                            ],
-                                          );
-                                        }
-                                      }
-                                    )
-                                  ],
-                                 ),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(16.0),
+                                                          child: Column(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: [
+                                                              const Text(
+                                                                'pila',
+                                                                style: TextStyle(
+                                                                  fontSize: 20,
+                                                                  fontWeight: FontWeight.bold,
+                                                                ),
+                                                              ),
+                                                              const SizedBox(height: 16),
+
+                                                              TextField(
+                                                                controller: comentarioController,
+                                                                keyboardType: TextInputType.text,
+                                                                decoration: const InputDecoration(
+                                                                  hintText: 'Adicione um comentário...',
+                                                                  border: OutlineInputBorder(),
+                                                                ),
+                                                              ),
+
+                                                              const SizedBox(height: 16),
+                                                              
+                                                              ElevatedButton(
+                                                                onPressed: () async {
+                                                                  await createComentarioConteudo(globals.idCentro, globals.idPublicacao, globals.idUtilizador, comentarioController.text);
+
+                                                                  Navigator.of(context).pop();
+                                                                  Navigator.pushNamed(context, '/conteudo');
+                                                                    },
+                                                                    child: const Text('AAAAA2'),
+                                                                 ),
+                                                                 
+                                                               ],
+                                                             ),
+                                                           ),
+                                                         );
+                                                       },
+                                                     );
+                                                   }, child: const Text("Comentar"))
+                                                   */
+                                                           );
+                                                         }
+                                                       )                                               
+                                                     ]
+                                                   )
+                                                 )
+                                               )
+                                             ]
+                                           );
+                                         }
+                                       }
+                                     )
+                                   ),
+                                 ],
+                               ),
                                  Center(child: Text('TESTE4')),
-                               ],
-                             ),
-                           ),
-                         ],
-                       ),
-                     ),
-                   ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                             const Divider(
                               height: 50,
                               thickness: 1,
@@ -511,7 +713,7 @@ class Conteudo extends StatelessWidget {
                         builder: (context) => const MultipleImagePickerPage(),
                       ),
                     );
-                  }, child: const Text('Add Message')),
+                  }, child: const Text('Adicionar Foto')),
 
                   buildAlbum(),
                 ],
