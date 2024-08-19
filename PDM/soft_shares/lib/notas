@@ -1,110 +1,90 @@
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [                           
-                            Row(
-                              children: [
-                                const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    publicacao['MORADA'] ?? 'Morada não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
+children: [
+  Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: CircleAvatar(
+          radius: 18,
+          backgroundImage: NetworkImage(
+            user['IMAGEMPERFIL'] == null 
+              ? 'https://cdn.discordapp.com/attachments/1154170394400542730/1260333904976679064/01.png?ex=668ef0ea&is=668d9f6a&hm=b909016ee5266e728eb2421b043a637a5d32156b3f0f4e9c59c4575af5208667&' 
+              : 'https://pintbackend-w8pt.onrender.com/images/${user['IMAGEMPERFIL']}'),
+        ),
+      ),
+      SizedBox(width: 10),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  '${user['NOME']}',
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                ),
+                Spacer(),
+
+                // botao de denuncia "...""
+                IconButton(
+                  icon: Icon(Icons.more_vert, size: 16.0),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Text('Deseja denunciar este comentário?'),
+                          actions: [
+                            TextButton.icon(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: const Icon(Icons.cancel_outlined, color: Color.fromARGB(255, 57, 99, 156)),
+                              label: Text(
+                                'Cancelar',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 57, 99, 156),
                                 ),
-                              ],
+                              ),
                             ),
-                            const Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                            Row(
-                              children: [
-                                const Icon(Icons.access_time, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    publicacao['HORARIO'] ?? 'Horário não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
+                            TextButton.icon(
+                              onPressed: () {
+                                //denuncia
+                                Navigator.of(context).pop();
+                              },
+                              icon: Icon(Icons.report_outlined, color: Color.fromARGB(255, 57, 99, 156)),
+                              label: Text(
+                                'Reportar',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 57, 99, 156),
                                 ),
-                              ],
-                            ),
-                            const Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                            Row(
-                              children: [
-                                const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    publicacao['TELEFONE'] ?? 'Telefone não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                            Row(
-                              children: [
-                                const Icon(Icons.web, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    publicacao['WEBSITE'] ?? 'Website não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                            Row(
-                              children: [
-                                const Icon(Icons.accessibility, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    publicacao['ACESSIBILIDADE'] ?? 'Acessibilidade não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
+                              ),
                             ),
                           ],
-                        ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+
+            // corpo do comentario
+            SizedBox(height: 4),
+            Text('${comentario['COMENTARIO']}'),
+            SizedBox(height: 4),
+            Row(
+              children: [
+                LikeButton(), // Substitua o comentário por este widget
+              ],
+            ),
+          ],
+        ),
+      )
+    ],
+  ),
+  SizedBox(height: 20),
+],
