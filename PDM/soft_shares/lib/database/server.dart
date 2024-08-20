@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'dart:convert';
@@ -936,6 +935,153 @@ Future<Map<String, dynamic>> deleteNotificacoes(var centro, var user) async {
   }
 }
 
+// verificar se o comentário do conteudo tem like
+Future<Map<String, dynamic>> isLikedConteudo(var user, var comentario) async {
+  final response = await http.get(Uri.parse('${baseUrl}avaliacaocomentarioconteudo/utilizadorAvaliouComentario/$user/$comentario'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    print(data['message']);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    return res;
+  } else {
+    throw Exception('Falha ao verificar likes: ${data['error']}');
+  }
+}
+
+// adicionar like ao comentário do conteudo
+Future<Map<String, dynamic>> createLikeConteudo(var comentario, var user) async {
+  final url = Uri.parse('${baseUrl}avaliacaocomentarioconteudo/likeComentarioAdd');
+
+  final body = json.encode({
+    'ID_COMENTARIO': comentario,
+    'ID_UTILIZADOR': user,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Like adicionado com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao atualizar like: ${data['erro']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+// remover like ao comentário do conteudo
+Future<Map<String, dynamic>> deleteLikeConteudo(var like) async {
+  final url = Uri.parse('${baseUrl}avaliacaocomentarioconteudo/likeComentarioDelete');
+
+  final body = json.encode({
+    'ID_LIKE': like,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Like removido com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao atualizar like: ${data['message']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+// verificar se o comentário do evento tem like
+Future<Map<String, dynamic>> isLikedEvento(var user, var comentario) async {
+  final response = await http.get(Uri.parse('${baseUrl}avaliacaocomentarioevento/utilizadorAvaliouComentario/$user/$comentario'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    print(data['message']);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    return res;
+  } else {
+    throw Exception('Falha ao verificar likes: ${data['error']}');
+  }
+}
+
+// adicionar like ao comentário do evento
+Future<Map<String, dynamic>> createLikeEvento(var comentario, var user) async {
+  final url = Uri.parse('${baseUrl}avaliacaocomentarioevento/likeComentarioAdd');
+
+  final body = json.encode({
+    'ID_COMENTARIO': comentario,
+    'ID_UTILIZADOR': user,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Like adicionado com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao atualizar like: ${data['erro']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+// remover like ao comentário do evento
+Future<Map<String, dynamic>> deleteLikeEvento(var like) async {
+  final url = Uri.parse('${baseUrl}avaliacaocomentarioevento/likeComentarioDelete');
+
+  final body = json.encode({
+    'ID_LIKE': like,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Like removido com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao atualizar like: ${data['message']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
 
 
 

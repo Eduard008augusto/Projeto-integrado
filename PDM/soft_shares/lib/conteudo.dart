@@ -156,13 +156,12 @@ class Conteudo extends StatelessWidget {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(15.0),
-                                child: publicacao['IMAGEMCONTEUDO'] != null 
-                                  ? Image.network(
-                                      'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                    )
-                                  : const Placeholder(),
+                                child: publicacao['IMAGEMCONTEUDO'] != null ? Image.network(
+                                  'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                )
+                                : const Placeholder(),
                               ),
                               Positioned(
                                 top: 10.0,
@@ -196,52 +195,52 @@ class Conteudo extends StatelessWidget {
                         const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    publicacao['NOMECONTEUDO'] ?? 'Nome não disponível',
-                                    style: const TextStyle(fontSize: 20.0),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '($totalAvaliacoes)',
-                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      publicacao['NOMECONTEUDO'] ?? 'Nome não disponível',
+                                      style: const TextStyle(fontSize: 20.0),
                                       overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
+                                      maxLines: 2,
                                     ),
-                                    const SizedBox(width: 5),
-                                    RatingBarIndicator(
-                                      rating: ratingEstrela.toDouble(),
-                                      itemBuilder: (context, index) => const Icon(
-                                        Icons.star,
-                                        color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '($totalAvaliacoes)',
+                                        style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
-                                      itemCount: 5,
-                                      itemSize: 20.0,
-                                      direction: Axis.horizontal,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            RatingBarIndicator(
-                              rating: ratingPreco.toDouble(),
-                              itemBuilder: (context, index) => const Icon(
-                                Icons.euro,
-                                color: Colors.black,
+                                      const SizedBox(width: 5),
+                                      RatingBarIndicator(
+                                        rating: ratingEstrela.toDouble(),
+                                        itemBuilder: (context, index) => const Icon(
+                                          Icons.star,
+                                          color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+                                        ),
+                                        itemCount: 5,
+                                        itemSize: 20.0,
+                                        direction: Axis.horizontal,
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              itemCount: 3,
-                              itemSize: 20.0,
-                              direction: Axis.horizontal,
-                            ),
+                              const SizedBox(height: 10),
+                              RatingBarIndicator(
+                                rating: ratingPreco.toDouble(),
+                                itemBuilder: (context, index) => const Icon(
+                                  Icons.euro,
+                                  color: Colors.black,
+                                ),
+                                itemCount: 3,
+                                itemSize: 20.0,
+                                direction: Axis.horizontal,
+                              ),
                               Container(
                                 padding: const EdgeInsets.all(4.0),
                                 child: DefaultTabController(
@@ -264,401 +263,340 @@ class Conteudo extends StatelessWidget {
                                         height: 350,
                                         child: TabBarView(
                                           children: [
-                                            Center(child: 
-                                          Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [                           
-                            Row(
-                              children: [
-                                Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    morada,
-                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.access_time, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    horario,
-                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    telefone,
-                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.web, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    website,
-                                    style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.accessibility, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                SizedBox(width: 3), 
-                                Expanded(
-                                  child: Text(
-                                    acessibilidade,
-                                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                                 Column(
-                                  children: [
-                                    Expanded(
-                                     child: FutureBuilder<List<Map<String, dynamic>>>(
-                                        future: getComentarioConteudo(globals.idPublicacao),
-                                        builder: (context, snapshot) {
-                                          if(snapshot.connectionState == ConnectionState.waiting){
-                                            return Center(child: CircularProgressIndicator(),);
-                                          } else if(!snapshot.hasData || snapshot.data!.isEmpty){
-                                            return const Center(child: Text('Nenhum comentário encontrado!', overflow: TextOverflow.ellipsis, maxLines: 2));
-                                          } else if(snapshot.hasError){
-                                            return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
-                                          } else {
-                                            final List<Map<String, dynamic>> comentarios = snapshot.data!;
-
-                                            TextEditingController comentarioController = TextEditingController();
-
-                                        return Stack(
-                                          children: [
-                                           SingleChildScrollView(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(16.0),
-                                            child :Column(
-                                              children: [
-                                                Column(
+                                            Center(
+                                              child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: comentarios.map((comentario) {
-                                                    return FutureBuilder<Map<String, dynamic>>(
-                                                      future: fetchUtilizador(comentario['ID_UTILIZADOR']),
-                                                      builder: (context, snapshot) {
-                                                        if (snapshot.connectionState == ConnectionState.waiting) {
-                                                          return CircularProgressIndicator(); 
-                                                        } else if (snapshot.hasError) {
-                                                          return Text('Erro ao carregar dados do user'); 
-                                                        } else if (!snapshot.hasData) {
-                                                          return Text('Nenhum dado encontrado para este user'); 
-                                                        } else {
-                                                          final Map<String, dynamic> user = snapshot.data!; 
-                                                          return Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: [
-                                                              Row(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: const EdgeInsets.only(top: 10.0), 
-                                                                      child: CircleAvatar(
-                                                                        radius: 18,
-                                                                        backgroundImage: NetworkImage(
-                                                                          user['IMAGEMPERFIL'] == null 
-                                                                            ? 'https://cdn.discordapp.com/attachments/1154170394400542730/1260333904976679064/01.png?ex=668ef0ea&is=668d9f6a&hm=b909016ee5266e728eb2421b043a637a5d32156b3f0f4e9c59c4575af5208667&' 
-                                                                            : 'https://pintbackend-w8pt.onrender.com/images/${user['IMAGEMPERFIL']}'),
-                                                                      ),
-                                                                    ),
-                                                                    SizedBox(width: 10),
-                                                                    Expanded(
-                                                                      child: Column(
-                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Row(
-                                                                            children: [
-                                                                               Text(
-                                                                            '${user['NOME']}',
-                                                                              style: TextStyle(
-                                                                              fontSize: 14.0, 
-                                                                              color: Colors.black.withOpacity(0.6), 
-                                                                            ),
-                                                                          ),
-                                                                          Spacer(),
-                                                                          
-                                                                          // botao de denuncia "...""
-                                                                          IconButton(
-                                                                            icon: Icon(Icons.more_vert, size: 16.0),
-                                                                            padding: EdgeInsets.all(0),
-                                                                            constraints: BoxConstraints(), 
-                                                                            onPressed:(){
-                                                                              showDialog(
-                                                                                context: context,
-                                                                                builder: (BuildContext context) {
-                                                                                  return AlertDialog(
-                                                                                    //title: Text('Denunciar comentário'),
-                                                                                    content: Text('Deseja denunciar este comentário?'),
-                                                                                    actions: [
-                                                                                      TextButton.icon(
-                                                                                        onPressed: () {
-                                                                                          Navigator.of(context).pop();
-                                                                                        },
-                                                                                        icon: const Icon(Icons.cancel_outlined, color: Color.fromARGB(255, 57, 99, 156)),
-                                                                                        label: Text(
-                                                                                          'Cancelar',
-                                                                                            style: TextStyle(
-                                                                                            color:Color.fromARGB(255, 57, 99, 156)
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                      TextButton.icon(
-                                                                                        onPressed: () {
-                                                                                          //denuncia
-                                                                                          Navigator.of(context).pop();
-                                                                                        },
-                                                                                        icon: Icon(Icons.report_outlined, color: Color.fromARGB(255, 57, 99, 156)),
-                                                                                        label: Text(
-                                                                                          'Denunciar',
-                                                                                            style: TextStyle(
-                                                                                            color:Color.fromARGB(255, 57, 99, 156), 
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    );
-                                                                                  }
-                                                                                );
-                                                                              },
-                                                                            ),
-                                                                          ],
-                                                                        ),
-
-                                                                          //corpo do comentario
-                                                                          //SizedBox(height: 4),
-                                                                          Text('${comentario['COMENTARIO']}'),
-                                                                          //SizedBox(height: 4),
-                                                                          Row(
-                                                                           children: [
-                                                                            LikeButton(),
-                                                                            Text('${comentario['totalLikes']}'),
-                                                                            /*
-                                                                             Icon(Icons.thumb_up_outlined, size: 16.0, color:Color.fromARGB(255, 57, 99, 156)),  
-                                                                             SizedBox(width: 5),  
-                                                                             Text('${comentario['totalLikes']}'),
-                                                                             */
-                                                                          ],
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              SizedBox(height: 20),  // entre coment
-                                                            ],
-                                                          );                                   
-                                                        } 
-                                                      } 
-                                                    );
-                                                  }).toList(),
-                                                ),
-                                                SizedBox(height: 50), // no fim
+                                                children: [                           
+                                                  Row(
+                                                    children: [
+                                                      Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                                      SizedBox(width: 3), 
+                                                      Expanded(
+                                                        child: Text(
+                                                          morada,
+                                                          style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
-                                                )
-                                              ),
-
-                                                
-                                             Positioned(
-                                              bottom: 0,
-                                              left: 10,
-                                              right: 10,
-                                              child: Container( 
-                                                color: Color.fromARGB(255, 254, 247, 255),
-                                                width: double.infinity,  
-                                                padding: EdgeInsets.all(10.0),
-                                                child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: TextFormField(
-                                              controller: comentarioController,
-                                              decoration: InputDecoration(
-                                                hintText: 'Adicione um comentário...',
-                                                border: UnderlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.grey),
-                                                ),
+                                                  Divider(
+                                                    height: 50,
+                                                    thickness: 1,
+                                                    indent: 20,
+                                                    endIndent: 20,
+                                                    color: Color.fromARGB(136, 41, 40, 40),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Icon(Icons.access_time, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                                      SizedBox(width: 3), 
+                                                      Expanded(
+                                                        child: Text(
+                                                          horario,
+                                                          style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Divider(
+                                                    height: 50,
+                                                    thickness: 1,
+                                                    indent: 20,
+                                                    endIndent: 20,
+                                                    color: Color.fromARGB(136, 41, 40, 40),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                                      SizedBox(width: 3), 
+                                                      Expanded(
+                                                        child: Text(
+                                                          telefone,
+                                                          style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Divider(
+                                                    height: 50,
+                                                    thickness: 1,
+                                                    indent: 20,
+                                                    endIndent: 20,
+                                                    color: Color.fromARGB(136, 41, 40, 40),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Icon(Icons.web, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                                      SizedBox(width: 3), 
+                                                      Expanded(
+                                                        child: Text(
+                                                          website,
+                                                          style: TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Divider(
+                                                    height: 50,
+                                                    thickness: 1,
+                                                    indent: 20,
+                                                    endIndent: 20,
+                                                    color: Color.fromARGB(136, 41, 40, 40),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Icon(Icons.accessibility, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                                      SizedBox(width: 3), 
+                                                      Expanded(
+                                                        child: Text(
+                                                          acessibilidade,
+                                                          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          ),
-                                          IconButton(
-                                            icon: Icon(Icons.send),
-                                            onPressed: () async {
-                                              showDialog(
-                                                context: context,
-                                                builder: (BuildContext context) {
-                                                  return Dialog(
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.all(16.0),
-                                                      child: Column(
-                                                        mainAxisSize: MainAxisSize.min,
+                                            Column(
+                                              children: [
+                                                Expanded(
+                                                  child: FutureBuilder<List<Map<String, dynamic>>>(
+                                                    future: getComentarioConteudo(globals.idPublicacao),
+                                                    builder: (context, snapshot) {
+                                                    if(snapshot.connectionState == ConnectionState.waiting){
+                                                      return Center(child: CircularProgressIndicator(),);
+                                                    } else if(!snapshot.hasData || snapshot.data!.isEmpty){
+                                                      return const Center(child: Text('Nenhum comentário encontrado!', overflow: TextOverflow.ellipsis, maxLines: 2));
+                                                    } else if(snapshot.hasError){
+                                                      return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
+                                                    } else {
+                                                      final List<Map<String, dynamic>> comentarios = snapshot.data!;
+                                                      TextEditingController comentarioController = TextEditingController();
+
+                                                      return Stack(
                                                         children: [
-                                                          const SizedBox(height: 16),
-                                                          TextField(
-                                                            controller: comentarioController,
-                                                            keyboardType: TextInputType.text,
-                                                            decoration: const InputDecoration(
-                                                              hintText: 'Adicione um comentário...',
-                                                              border: OutlineInputBorder(),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(height: 16),
-                                                          ElevatedButton(
-                                                            onPressed: () async {
-                                                              await createComentarioConteudo(
-                                                                globals.idCentro,
-                                                                globals.idPublicacao,
-                                                                globals.idUtilizador,
-                                                                comentarioController.text,
-                                                              );
-                                                              Navigator.of(context).pop();
-                                                              Navigator.pushNamed(context, '/conteudo');
-                                                            },
-                                                            child: const Text('Confirmar'),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                /*child: ElevatedButton(onPressed: (){
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext context) {
-                                                      return Dialog(
-                                                        shape: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                        ),
-                                                        child: Padding(
-                                                          padding: const EdgeInsets.all(16.0),
-                                                          child: Column(
-                                                            mainAxisSize: MainAxisSize.min,
-                                                            children: [
-                                                              const Text(
-                                                                'pila',
-                                                                style: TextStyle(
-                                                                  fontSize: 20,
-                                                                  fontWeight: FontWeight.bold,
-                                                                ),
+                                                          SingleChildScrollView(
+                                                            child: Padding(
+                                                              padding: const EdgeInsets.all(16.0),
+                                                              child: Column(
+                                                                children: [
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: comentarios.map((comentario) {
+                                                                      return FutureBuilder<Map<String, dynamic>>(
+                                                                        future: fetchUtilizador(comentario['ID_UTILIZADOR']),
+                                                                        builder: (context, snapshot) {
+                                                                          if (snapshot.connectionState == ConnectionState.waiting) {
+                                                                            return CircularProgressIndicator(); 
+                                                                          } else if (snapshot.hasError) {
+                                                                            return Text('Erro ao carregar dados do user'); 
+                                                                          } else if (!snapshot.hasData) {
+                                                                            return Text('Nenhum dado encontrado para este user'); 
+                                                                          } else {
+                                                                            final Map<String, dynamic> user = snapshot.data!; 
+                                                                            return Column(
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              children: [
+                                                                                Row(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsets.only(top: 10.0), 
+                                                                                      child: CircleAvatar(
+                                                                                        radius: 18,
+                                                                                        backgroundImage: NetworkImage(
+                                                                                          user['IMAGEMPERFIL'] == null 
+                                                                                            ? 'https://cdn.discordapp.com/attachments/1154170394400542730/1260333904976679064/01.png?ex=668ef0ea&is=668d9f6a&hm=b909016ee5266e728eb2421b043a637a5d32156b3f0f4e9c59c4575af5208667&' 
+                                                                                            : 'https://pintbackend-w8pt.onrender.com/images/${user['IMAGEMPERFIL']}'),
+                                                                                      ),
+                                                                                    ),
+                                                                                    SizedBox(width: 10),
+                                                                                    Expanded(
+                                                                                      child: Column(
+                                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                        children: [
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              Text('${user['NOME']}',
+                                                                                                style: TextStyle(
+                                                                                                  fontSize: 14.0, 
+                                                                                                  color: Colors.black.withOpacity(0.6), 
+                                                                                                ),
+                                                                                              ),
+                                                                                              Spacer(),
+                                                                                              // botao de denuncia "...""
+                                                                                              IconButton(
+                                                                                                icon: Icon(Icons.more_vert, size: 16.0),
+                                                                                                padding: EdgeInsets.all(0),
+                                                                                                constraints: BoxConstraints(), 
+                                                                                                onPressed:(){
+                                                                                                  showDialog(
+                                                                                                    context: context,
+                                                                                                    builder: (BuildContext context) {
+                                                                                                      return AlertDialog(
+                                                                                                        //title: Text('Denunciar comentário'),
+                                                                                                        content: Text('Deseja denunciar este comentário?'),
+                                                                                                        actions: [
+                                                                                                          TextButton.icon(
+                                                                                                            onPressed: () {
+                                                                                                              Navigator.of(context).pop();
+                                                                                                            },
+                                                                                                            icon: const Icon(Icons.cancel_outlined, color: Color.fromARGB(255, 57, 99, 156)),
+                                                                                                            label: Text(
+                                                                                                              'Cancelar',
+                                                                                                                style: TextStyle(
+                                                                                                                color:Color.fromARGB(255, 57, 99, 156)
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                          TextButton.icon(
+                                                                                                            onPressed: () {
+                                                                                                              //denuncia
+                                                                                                              Navigator.of(context).pop();
+                                                                                                            },
+                                                                                                            icon: Icon(Icons.report_outlined, color: Color.fromARGB(255, 57, 99, 156)),
+                                                                                                            label: Text(
+                                                                                                              'Denunciar',
+                                                                                                              style: TextStyle(
+                                                                                                                color:Color.fromARGB(255, 57, 99, 156), 
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                        ],
+                                                                                                      );
+                                                                                                    }
+                                                                                                  );
+                                                                                                },
+                                                                                              ),
+                                                                                            ],
+                                                                                          ),
+                                                                                          //corpo do comentario
+                                                                                          //SizedBox(height: 4),
+                                                                                          Text('${comentario['COMENTARIO']}'),
+                                                                                          //SizedBox(height: 4),
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              LikeButton(),
+                                                                                              Text('${comentario['totalLikes']}'),
+                                                                                            ],
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    )
+                                                                                  ],
+                                                                                ),
+                                                                                SizedBox(height: 20),  // entre coment
+                                                                              ],
+                                                                            );                                   
+                                                                          } 
+                                                                        } 
+                                                                      );
+                                                                    }).toList(),
+                                                                  ),
+                                                                  SizedBox(height: 50), // no fim
+                                                                ],
                                                               ),
-                                                              const SizedBox(height: 16),
+                                                            )
+                                                          ),
 
-                                                              TextField(
-                                                                controller: comentarioController,
-                                                                keyboardType: TextInputType.text,
-                                                                decoration: const InputDecoration(
-                                                                  hintText: 'Adicione um comentário...',
-                                                                  border: OutlineInputBorder(),
-                                                                ),
-                                                              ),
-
-                                                              const SizedBox(height: 16),
-                                                              
-                                                              ElevatedButton(
-                                                                onPressed: () async {
-                                                                  await createComentarioConteudo(globals.idCentro, globals.idPublicacao, globals.idUtilizador, comentarioController.text);
-
-                                                                  Navigator.of(context).pop();
-                                                                  Navigator.pushNamed(context, '/conteudo');
-                                                                    },
-                                                                    child: const Text('AAAAA2'),
-                                                                 ),
-                                                                 
-                                                               ],
-                                                             ),
-                                                           ),
-                                                         );
-                                                       },
-                                                     );
-                                                   }, child: const Text("Comentar"))
-                                                   */
-                                                           );
-                                                         }
-                                                       )                                               
-                                                     ]
-                                                   )
-                                                 )
-                                               )
-                                             ]
-                                           );
-                                         }
-                                       }
-                                     )
-                                   ),
-                                 ],
-                               ),
-                                 Center(child: Text('TESTE4')),
-                                ],
+                                                          Positioned(
+                                                            bottom: 0,
+                                                            left: 10,
+                                                            right: 10,
+                                                            child: Container( 
+                                                              color: Color.fromARGB(255, 254, 247, 255),
+                                                              width: double.infinity,  
+                                                              padding: EdgeInsets.all(10.0),
+                                                              child: Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: TextFormField(
+                                                                      controller: comentarioController,
+                                                                      decoration: InputDecoration(
+                                                                        hintText: 'Adicione um comentário...',
+                                                                        border: UnderlineInputBorder(
+                                                                          borderSide: BorderSide(color: Colors.grey),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  IconButton(
+                                                                    icon: Icon(Icons.send),
+                                                                    onPressed: () async {
+                                                                      showDialog(
+                                                                        context: context,
+                                                                        builder: (BuildContext context) {
+                                                                          return Dialog(
+                                                                            shape: RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                            ),
+                                                                            child: Padding(
+                                                                              padding: const EdgeInsets.all(16.0),
+                                                                              child: Column(
+                                                                                mainAxisSize: MainAxisSize.min,
+                                                                                children: [
+                                                                                  const SizedBox(height: 16),
+                                                                                  TextField(
+                                                                                    controller: comentarioController,
+                                                                                    keyboardType: TextInputType.text,
+                                                                                    decoration: const InputDecoration(
+                                                                                      hintText: 'Adicione um comentário...',
+                                                                                      border: OutlineInputBorder(),
+                                                                                    ),
+                                                                                  ),
+                                                                                  const SizedBox(height: 16),
+                                                                                  ElevatedButton(
+                                                                                    onPressed: () async {
+                                                                                      await createComentarioConteudo(
+                                                                                        globals.idCentro,
+                                                                                        globals.idPublicacao,
+                                                                                        globals.idUtilizador,
+                                                                                        comentarioController.text,
+                                                                                      );
+                                                                                      Navigator.of(context).pop();
+                                                                                      Navigator.pushNamed(context, '/conteudo');
+                                                                                    },
+                                                                                    child: const Text('Confirmar'),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      );
+                                                                    }
+                                                                  )
+                                                                ]
+                                                              )
+                                                            )
+                                                          )
+                                                        ]
+                                                      );
+                                                    }
+                                                  }
+                                                )
+                                              ),
+                                            ],
+                                          ),
+                                          Center(child: Text('TESTE4')),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
                             const Divider(
                               height: 50,
                               thickness: 1,
@@ -676,48 +614,48 @@ class Conteudo extends StatelessWidget {
                     child: Column(
                       children: [
                         Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            _launchGoogleMaps(publicacao['MORADA'] ?? 'Morada não disponível');
-                          },
-                          icon: const Icon(Icons.directions, color: Colors.white,),
-                          label: const Text('Direções'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
-                            foregroundColor: Colors.white 
-                          ),
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                _launchGoogleMaps(publicacao['MORADA'] ?? 'Morada não disponível');
+                              },
+                              icon: const Icon(Icons.directions, color: Colors.white,),
+                              label: const Text('Direções'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                                foregroundColor: Colors.white 
+                              ),
+                            ),
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                //Navigator.pushNamed(context, '/editconteudo');
+                                _showRatingDialog(context); 
+                              },
+                              icon: const Icon(Icons.star, color: Colors.white),
+                              label: const Text('Classificar'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                                foregroundColor: Colors.white, 
+                              ),
+                            ),
+                            Center(
+                              child: ElevatedButton.icon(
+                                onPressed: () {
+                                  final query = Uri.encodeComponent(publicacao['MORADA']);
+                                  final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
+                                  Share.shareUri(googleMapsUrl);
+                                },
+                                icon: const Icon(Icons.share, color: Colors.white),
+                                label: const Text('Partilhar'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                                  foregroundColor: Colors.white, 
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            //Navigator.pushNamed(context, '/editconteudo');
-                            _showRatingDialog(context); 
-                          },
-                          icon: const Icon(Icons.star, color: Colors.white),
-                          label: const Text('Classificar'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
-                            foregroundColor: Colors.white, 
-                          ),
-                        ),
-                        Center(
-                          child: ElevatedButton.icon(
-                          onPressed: () {
-                            final query = Uri.encodeComponent(publicacao['MORADA']);
-                            final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
-                            Share.shareUri(googleMapsUrl);
-                          },
-                          icon: const Icon(Icons.share, color: Colors.white),
-                          label: const Text('Partilhar'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
-                            foregroundColor: Colors.white, 
-                          ),
-                        ),
-                        )
-                      ],
-                    ),
                       ],
                     )
                   ),
