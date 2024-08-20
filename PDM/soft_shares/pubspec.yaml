@@ -13,6 +13,7 @@ dependencies:
   http:
   path:
   sqflite:
+<<<<<<< Updated upstream
   image_picker:
   path_provider:
   intl:
@@ -27,6 +28,8 @@ dependencies:
   shared_preferences:
   table_calendar:
   connectivity_plus:
+=======
+>>>>>>> Stashed changes
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +51,7 @@ flutter:
     - assets/images/Distritos/Santarem.svg
     - assets/images/Distritos/VilaReal.svg
     - assets/images/Distritos/Viseu.svg
+<<<<<<< Updated upstream
     - assets/images/Distritos/Lisboa.svg
     - assets/images/Banner/lisboa.png
     - assets/images/Banner/fundao.png
@@ -67,3 +71,5 @@ flutter_icons:
   image_path: "assets/images/iconlogo.png"
   adaptive_icon_background: "assets/images/iconlogo_bg.png"
   adaptive_icon_foreground: "assets/images/iconlogo_fg.png"
+=======
+>>>>>>> Stashed changes

@@ -1,7 +1,16 @@
+<<<<<<< Updated upstream
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import './services/token_service.dart';
+=======
+import 'package:flutter/material.dart';
+
+
+void main() {
+  runApp(const MenuDrawer());
+}
+>>>>>>> Stashed changes
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({super.key});
@@ -9,6 +18,7 @@ class MenuDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+<<<<<<< Updated upstream
       child: Column(
         children: [
           const SizedBox(height: 40.0),
@@ -22,11 +32,27 @@ class MenuDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/perfil');
             },
           ),
+=======
+      child: ListView(
+        children: [
+          const SizedBox(height: 20.0,),
+
+          ListTile(
+            leading: const Icon(Icons.account_circle, size: 40.0,),
+            title: const Text(
+              'NOME DO UTILIZADOR',
+              style: TextStyle(fontSize: 18.0),
+              ),
+            onTap: () { Navigator.pushNamed(context, '/'); },
+          ),
+          
+>>>>>>> Stashed changes
           const Divider(
             height: 50,
             thickness: 1,
             indent: 20,
             endIndent: 20,
+<<<<<<< Updated upstream
             color: Color.fromARGB(136, 41, 40, 40),
           ),
           ListTile(
@@ -39,11 +65,26 @@ class MenuDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/mapa');
             },
           ),
+=======
+            color: Color.fromARGB(255, 41, 40, 40),
+          ),
+          
+          ListTile(
+            leading: const Icon(Icons.home, size: 30.0,),
+            title: const Text(
+              'Centro Selecionado',
+              style: TextStyle(fontSize: 18.0),
+              ),
+            onTap: () { Navigator.pushNamed(context, '/mapa'); },
+          ),
+
+>>>>>>> Stashed changes
           const Divider(
             height: 50,
             thickness: 1,
             indent: 20,
             endIndent: 20,
+<<<<<<< Updated upstream
             color: Color.fromARGB(136, 41, 40, 40),
           ),
           ListTile(
@@ -66,11 +107,35 @@ class MenuDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/favoritos');
             },
           ),
+=======
+            color: Color.fromARGB(255, 41, 40, 40),
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.dashboard),
+            title: const Text(
+              'Areas',
+              style: TextStyle(fontSize: 18.0),
+              ),
+            onTap: () { Navigator.pushNamed(context, '/areas'); },
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.favorite),
+            title: const Text(
+              'Favoritos',
+              style: TextStyle(fontSize: 18.0),
+              ),
+            onTap: () { Navigator.pushNamed(context, '/'); },
+          ),
+
+>>>>>>> Stashed changes
           const Divider(
             height: 50,
             thickness: 1,
             indent: 20,
             endIndent: 20,
+<<<<<<< Updated upstream
             color: Color.fromARGB(136, 41, 40, 40),
           ),
           ListTile(
@@ -141,9 +206,43 @@ class MenuDrawer extends StatelessWidget {
                 ),
               ),
             ),
+=======
+            color: Color.fromARGB(255, 41, 40, 40),
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.calendar_month),
+            title: const Text(
+              'Eventos',
+              style: TextStyle(fontSize: 18.0),
+              ),
+            onTap: () { Navigator.pushNamed(context, '/feed'); },
+          ),
+          
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text(
+              'Definições',
+              style: TextStyle(fontSize: 18.0),
+              ),
+            onTap: () { Navigator.pushNamed(context, '/settings'); },
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text(
+              'Terminar Sessão',
+              style: TextStyle(fontSize: 18.0),
+              ),
+            onTap: () { Navigator.pushNamed(context, '/login'); },
+>>>>>>> Stashed changes
           ),
         ],
       ),
     );
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
