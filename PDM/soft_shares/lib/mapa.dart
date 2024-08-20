@@ -34,7 +34,7 @@ class Mapa extends StatelessWidget {
           ),
         ),
 
-      drawer: const MenuDrawer(),
+      drawer: const MenuDrawerMapa(),
       body: Center(
         child: Stack(
           children: [

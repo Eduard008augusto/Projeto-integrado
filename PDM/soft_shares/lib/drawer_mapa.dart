@@ -5,17 +5,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import './services/token_service.dart';
 
 void main() {
-  runApp(const MenuDrawer());
+  runApp(const MenuDrawerMapa());
 }
 
-class MenuDrawer extends StatefulWidget {
-  const MenuDrawer({super.key});
+class MenuDrawerMapa extends StatefulWidget {
+  const MenuDrawerMapa({super.key});
 
   @override
-  _MenuDrawerState createState() => _MenuDrawerState();
+  _MenuDrawerMapaState createState() => _MenuDrawerMapaState();
 }
 
-class _MenuDrawerState extends State<MenuDrawer> {
+class _MenuDrawerMapaState extends State<MenuDrawerMapa> {
   String _selectedRoute = '';
 
   @override

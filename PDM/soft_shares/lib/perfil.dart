@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'drawer.dart';
+import 'drawer_mapa.dart';
 import 'package:soft_shares/edit_perfil.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
@@ -36,7 +37,7 @@ class Perfil extends StatelessWidget {
           const SizedBox(width: 20.0,),
         ],
       ),
-      drawer: const MenuDrawer(),
+      drawer: globals.idCentro == 0 ? const MenuDrawerMapa() : const MenuDrawer(),
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchUtilizador(globals.idUtilizador),
         builder: (context, snapshot) {
