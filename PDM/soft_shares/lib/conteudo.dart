@@ -378,7 +378,83 @@ class Conteudo extends StatelessWidget {
                                           if(snapshot.connectionState == ConnectionState.waiting){
                                             return Center(child: CircularProgressIndicator(),);
                                           } else if(!snapshot.hasData || snapshot.data!.isEmpty){
-                                            return const Center(child: Text('Nenhum comentário encontrado!', overflow: TextOverflow.ellipsis, maxLines: 2));
+                                           TextEditingController comentarioController = TextEditingController();
+                                            return Column(
+                                              children: [
+                                                Center(child: Text('Nenhum comentário encontrado!', overflow: TextOverflow.ellipsis, maxLines: 2)),
+                                            Positioned(
+                                              bottom: 0,
+                                              left: 10,
+                                              right: 10,
+                                              child: Container( 
+                                                color: Color.fromARGB(255, 254, 247, 255),
+                                                width: double.infinity,  
+                                                padding: EdgeInsets.all(10.0),
+                                                child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextFormField(
+                                              controller: comentarioController,
+                                              decoration: InputDecoration(
+                                                hintText: 'Adicione um comentário...',
+                                                border: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: Colors.grey),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.send),
+                                            onPressed: () async {
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return Dialog(
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(16.0),
+                                                      child: Column(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          const SizedBox(height: 16),
+                                                          TextField(
+                                                            controller: comentarioController,
+                                                            keyboardType: TextInputType.text,
+                                                            decoration: const InputDecoration(
+                                                              hintText: 'Adicione um comentário...',
+                                                              border: OutlineInputBorder(),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(height: 16),
+                                                          ElevatedButton(
+                                                            onPressed: () async {
+                                                              await createComentarioConteudo(
+                                                                globals.idCentro,
+                                                                globals.idPublicacao,
+                                                                globals.idUtilizador,
+                                                                comentarioController.text,
+                                                              );
+                                                              Navigator.of(context).pop();
+                                                              Navigator.pushNamed(context, '/conteudo');
+                                                            },
+                                                            child: const Text('Confirmar'),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                           );
+                                                         }
+                                                       )                                               
+                                                     ]
+                                                   )
+                                                 )
+                                               )
+                                              ],
+                                            ); 
                                           } else if(snapshot.hasError){
                                             return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
                                           } else {
@@ -585,57 +661,6 @@ class Conteudo extends StatelessWidget {
                                                     ),
                                                   );
                                                 },
-                                                /*child: ElevatedButton(onPressed: (){
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext context) {
-                                                      return Dialog(
-                                                        shape: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                        ),
-                                                        child: Padding(
-                                                          padding: const EdgeInsets.all(16.0),
-                                                          child: Column(
-                                                            mainAxisSize: MainAxisSize.min,
-                                                            children: [
-                                                              const Text(
-                                                                'pila',
-                                                                style: TextStyle(
-                                                                  fontSize: 20,
-                                                                  fontWeight: FontWeight.bold,
-                                                                ),
-                                                              ),
-                                                              const SizedBox(height: 16),
-
-                                                              TextField(
-                                                                controller: comentarioController,
-                                                                keyboardType: TextInputType.text,
-                                                                decoration: const InputDecoration(
-                                                                  hintText: 'Adicione um comentário...',
-                                                                  border: OutlineInputBorder(),
-                                                                ),
-                                                              ),
-
-                                                              const SizedBox(height: 16),
-                                                              
-                                                              ElevatedButton(
-                                                                onPressed: () async {
-                                                                  await createComentarioConteudo(globals.idCentro, globals.idPublicacao, globals.idUtilizador, comentarioController.text);
-
-                                                                  Navigator.of(context).pop();
-                                                                  Navigator.pushNamed(context, '/conteudo');
-                                                                    },
-                                                                    child: const Text('AAAAA2'),
-                                                                 ),
-                                                                 
-                                                               ],
-                                                             ),
-                                                           ),
-                                                         );
-                                                       },
-                                                     );
-                                                   }, child: const Text("Comentar"))
-                                                   */
                                                            );
                                                          }
                                                        )                                               
@@ -651,7 +676,29 @@ class Conteudo extends StatelessWidget {
                                    ),
                                  ],
                                ),
-                                 Center(child: Text('TESTE4')),
+
+                               SingleChildScrollView(  
+                                 child: Center(
+                                  child:  Column(
+                                    children: [  
+                                        const Text('ALBUM', style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),),
+
+                                        ElevatedButton(onPressed: (){
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) => const MultipleImagePickerPage(),
+                                            ),
+                                          );
+                                        }, child: const Text('Adicionar Foto')),
+                                        buildAlbum(),                                      
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
                                 ],
                               ),
                             ),
@@ -713,29 +760,14 @@ class Conteudo extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
                             foregroundColor: Colors.white, 
-                          ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        )
-                      ],
-                    ),
                       ],
                     )
                   ),
-
-                  const Text('ALBUM', style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),),
-
-                  ElevatedButton(onPressed: (){
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const MultipleImagePickerPage(),
-                      ),
-                    );
-                  }, child: const Text('Adicionar Foto')),
-
-                  buildAlbum(),
                 ],
               ),
             );

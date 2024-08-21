@@ -3,7 +3,7 @@
 - Implementar comentários (eventos e publicações)
 - Denunciar comentários
 - Opção no drawer para notificações com a quantidade de notificações por ler
--    [FEITO]    Botão de partilha de publicação (apenas localização? ⁠Rafa, πnho⁠)
+- Botão de partilha de publicação (apenas localização? ⁠Rafa, πnho⁠)
 - Definições de preferências de notificações
 - Adicionar um separador na cena das publicações ainda não verificadas para os eventos
 -    [FEITO]    Arranjar o drawer no perfil para não mostrar areas caso o user nunca tenha selecionado um centro
