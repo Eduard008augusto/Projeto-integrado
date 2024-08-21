@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+// ignore: unused_import
+import 'package:soft_shares/add_comentario_conteudo.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -114,13 +116,32 @@ class Evento extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 4,
                             ),
-                            const Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
+                            Container(
+                              padding: const EdgeInsets.all(4.0),
+                              child: DefaultTabController(
+                                initialIndex: 0,
+                                length: 3,
+                                child: Column(
+                                  children: [
+                                    const TabBar(
+                                      labelColor: Color.fromARGB(255, 57, 99, 156),
+                                      unselectedLabelColor: Colors.grey,
+                                      indicatorColor: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+                                      tabs: [
+                                        Tab(icon: Icon(Icons.info_outline),),
+                                        Tab(icon: Icon(Icons.chat_outlined),),
+                                        Tab(icon: Icon(Icons.photo_library_outlined),),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    SizedBox(
+                                      height: 350,
+                                      child: TabBarView(
+                                        children: [
+                                          Center(child:
+                                            Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
                             Row(
                               children: [
                                 const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
@@ -225,11 +246,28 @@ class Evento extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                         ],
+                       ),
+                     ),
+                    const Column(
+                           children: [
+                             Text('Comentarios'),
                       ],
-                    ),
-                  ),
+
+                    ),  
+                    const Column(
+                           children: [
+                             Text('ALBUM'),
+                      ],
+                    ), 
+
+                  ],
+                 ),
+               )
+             ],
+           ),
+         ),
+       ),
                   Container(
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
@@ -297,7 +335,12 @@ class Evento extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
                             foregroundColor: Colors.white,
-                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

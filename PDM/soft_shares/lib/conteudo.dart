@@ -704,21 +704,6 @@ class Conteudo extends StatelessWidget {
                       ],
                     )
                   ),
-
-                  const Text('ALBUM', style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),),
-
-                  ElevatedButton(onPressed: (){
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const MultipleImagePickerPage(),
-                      ),
-                    );
-                  }, child: const Text('Adicionar Foto')),
-
-                  buildAlbum(),
                 ],
               ),
             );

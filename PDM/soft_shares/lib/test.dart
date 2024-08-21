@@ -68,10 +68,10 @@ class _MultipleImagePickerPageState extends State<MultipleImagePickerPage> {
                   onPressed: () {
                     _selectedImages!.map((image) async {
                       await uploadImage(image);
-                      await uploadImagemConteudo(2, 1, globals.imagem);
+                      await uploadImagemConteudo(globals.idPublicacao, globals.idUtilizador, globals.imagem);
                     }).toList();
                   },
-                  child: const Text('Cancelar'),
+                  child: const Text('Confirmar'),
                 ),
               ],
             ),
