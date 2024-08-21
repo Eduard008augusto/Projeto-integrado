@@ -22,48 +22,14 @@ class _LikeButtonState extends State<LikeButton> {
     check();
   }
 
+  int? idLike;
+
   void check() async {
     Map<String, dynamic> res = await isLikedConteudo(globals.idUtilizador, widget.comentario);
+    idLike = res['ID_LIKE'];
     setState(() {
       _isLiked = res['Avaliou'];
     });
-  }
-
-  void _toggleLike() async {
-    try {
-      if (_isLiked) {
-        await deleteLikeConteudo(widget.comentario);
-        setState(() {
-          _isLiked = false;
-        });
-      } else {
-        await createLikeConteudo(widget.comentario, globals.idUtilizador);
-        setState(() {
-          _isLiked = true;
-        });
-      }
-    } catch (error) {
-      print('Erro ao adicionar like: $error');
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Erro ao adicionar like: $error'),
-                ],
-              ),
-            ),
-          );
-        },
-      );
-    }
   }
 
   @override
@@ -79,7 +45,42 @@ class _LikeButtonState extends State<LikeButton> {
           ),
           padding: const EdgeInsets.all(0),
           constraints: const BoxConstraints(), 
-          onPressed: _toggleLike, // Chama a função de alternância de like
+          onPressed: () async {
+            try {
+              if (_isLiked) {
+                await deleteLikeConteudo(idLike);
+                setState(() {
+                  _isLiked = false;
+                });
+              } else {
+                await createLikeConteudo(widget.comentario, globals.idUtilizador);
+                setState(() {
+                  _isLiked = true;
+                });
+              }
+            } catch (error) {
+              print('Erro ao adicionar like: $error');
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Erro ao adicionar like: $error'),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+          },
         ),
       ],
     );
