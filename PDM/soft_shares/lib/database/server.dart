@@ -1107,6 +1107,17 @@ Future<Map<String, dynamic>> deleteLikeEvento(var like) async {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 //retorna os centros
 Future<List<Map<String, dynamic>>> getCentros() async{
   final response = await http.get(Uri.parse('${baseUrl}centro/list'));

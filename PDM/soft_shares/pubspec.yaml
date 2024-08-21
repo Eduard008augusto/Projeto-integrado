@@ -13,7 +13,6 @@ dependencies:
   http:
   path:
   sqflite:
-<<<<<<< Updated upstream
   image_picker:
   path_provider:
   intl:
@@ -28,8 +27,6 @@ dependencies:
   shared_preferences:
   table_calendar:
   connectivity_plus:
-=======
->>>>>>> Stashed changes
 
 dev_dependencies:
   flutter_test:
