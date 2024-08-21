@@ -11,8 +11,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'like_bttn.dart';
 //import 'package:comment_box/comment/comment.dart';
 
-import 'test.dart';
-
 bool isFavorite = false;
 bool isLiked = false;
 bool avaliado = false;
