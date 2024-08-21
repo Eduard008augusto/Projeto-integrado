@@ -57,11 +57,6 @@ flutter:
     - assets/images/Banner/viseu.png
     - assets/images/Banner/vilareal.png
 
-
-
-
-
-
 flutter_icons:
   android: true
   ios: true

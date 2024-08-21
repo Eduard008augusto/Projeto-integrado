@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soft_shares/drawer_mapa.dart';
+import 'package:soft_shares/drawer.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
 
@@ -46,7 +46,7 @@ class Areas extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Areas'),
       ),
-      drawer: const MenuDrawerMapa(),
+      drawer: const MenuDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

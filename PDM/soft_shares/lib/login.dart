@@ -4,9 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:soft_shares/services/auth_service.dart';
 import './database/var.dart' as globals;
 
-
-import 'database/server.dart';
 import './services/token_service.dart';
+import 'database/server.dart';
 
 void main() {
   runApp(Login());
@@ -75,6 +74,7 @@ class Login extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Palavra-passe',
                       border: OutlineInputBorder(),
+                      //errorText: 'AAAAAAAAAAA',
                     ),
                     obscureText: true,
                   ),
