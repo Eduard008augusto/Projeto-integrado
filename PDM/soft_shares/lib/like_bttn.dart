@@ -1,15 +1,70 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, library_private_types_in_public_api, avoid_print, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import './database/server.dart';
+import './database/var.dart' as globals;
 
-// ignore: use_key_in_widget_constructors
 class LikeButton extends StatefulWidget {
+  final comentario;
+
+  const LikeButton({super.key, required this.comentario});
+
   @override
-  // ignore: library_private_types_in_public_api
   _LikeButtonState createState() => _LikeButtonState();
 }
 
 class _LikeButtonState extends State<LikeButton> {
-  bool _isLiked = false; 
+  bool _isLiked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    check();
+  }
+
+  void check() async {
+    Map<String, dynamic> res = await isLikedConteudo(globals.idUtilizador, widget.comentario);
+    setState(() {
+      _isLiked = res['Avaliou'];
+    });
+  }
+
+  void _toggleLike() async {
+    try {
+      if (_isLiked) {
+        await deleteLikeConteudo(widget.comentario);
+        setState(() {
+          _isLiked = false;
+        });
+      } else {
+        await createLikeConteudo(widget.comentario, globals.idUtilizador);
+        setState(() {
+          _isLiked = true;
+        });
+      }
+    } catch (error) {
+      print('Erro ao adicionar like: $error');
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Erro ao adicionar like: $error'),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +79,8 @@ class _LikeButtonState extends State<LikeButton> {
           ),
           padding: const EdgeInsets.all(0),
           constraints: const BoxConstraints(), 
-          onPressed: () {
-            setState(() {
-              _isLiked = !_isLiked; 
-            });
-          },
+          onPressed: _toggleLike, // Chama a função de alternância de like
         ),
-        /*SizedBox(width: 5),
-        Text(
-          '${_isLiked ? 1 : 0}', 
-          style: TextStyle(
-            color: _isLiked
-                ? Color.fromARGB(255, 57, 99, 156) 
-                : Colors.black,
-          ),
-        ),*/
       ],
     );
   }

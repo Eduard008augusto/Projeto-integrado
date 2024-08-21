@@ -394,6 +394,7 @@ class Conteudo extends StatelessWidget {
                                                                   Column(
                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                     children: comentarios.map((comentario) {
+                                                                      final comID = comentario['ID_COMENTARIO'];
                                                                       return FutureBuilder<Map<String, dynamic>>(
                                                                         future: fetchUtilizador(comentario['ID_UTILIZADOR']),
                                                                         builder: (context, snapshot) {
@@ -528,13 +529,11 @@ class Conteudo extends StatelessWidget {
                                                                                               ),
                                                                                             ],
                                                                                           ),
-                                                                                          //corpo do comentario
-                                                                                          //SizedBox(height: 4),
                                                                                           Text('${comentario['COMENTARIO']}'),
-                                                                                          //SizedBox(height: 4),
                                                                                           Row(
                                                                                             children: [
-                                                                                              LikeButton(),
+                                                                                              
+                                                                                              LikeButton(comentario: comID),
                                                                                               Text('${comentario['totalLikes']}'),
                                                                                             ],
                                                                                           ),
@@ -676,7 +675,6 @@ class Conteudo extends StatelessWidget {
                             ),
                             ElevatedButton.icon(
                               onPressed: () {
-                                //Navigator.pushNamed(context, '/editconteudo');
                                 _showRatingDialog(context); 
                               },
                               icon: const Icon(Icons.star, color: Colors.white),
