@@ -1,7 +1,6 @@
 library globals;
 
-<<<<<<< Updated upstream
-var idCentro = 1;
+var idCentro = 0;
 var idArea = 0;
 var idSubArea = 0;
 
@@ -56,9 +55,3 @@ DateTime? dataEvento;
 double? precoEvento = 0.0;
 String? descricaoEvento = '';
 String? imagemEvento = '';
-=======
-var idCentro = 0;
-var idArea = 0;
-var idSubArea = 0;
-var idUtilizador = 0;
->>>>>>> Stashed changes

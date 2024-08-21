@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 // ignore_for_file: avoid_print
 
 import 'dart:io';
@@ -13,18 +12,6 @@ var baseUrl = 'https://pintbackend-w8pt.onrender.com/';
 // receber áreas
 Future<List<Map<String, dynamic>>> fetchAreas() async {
   final response = await http.get(Uri.parse('${baseUrl}area/listPorCentro/${globals.idCentro}'));
-=======
-// server.dart
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-import 'package:soft_shares/database/var.dart';
-
-var baseUrl = 'https://pintbackend-w8pt.onrender.com/';
-
-Future<List<Map<String, dynamic>>> fetchAreas() async {
-  final response = await http.get(Uri.parse('${baseUrl}area/listPorCentro/$idCentro'));
->>>>>>> Stashed changes
   var data = jsonDecode(response.body);
   if (data['success']) {
     List<Map<String, dynamic>> areas = List<Map<String, dynamic>>.from(data['data']);
@@ -34,7 +21,6 @@ Future<List<Map<String, dynamic>>> fetchAreas() async {
   }
 }
 
-<<<<<<< Updated upstream
 // login
 Future<Map<String, dynamic>> login(String email, String password) async {
   try {
@@ -100,11 +86,6 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
   final body = json.encode({
     'ID_CENTRO': idcentro,
     'NOME': nome,
-=======
-Future<Map<String, dynamic>> login(String email, String password) async {
-  final url = Uri.parse('${baseUrl}utilizador/loginApp');
-  final body = json.encode({
->>>>>>> Stashed changes
     'EMAIL': email,
     'PASSWORD': password,
   });
@@ -119,7 +100,6 @@ Future<Map<String, dynamic>> login(String email, String password) async {
 
   var data = jsonDecode(response.body);
 
-<<<<<<< Updated upstream
   print(data);
 
   if (data['success']) {
@@ -131,16 +111,6 @@ Future<Map<String, dynamic>> login(String email, String password) async {
 }
 
 // receber publicações
-=======
-  if (data['success']) {
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
-    return res;
-  } else {
-    throw Exception('Falha ao carregar dados');
-  }
-}
-
->>>>>>> Stashed changes
 Future<List<Map<String, dynamic>>> fetchPublicacoes(var centro, var area, var subarea) async {
   final response = await http.get(Uri.parse('${baseUrl}conteudo/listPorCentroAreaSubArea/$centro/$area/$subarea'));
   var data = jsonDecode(response.body);
@@ -152,7 +122,6 @@ Future<List<Map<String, dynamic>>> fetchPublicacoes(var centro, var area, var su
   }
 }
 
-<<<<<<< Updated upstream
 // receber publicações
 Future<Map<String, dynamic>> fetchPublicacao(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}conteudo/get/$id'));
@@ -178,13 +147,10 @@ Future<List<Map<String, dynamic>>> fetchPublicacaoUser(var id) async {
 }
 
 // receber utilizador
-=======
->>>>>>> Stashed changes
 Future<Map<String, dynamic>> fetchUtilizador(var id) async {
   final response = await http.get(Uri.parse('${baseUrl}utilizador/get/$id'));
   var data = jsonDecode(response.body);
   if(data['success']){
-<<<<<<< Updated upstream
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
   } else {
@@ -1281,11 +1247,6 @@ Future<List<Map<String, dynamic>>> getInscricoesEventos() async {
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
   } else {
-=======
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
-    return res;
-  } else {
->>>>>>> Stashed changes
     throw Exception('Falha ao carregar dados');
   }
 }

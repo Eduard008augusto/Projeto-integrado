@@ -4,12 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:soft_shares/services/auth_service.dart';
 import './database/var.dart' as globals;
 
-
-import 'database/server.dart';
 import './services/token_service.dart';
-
 import 'database/server.dart';
-import './database/var.dart' as globals;
 
 void main() {
   runApp(Login());
@@ -89,7 +85,6 @@ class Login extends StatelessWidget {
             const SizedBox(height: 20.0,),
 
             OutlinedButton(onPressed: () async {
-<<<<<<< Updated upstream
               if (emailController.text.isEmpty || passController.text.isEmpty) {
                 showDialog(
                   context: context,
@@ -165,18 +160,6 @@ class Login extends StatelessWidget {
                   },
                 );
               }
-=======
-              try{
-                Map<String, dynamic> data = await login(emailController.text, passController.text);
-
-                if(data['success']){
-                  globals.idUtilizador = data['id_utilizador'];
-                  Navigator.pushNamed(context, '/areas');
-                }
-              } catch (e) {
-                print(e.toString());
-              }             
->>>>>>> Stashed changes
             },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 153),
@@ -345,11 +328,6 @@ class Login extends StatelessWidget {
             ),
           ],
         ),
-<<<<<<< Updated upstream
       );
-=======
-      ),
-    );
->>>>>>> Stashed changes
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:soft_shares/conteudo_to_edit.dart';
@@ -8,15 +7,6 @@ import 'package:soft_shares/database/connection_check.dart';
 import 'package:soft_shares/edit_conteudo.dart';
 import 'package:soft_shares/feed_pendente.dart';
 import 'firebase_options.dart';
-=======
-
-import 'login.dart';
-import 'registo.dart';
-import 'areas.dart';
-import 'feed.dart';
-import 'mapa.dart';
-import 'settings.dart';
->>>>>>> Stashed changes
 
 import './database/var.dart' as globals;
 import 'conteudo.dart';
@@ -71,24 +61,16 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-<<<<<<< Updated upstream
       debugShowCheckedModeBanner: false,
       title: 'Soft Shares',
       initialRoute: '/',
       routes: {
         '/': (context) => globals.token == null || globals.token!.isEmpty ? Login() : const Mapa(),
-=======
-      title: 'Soft Shares',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const Mapa(),
->>>>>>> Stashed changes
         '/areas': (context) => const Areas(),
         '/login': (context) => Login(),
         '/registo': (context) => Registar(),
         '/feed': (context) => const Feed(),
         '/mapa': (context) => const Mapa(),
-<<<<<<< Updated upstream
         '/conteudo': (context) => const Conteudo(),
         '/addconteudo': (context) => const Addconteudo(),
         '/editconteudo': (context) => const EditConteudo(),
@@ -102,10 +84,6 @@ class MainApp extends StatelessWidget {
         '/favoritos': (context) => const Favoritos(),
         '/pendente': (context) => const Pendente(),
         '/uppl': (context) => const UploadImagePage(),
-=======
-        '/settings': (context) => const SettingsPage(),
-
->>>>>>> Stashed changes
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

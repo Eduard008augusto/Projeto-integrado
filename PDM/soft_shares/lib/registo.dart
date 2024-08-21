@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
@@ -6,11 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:soft_shares/database/server.dart';
 
 import './database/var.dart' as globals;
-=======
-// ignore_for_file: must_be_immutable, avoid_print
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
->>>>>>> Stashed changes
 
 void main() {
   runApp(Registar());
@@ -26,12 +20,7 @@ class Registar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
     return Scaffold(
-=======
-    return MaterialApp(
-      home: Scaffold(
->>>>>>> Stashed changes
         body: Column(
           children: [
             Center(
@@ -42,11 +31,7 @@ class Registar extends StatelessWidget {
                   width: 120,
                   height: 120,
                 ),
-<<<<<<< Updated upstream
               ),
-=======
-              )
->>>>>>> Stashed changes
             ),
 
             const SizedBox(
@@ -57,7 +42,6 @@ class Registar extends StatelessWidget {
               margin: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Center(
                 child: Column(
-<<<<<<< Updated upstream
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Nome'),
@@ -71,21 +55,6 @@ class Registar extends StatelessWidget {
                   ],
                 ),
               ),
-=======
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Email'),
-                  TextField(
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Email',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ]
-              ),
-              )
->>>>>>> Stashed changes
             ),
 
             const SizedBox(
@@ -96,7 +65,6 @@ class Registar extends StatelessWidget {
               margin: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Center(
                 child: Column(
-<<<<<<< Updated upstream
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Email'),
@@ -110,21 +78,6 @@ class Registar extends StatelessWidget {
                   ],
                 ),
               ),
-=======
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Nome de Usuário'),
-                  TextField(
-                    controller: userController,
-                    decoration: const InputDecoration(
-                      hintText: 'Nome de Usuário',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ]
-              ),
-              )
->>>>>>> Stashed changes
             ),
 
             const SizedBox(
@@ -143,16 +96,10 @@ class Registar extends StatelessWidget {
                       hintText: 'Palavra-passe',
                       border: OutlineInputBorder(),
                     ),
-<<<<<<< Updated upstream
                     obscureText: true,
                   ),
                 ],
               ),
-=======
-                  ),
-                ],
-              )
->>>>>>> Stashed changes
             ),
 
             const SizedBox(
@@ -171,7 +118,6 @@ class Registar extends StatelessWidget {
                       hintText: 'Confirmar Palavra-passe',
                       border: OutlineInputBorder(),
                     ),
-<<<<<<< Updated upstream
                     obscureText: true,
                   ),
                 ],
@@ -274,32 +220,3 @@ class Registar extends StatelessWidget {
       );
   }
 }
-=======
-                  ),
-                ],
-              )
-            ),
-
-            OutlinedButton(onPressed: (){
-              print('Login CLICK');
-            },
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 153),
-              backgroundColor: const Color.fromARGB(255, 0, 184, 224),
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),  
-              ),
-              side: const BorderSide(
-                color: Color.fromARGB(255, 255, 255, 255),
-                width: 1,
-              )
-            ),
-            child: const Text('ENTRAR')),
-          ],
-        ),
-      ),
-    );
-  }
-}
->>>>>>> Stashed changes
