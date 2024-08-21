@@ -48,7 +48,6 @@ flutter:
     - assets/images/Distritos/Santarem.svg
     - assets/images/Distritos/VilaReal.svg
     - assets/images/Distritos/Viseu.svg
-<<<<<<< Updated upstream
     - assets/images/Distritos/Lisboa.svg
     - assets/images/Banner/lisboa.png
     - assets/images/Banner/fundao.png
@@ -57,16 +56,9 @@ flutter:
     - assets/images/Banner/viseu.png
     - assets/images/Banner/vilareal.png
 
-
-
-
-
-
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/images/iconlogo.png"
   adaptive_icon_background: "assets/images/iconlogo_bg.png"
   adaptive_icon_foreground: "assets/images/iconlogo_fg.png"
-=======
->>>>>>> Stashed changes
