@@ -8,6 +8,7 @@ import 'package:soft_shares/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -343,6 +344,21 @@ class Evento extends StatelessWidget {
                           ],
                         ),
                       ],
+                    ),
+                  ),
+                  Center(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        final query = Uri.encodeComponent(evento['LOCALIZACAO']);
+                        final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
+                        Share.shareUri(googleMapsUrl);
+                      },
+                      icon: const Icon(Icons.share, color: Colors.white),
+                      label: const Text('Partilhar'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                        foregroundColor: Colors.white, 
+                      ),
                     ),
                   ),
                 ],
