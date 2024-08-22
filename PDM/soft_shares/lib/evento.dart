@@ -358,6 +358,7 @@ class Evento extends StatelessWidget {
                                            Column(
                                              crossAxisAlignment: CrossAxisAlignment.start,
                                              children: comentarios.map((comentario) {
+                                             final comID = comentario['ID_COMENTARIO'];
                                                return FutureBuilder<Map<String, dynamic>>(
                                                  future: fetchUtilizador(comentario['ID_UTILIZADOR']),
                                                  builder: (context, snapshot) {
@@ -498,8 +499,8 @@ class Evento extends StatelessWidget {
                                                                    //SizedBox(height: 4),
                                                                    Row(
                                                                      children: [
-                                                                       LikeButton(),
-                                                                       Text('${comentario['totalLikes']}'),
+                                                                        LikeButton(comentario: comID),
+                                                                        Text('${comentario['totalLikes']}'),
                                                                      ],
                                                                    ),
                                                                  ],
