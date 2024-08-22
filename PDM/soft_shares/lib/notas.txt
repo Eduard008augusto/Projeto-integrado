@@ -9,6 +9,57 @@
 -    [FEITO]    Arranjar o drawer no perfil para não mostrar areas caso o user nunca tenha selecionado um centro
 
 
+  Widget buildAlbum() {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: getAlbumConteudo(globals.idPublicacao),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('Nenhuma imagem encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
+        } else {
+          final List<Map<String, dynamic>> imagens = snapshot.data!;
+          return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, // Número de colunas
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                childAspectRatio: 1, // Garante que os itens sejam quadrados
+            ),
+            itemCount: imagens.length,
+            itemBuilder: (context, index) {
+              final imagem = imagens[index];
+              return GestureDetector(
+                onTap: () {
+
+                },
+                child: Image.network(
+                  'https://pintbackend-w8pt.onrender.com/images/${imagem['IMAGEM']}',
+                  fit: BoxFit.cover,
+                ),              
+              );
+            },
+            spacing: 10.0,
+            runSpacing: 10.0,
+            children: imagens.map((imagem) {
+              return SizedBox(
+                width: MediaQuery.of(context).size.width / 2 - 15,
+
+              );
+            }).toList(),
+          );
+        }
+      },
+    );
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////
 
 // ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, prefer_const_constructors
 

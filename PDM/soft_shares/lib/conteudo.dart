@@ -11,7 +11,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'like_bttn.dart';
 //import 'package:comment_box/comment/comment.dart';
 
-import 'test.dart';
+import 'up_picconteudo.dart';
 
 bool isFavorite = false;
 bool isLiked = false;
@@ -636,14 +636,50 @@ class Conteudo extends StatelessWidget {
                                               ),
                                             ],
                                           ),
-                                          Center(child: Text('TESTE4')),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                                          Stack(
+                                            children: [
+                                              SingleChildScrollView(
+                                                child: Center(
+                                                  child: Column(
+                                                    children: [
+                                                      buildAlbum(),
+                                                      const SizedBox(height: 80), 
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                bottom: 20,
+                                                right: 20,
+                                                child: FloatingActionButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) => const MultipleImagePickerPage(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  backgroundColor: Colors.transparent, 
+                                                  elevation: 0, 
+                                                  child: Container(
+                                                    decoration: const BoxDecoration(
+                                                      color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                                                      shape: BoxShape.circle, 
+                                                    ),
+                                                    padding: const EdgeInsets.all(15), // Padding para tornar o botão maior
+                                                    child: const Icon(Icons.add, color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                       ],
+                                     ),
+                                   ),
+                                 ],    
+                               ),
+                             ),
+                           ),
                             const Divider(
                               height: 50,
                               thickness: 1,
@@ -667,21 +703,38 @@ class Conteudo extends StatelessWidget {
                               onPressed: () {
                                 _launchGoogleMaps(publicacao['MORADA'] ?? 'Morada não disponível');
                               },
-                              icon: const Icon(Icons.directions, color: Colors.white,),
-                              label: const Text('Direções'),
+                              icon: const Icon(
+                                Icons.directions,
+                                color: Colors.white,
+                                size:20.0, 
+                              ),
+                              label: const Text(
+                                'Direções',
+                                style: TextStyle(fontSize: 14.0), 
+                              ),
                               style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), // padd interno
+                                minimumSize: const Size(95, 43), 
                                 backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
-                                foregroundColor: Colors.white 
+                                foregroundColor: Colors.white, 
                               ),
                             ),
                             ElevatedButton.icon(
                               onPressed: () {
-                                //Navigator.pushNamed(context, '/editconteudo');
-                                _showRatingDialog(context); 
+                                _showRatingDialog(context);
                               },
-                              icon: const Icon(Icons.star, color: Colors.white),
-                              label: const Text('Classificar'),
+                              icon: const Icon(
+                                Icons.star,
+                                color: Colors.white,
+                                size:20.0, 
+                              ),
+                              label: const Text(
+                                'Classificar',
+                                style: TextStyle(fontSize: 14.0), 
+                              ),
                               style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), //padd interno
+                                minimumSize: const Size(95, 43), 
                                 backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
                                 foregroundColor: Colors.white, 
                               ),
@@ -693,9 +746,18 @@ class Conteudo extends StatelessWidget {
                                   final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
                                   Share.shareUri(googleMapsUrl);
                                 },
-                                icon: const Icon(Icons.share, color: Colors.white),
-                                label: const Text('Partilhar'),
+                                icon: const Icon(
+                                  Icons.share,
+                                  color: Colors.white,
+                                  size: 20.0,
+                                ),
+                                label: const Text(
+                                  'Partilhar',
+                                  style: TextStyle(fontSize: 14.0), 
+                                ),
                                 style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), // padd interno
+                                  minimumSize: const Size(95, 43), 
                                   backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
                                   foregroundColor: Colors.white, 
                                 ),
@@ -704,8 +766,8 @@ class Conteudo extends StatelessWidget {
                           ],
                         ),
                       ],
-                    )
-                  ),
+                    ),
+                  )
                 ],
               ),
             );
@@ -716,33 +778,118 @@ class Conteudo extends StatelessWidget {
   }
 
   Widget buildAlbum() {
-    return FutureBuilder<List<Map<String, dynamic>>>(
-      future: getAlbumConteudo(globals.idPublicacao),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('Nenhuma imagem encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
-        } else {
-          final List<Map<String, dynamic>> imagens = snapshot.data!;
-          return Wrap(
-            spacing: 10.0,
-            runSpacing: 10.0,
-            children: imagens.map((imagem) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width / 2 - 15,
-                child: Image.network(
-                  'https://pintbackend-w8pt.onrender.com/images/${imagem['IMAGEM']}',
-                  fit: BoxFit.cover,
-                ),
-              );
-            }).toList(),
-          );
-        }
-      },
-    );
+  return FutureBuilder<List<Map<String, dynamic>>>(
+    future: getAlbumConteudo(globals.idPublicacao),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (snapshot.hasError) {
+        return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
+      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        return const Center(child: Text('Nenhuma imagem encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
+      } else {
+        final List<Map<String, dynamic>> imagens = snapshot.data!;
+        return GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 10.0,
+            mainAxisSpacing: 10.0,
+            childAspectRatio: 1,
+          ),
+          itemCount: imagens.length,
+          itemBuilder: (context, index) {
+            final imagem = imagens[index];
+            return FutureBuilder<Map<String, dynamic>>(
+              future: fetchUtilizador(imagem['ID_UTILIZADOR']),
+              builder: (context, userSnapshot) {
+                if (userSnapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (userSnapshot.hasError) {
+                  return const Center(child: Text('Erro ao carregar dados do user'));
+                } else if (!userSnapshot.hasData) {
+                  return const Center(child: Text('Nenhum dado encontrado para este user'));
+                } else {
+                  final user = userSnapshot.data!;
+                  return GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            contentPadding: EdgeInsets.zero,
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 9.0), // Padding à esquerda do avatar
+                                          child: CircleAvatar(
+                                            radius: 17,
+                                            backgroundImage: NetworkImage(
+                                              user['IMAGEMPERFIL'] == null
+                                                  ? 'https://cdn.discordapp.com/attachments/1154170394400542730/1260333904976679064/01.png?ex=668ef0ea&is=668d9f6a&hm=b909016ee5266e728eb2421b043a637a5d32156b3f0f4e9c59c4575af5208667&'
+                                                  : 'https://pintbackend-w8pt.onrender.com/images/${user['IMAGEMPERFIL']}',
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 8), // Espaçamento entre o avatar e o nome
+                                        Text(
+                                          user['NOME'] ?? 'Nome não disponível',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black.withOpacity(0.5), // Ajuste a opacidade do texto
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.close),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                Image.network(
+                                  'https://pintbackend-w8pt.onrender.com/images/${imagem['IMAGEM']}',
+                                  fit: BoxFit.cover,
+                                ),
+                                Container(
+                                  height: 45.0,
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 254, 247, 255),
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(25.0),
+                                      bottomRight: Radius.circular(25.0),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Image.network(
+                      'https://pintbackend-w8pt.onrender.com/images/${imagem['IMAGEM']}',
+                      fit: BoxFit.cover,
+                     ),
+                   );
+                 }
+               },
+             );
+           },
+         );
+       }
+     },
+   );
   }
 }
 

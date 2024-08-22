@@ -6,14 +6,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/database/var.dart' as globals;
 
-class MultipleImagePickerPage extends StatefulWidget {
-  const MultipleImagePickerPage({super.key});
+class MultipleImagePickerPage2 extends StatefulWidget {
+  const MultipleImagePickerPage2({super.key});
 
   @override
-  _MultipleImagePickerPageState createState() => _MultipleImagePickerPageState();
+  _MultipleImagePickerPage2State createState() => _MultipleImagePickerPage2State();
 }
 
-class _MultipleImagePickerPageState extends State<MultipleImagePickerPage> {
+class _MultipleImagePickerPage2State extends State<MultipleImagePickerPage2> {
   List<File>? _selectedImages;
 
   Future<void> _pickImages() async {
@@ -68,8 +68,9 @@ class _MultipleImagePickerPageState extends State<MultipleImagePickerPage> {
                   onPressed: () {
                     _selectedImages!.map((image) async {
                       await uploadImage(image);
-                      await uploadImagemConteudo(globals.idPublicacao, globals.idUtilizador, globals.imagem);
+                      await uploadImagemEvento(globals.idEvento, globals.idUtilizador, globals.imagem);
                     }).toList();
+                    Navigator.of(context).pop();
                   },
                   child: const Text('Confirmar'),
                 ),
