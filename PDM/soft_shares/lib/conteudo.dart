@@ -8,7 +8,7 @@ import 'package:soft_shares/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'like_bttn.dart';
+import 'like_bttn_conteudo.dart';
 //import 'package:comment_box/comment/comment.dart';
 
 import 'up_picconteudo.dart';
@@ -533,7 +533,7 @@ class Conteudo extends StatelessWidget {
                                                                                           Row(
                                                                                             children: [
                                                                                               
-                                                                                              LikeButton(comentario: comID),
+                                                                                              LikeButtonConteudo(comentario: comID),
                                                                                               Text('${comentario['totalLikes']}'),
                                                                                             ],
                                                                                           ),

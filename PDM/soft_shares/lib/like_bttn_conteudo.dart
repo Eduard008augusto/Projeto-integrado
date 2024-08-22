@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
 
-class LikeButton extends StatefulWidget {
+class LikeButtonConteudo extends StatefulWidget {
   final comentario;
 
-  const LikeButton({super.key, required this.comentario});
+  const LikeButtonConteudo({super.key, required this.comentario});
 
   @override
-  _LikeButtonState createState() => _LikeButtonState();
+  _LikeButtonConteudoState createState() => _LikeButtonConteudoState();
 }
 
-class _LikeButtonState extends State<LikeButton> {
+class _LikeButtonConteudoState extends State<LikeButtonConteudo> {
   bool _isLiked = false;
 
   @override
