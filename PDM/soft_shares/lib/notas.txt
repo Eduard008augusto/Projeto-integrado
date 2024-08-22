@@ -1,4 +1,5 @@
--    [MEIO FEITO]    Editar publicações que não validadas
+-    [MEIO FEITO]    Editar publicações não validadas
+- Editar eventos não validados
 -    [MEIO FEITO]    Separadores para comentários e album de fotos (eventos e publicações)
 -    [MEIO FEITO]    Implementar comentários (eventos e publicações)
 -    [MEIO FEITO]    Denunciar comentários
