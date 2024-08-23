@@ -55,7 +55,7 @@ class _LikeButtonEventoState extends State<LikeButtonEvento> {
                   Navigator.of(context).pop();
                   Navigator.pushNamed(
                     context, 
-                    '/conteudo', 
+                    '/evento', 
                     arguments: {'tabIndex': 2}, 
                   );  
                 });
@@ -67,7 +67,7 @@ class _LikeButtonEventoState extends State<LikeButtonEvento> {
                   Navigator.of(context).pop();
                   Navigator.pushNamed(
                     context, 
-                    '/conteudo', 
+                    '/evento', 
                     arguments: {'tabIndex': 2}, 
                   );  
                 });
