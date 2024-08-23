@@ -543,10 +543,13 @@ class Conteudo extends StatelessWidget {
                                                                                                                     try {
                                                                                                                       print(comID);
                                                                                                                       await deleteComentarioConteudo(comID);
-                                                                                                                      
                                                                                                                       Navigator.of(context).pop();
-
-                                                                                                                      // Mensagem de confirmação de exclusão
+                                                                                                                      Navigator.of(context).pop();
+                                                                                                                      Navigator.pushNamed(
+                                                                                                                        context, 
+                                                                                                                        '/conteudo', 
+                                                                                                                        arguments: {'tabIndex': 2}, 
+                                                                                                                      );                                                                                                                      // Mensagem de confirmação de exclusão
                                                                                                                       showDialog(
                                                                                                                         context: context,
                                                                                                                         builder: (BuildContext context) {
@@ -667,7 +670,6 @@ class Conteudo extends StatelessWidget {
                                                                                           Text('${comentario['COMENTARIO']}'),
                                                                                           Row(
                                                                                             children: [
-                                                                                              
                                                                                               LikeButtonConteudo(comentario: comID),
                                                                                               Text('${comentario['totalLikes']}'),
                                                                                             ],

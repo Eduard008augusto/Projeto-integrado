@@ -51,11 +51,25 @@ class _LikeButtonConteudoState extends State<LikeButtonConteudo> {
                 await deleteLikeConteudo(idLike);
                 setState(() {
                   _isLiked = false;
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(
+                    context, 
+                    '/conteudo', 
+                    arguments: {'tabIndex': 2}, 
+                  );                        
                 });
               } else {
                 await createLikeConteudo(widget.comentario, globals.idUtilizador);
                 setState(() {
                   _isLiked = true;
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(
+                    context, 
+                    '/conteudo', 
+                    arguments: {'tabIndex': 2}, 
+                  );  
                 });
               }
             } catch (error) {

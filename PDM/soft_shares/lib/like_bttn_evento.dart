@@ -51,11 +51,25 @@ class _LikeButtonEventoState extends State<LikeButtonEvento> {
                 await deleteLikeEvento(idLike);
                 setState(() {
                   _isLiked = false;
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(
+                    context, 
+                    '/conteudo', 
+                    arguments: {'tabIndex': 2}, 
+                  );  
                 });
               } else {
                 await createLikeEvento(widget.comentario, globals.idUtilizador);
                 setState(() {
                   _isLiked = true;
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(
+                    context, 
+                    '/conteudo', 
+                    arguments: {'tabIndex': 2}, 
+                  );  
                 });
               }
             } catch (error) {

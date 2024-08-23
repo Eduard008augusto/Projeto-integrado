@@ -66,6 +66,16 @@ class MenuDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/favoritos');
             },
           ),
+            ListTile(
+            leading: const Icon(Icons.notifications_outlined, size: 30.0),
+            title: const Text(
+              "Notificações",
+              style: TextStyle(fontSize: 18.0),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/favoritos');
+            },
+          ),
           const Divider(
             height: 50,
             thickness: 1,
