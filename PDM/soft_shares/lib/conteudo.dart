@@ -541,7 +541,9 @@ class Conteudo extends StatelessWidget {
                                                                                                               ? TextButton.icon(
                                                                                                                   onPressed: () async {
                                                                                                                     try {
+                                                                                                                      print(comID);
                                                                                                                       await deleteComentarioConteudo(comID);
+                                                                                                                      
                                                                                                                       Navigator.of(context).pop();
 
                                                                                                                       // Mensagem de confirmação de exclusão
