@@ -8,7 +8,7 @@ import 'package:soft_shares/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:intl/intl.dart';
-import 'like_bttn.dart';
+import 'like_bttn_evento.dart';
 
 import 'up_picevento.dart';
 
@@ -498,7 +498,7 @@ class Evento extends StatelessWidget {
                                                                    //SizedBox(height: 4),
                                                                    Row(
                                                                      children: [
-                                                                        LikeButton(comentario: comID),
+                                                                        LikeButtonEvento(comentario: comID),
                                                                         Text('${comentario['totalLikes']}'),
                                                                      ],
                                                                    ),
