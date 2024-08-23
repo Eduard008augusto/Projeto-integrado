@@ -764,6 +764,25 @@ Future<Map<String, dynamic>> createComentarioConteudo(var centro, var conteudo, 
   }
 }
 
+Future<Map<String, dynamic>> deleteComentario(var comentario) async {
+  final response = await http.post(
+    Uri.parse('${baseUrl}comentarioConteudo/delete'),
+    body: {
+      'idComentario': comentario.toString(),
+    },
+  );
+
+  var data = jsonDecode(response.body);
+
+  if (data['success']) {
+    print(data['message']);
+    Map<String, dynamic> res = Map<String, dynamic>.from(data);
+    return res;
+  } else {
+    throw Exception('Falha ao apagar comentário: ${data['error']}');
+  }
+}
+
 // denunciar um comentário de um conteudo
 Future<Map<String, dynamic>> denunciarComentarioConteudo(var conteudo) async {
   final response = await http.post(Uri.parse('${baseUrl}comentarioconteudo/denunciar/$conteudo'));

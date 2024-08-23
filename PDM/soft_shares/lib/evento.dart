@@ -263,8 +263,7 @@ class Evento extends StatelessWidget {
                              if(snapshot.connectionState == ConnectionState.waiting){
                                return Center(child: CircularProgressIndicator(),);
                              } else if(!snapshot.hasData || snapshot.data!.isEmpty){
-                                                             TextEditingController comentarioController = TextEditingController();
-
+                            TextEditingController comentarioController = TextEditingController();
                              return Stack(
                                children: [
                                  const Center(
@@ -400,7 +399,7 @@ class Evento extends StatelessWidget {
                                                                          ),
                                                                        ),
                                                                        Spacer(),
-                                                                       // botao de denuncia "...""
+                                                                       // botao de denuncia/ exclusao "...""
                                                                        IconButton(
                                                                          icon: Icon(Icons.more_vert, size: 16.0),
                                                                          padding: EdgeInsets.all(0),
