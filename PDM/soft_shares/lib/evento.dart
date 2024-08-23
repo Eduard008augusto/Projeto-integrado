@@ -345,7 +345,7 @@ class Evento extends StatelessWidget {
                                return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
                              } else {
                                final List<Map<String, dynamic>> comentarios = snapshot.data!;
-                               TextEditingController comentarioController = TextEditingController();
+                               TextEditingController comentarioControllerC = TextEditingController();
 
                                return Stack(
                                  children: [
@@ -399,7 +399,7 @@ class Evento extends StatelessWidget {
                                                                          ),
                                                                        ),
                                                                        Spacer(),
-                                                                       // botao de denuncia/ exclusao "...""
+                                                                       // botao de denuncia/ exclusao "..."
                                                                        IconButton(
                                                                          icon: Icon(Icons.more_vert, size: 16.0),
                                                                          padding: EdgeInsets.all(0),
@@ -533,7 +533,7 @@ class Evento extends StatelessWidget {
                                          children: [
                                            Expanded(
                                              child: TextFormField(
-                                               controller: comentarioController,
+                                               controller: comentarioControllerC,
                                                decoration: InputDecoration(
                                                  hintText: 'Adicione um comentário...',
                                                  border: UnderlineInputBorder(
@@ -559,7 +559,7 @@ class Evento extends StatelessWidget {
                                                          children: [
                                                            const SizedBox(height: 16),
                                                            TextField(
-                                                             controller: comentarioController,
+                                                             controller: comentarioControllerC,
                                                              keyboardType: TextInputType.text,
                                                              decoration: const InputDecoration(
                                                                hintText: 'Adicione um comentário...',
@@ -573,7 +573,7 @@ class Evento extends StatelessWidget {
                                                                  globals.idCentro,
                                                                  globals.idEvento,
                                                                  globals.idUtilizador,
-                                                                 comentarioController.text,
+                                                                 comentarioControllerC.text,
                                                                );
                                                                Navigator.of(context).pop();
                                                                Navigator.pushNamed(context, '/evento');
