@@ -769,7 +769,7 @@ Future<Map<String, dynamic>> deleteComentarioConteudo(var comentario) async {
   final url = Uri.parse('${baseUrl}comentarioconteudo/delete');
 
   final body = json.encode({
-    'ID_COMENTARIO ': comentario,
+    'ID_COMENTARIO': comentario,
   });
 
   final response = await http.post(
@@ -888,7 +888,7 @@ Future<Map<String, dynamic>> deleteComentarioEvento(var comentario) async {
   final url = Uri.parse('${baseUrl}comentarioevento/delete');
 
   final body = json.encode({
-    'ID_COMENTARIO ': comentario,
+    'ID_COMENTARIO': comentario,
   });
 
   final response = await http.post(
