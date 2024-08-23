@@ -376,7 +376,7 @@ class Conteudo extends StatelessWidget {
                                                     builder: (context, snapshot) {
                                                     if(snapshot.connectionState == ConnectionState.waiting){
                                                       return Center(child: CircularProgressIndicator(),);
-                                                    } else if(!snapshot.hasData || snapshot.data!.isEmpty){
+                                                    } else if(!snapshot.hasData || snapshot.data!.isEmpty){//quando ainda n há comentarios
                                                       TextEditingController comentarioController = TextEditingController();
                                                       return Stack(
                                                         children: [
