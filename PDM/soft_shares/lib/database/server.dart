@@ -957,13 +957,12 @@ Future<Map<String, dynamic>> updateComentarioEvento(var comentario, var texto) a
 }
 
 // retorna a quantidade de notifcações
-Future<Map<String, dynamic>> quantidadeNotificacoes(var centro, var user) async {
+Future<int> quantidadeNotificacoes(var centro, var user) async {
   final response = await http.get(Uri.parse('${baseUrl}notificacao/NumeroNotifCentroUser/$centro/$user'));
   var data = jsonDecode(response.body);
   print(data);
   if (data['success']) {
-    Map<String, dynamic> res = Map<String, dynamic>.from(data);
-    return res;
+    return data['NumeroNotificacoes'];
   } else {
     throw Exception('Falha ao obter quantidade de notificações: ${data['error']}');
   }
