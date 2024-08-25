@@ -65,12 +65,20 @@ class _MultipleImagePickerPage2State extends State<MultipleImagePickerPage2> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  onPressed: () {
+                onPressed: () async {
+                  await Future.wait(
                     _selectedImages!.map((image) async {
                       await uploadImage(image);
                       await uploadImagemEvento(globals.idEvento, globals.idUtilizador, globals.imagem);
-                    }).toList();
-                    Navigator.of(context).pop();
+                    }).toList(),
+                  );
+                      await Future.delayed(const Duration(seconds: 2));
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pop();
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pop();
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushNamed(context, '/evento');
                   },
                   child: const Text('Confirmar'),
                 ),

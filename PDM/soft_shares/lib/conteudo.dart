@@ -395,6 +395,7 @@ class Conteudo extends StatelessWidget {
                                                                 children: [
                                                                   Expanded(
                                                                     child: TextFormField(
+                                                                      controller: comentarioController,
                                                                       decoration: InputDecoration(
                                                                         hintText: 'Adicione um comentário...',
                                                                         border: UnderlineInputBorder(
@@ -403,7 +404,7 @@ class Conteudo extends StatelessWidget {
                                                                       ),
                                                                     ),
                                                                   ),
-                                                                 IconButton(
+                                                                  IconButton(
                                                                     icon: Icon(Icons.send),
                                                                     onPressed: () async {
                                                                       showDialog(
@@ -420,7 +421,7 @@ class Conteudo extends StatelessWidget {
                                                                                 children: [
                                                                                   const SizedBox(height: 16),
                                                                                   TextField(
-                                                                                    controller: TextEditingController(),
+                                                                                    controller: comentarioController,
                                                                                     keyboardType: TextInputType.text,
                                                                                     decoration: const InputDecoration(
                                                                                       hintText: 'Adicione um comentário...',
@@ -460,7 +461,8 @@ class Conteudo extends StatelessWidget {
                                                     } else {
                                                       final List<Map<String, dynamic>> comentarios = snapshot.data!;
                                                       TextEditingController comentarioController = TextEditingController();
-
+                                                          //final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+                                                          //int initialTabIndex = arguments?['tabIndex'] ?? 0;
                                                       return Stack(
                                                         children: [
                                                           SingleChildScrollView(
@@ -540,16 +542,16 @@ class Conteudo extends StatelessWidget {
                                                                                                           globals.idUtilizador == comentario['ID_UTILIZADOR']
                                                                                                               ? TextButton.icon(
                                                                                                                   onPressed: () async {
-                                                                                                                    try {
+                                                                                                                    try { // aqui funciona quase a 100%
                                                                                                                       print(comID);
                                                                                                                       await deleteComentarioConteudo(comID);
                                                                                                                       Navigator.of(context).pop();
                                                                                                                       Navigator.of(context).pop();
-                                                                                                                      Navigator.pushNamed(
-                                                                                                                        context, 
-                                                                                                                        '/conteudo', 
-                                                                                                                        arguments: {'tabIndex': 2}, 
-                                                                                                                      );                                                                                                                      // Mensagem de confirmação de exclusão
+                                                                                                                      final TabController? tabController = DefaultTabController.of(context);
+                                                                                                                        if (tabController != null) {
+                                                                                                                        tabController.index = 1;
+                                                                                                                        Navigator.pushNamed(context, '/conteudo');
+                                                                                                                      }
                                                                                                                       showDialog(
                                                                                                                         context: context,
                                                                                                                         builder: (BuildContext context) {
@@ -592,7 +594,6 @@ class Conteudo extends StatelessWidget {
                                                                                                                         },
                                                                                                                       );
                                                                                                                     }
-
                                                                                                                     Navigator.of(context).pop();
                                                                                                                   },
                                                                                                                   icon: Icon(Icons.delete_outline, color: Color.fromARGB(255, 57, 99, 156)),
@@ -747,6 +748,7 @@ class Conteudo extends StatelessWidget {
                                                                                         globals.idUtilizador,
                                                                                         comentarioController.text,
                                                                                       );
+                                                                                      Navigator.of(context).pop(); // por enquanto esta é a melhor forma
                                                                                       Navigator.of(context).pop();
                                                                                       Navigator.pushNamed(context, '/conteudo');
                                                                                     },
@@ -1038,6 +1040,7 @@ class FavoriteButton extends StatefulWidget {
 
 class _FavoriteButtonState extends State<FavoriteButton> {
   late Future<Map<String, dynamic>> _futureFavorite;
+
 
   @override
   void initState() {

@@ -56,7 +56,7 @@ class _LikeButtonConteudoState extends State<LikeButtonConteudo> {
                   Navigator.pushNamed(
                     context, 
                     '/conteudo', 
-                    arguments: {'tabIndex': 2}, 
+                    arguments: {'tabIndex': 1}, 
                   );                        
                 });
               } else {
@@ -68,7 +68,7 @@ class _LikeButtonConteudoState extends State<LikeButtonConteudo> {
                   Navigator.pushNamed(
                     context, 
                     '/conteudo', 
-                    arguments: {'tabIndex': 2}, 
+                    arguments: {'tabIndex': 1}, 
                   );  
                 });
               }

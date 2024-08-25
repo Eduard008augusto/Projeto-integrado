@@ -281,6 +281,7 @@ class Evento extends StatelessWidget {
                                        children: [
                                          Expanded(
                                            child: TextFormField(
+                                            controller: comentarioController,
                                              decoration: InputDecoration(
                                                hintText: 'Adicione um comentário...',
                                                border: UnderlineInputBorder(
@@ -304,13 +305,13 @@ class Evento extends StatelessWidget {
                                                      child: Column(
                                                        mainAxisSize: MainAxisSize.min,
                                                        children: [
-                                                         const SizedBox(height: 16),
-                                                         TextField(
-                                                           controller: TextEditingController(),
-                                                           keyboardType: TextInputType.text,
-                                                           decoration: const InputDecoration(
-                                                             hintText: 'Adicione um comentário...',
-                                                             border: OutlineInputBorder(),
+                                                          const SizedBox(height: 16),
+                                                          TextField(
+                                                            controller: comentarioController,
+                                                            keyboardType: TextInputType.text,
+                                                            decoration: const InputDecoration(
+                                                              hintText: 'Adicione um comentário...',
+                                                              border: OutlineInputBorder(),
                                                            ),
                                                          ),
                                                          const SizedBox(height: 16),
@@ -400,98 +401,158 @@ class Evento extends StatelessWidget {
                                                                        ),
                                                                        Spacer(),
                                                                        // botao de denuncia/ exclusao "..."
-                                                                       IconButton(
-                                                                         icon: Icon(Icons.more_vert, size: 16.0),
-                                                                         padding: EdgeInsets.all(0),
-                                                                         constraints: BoxConstraints(), 
-                                                                         onPressed:(){
-                                                                           showDialog(
-                                                                             context: context,
-                                                                             builder: (BuildContext context) {
-                                                                               return AlertDialog(
-                                                                                 //title: Text('Denunciar comentário'),
-                                                                                 content: Text('Deseja denunciar este comentário?'),
-                                                                                 actions: [
-                                                                                   TextButton.icon(
-                                                                                     onPressed: () {
-                                                                                       Navigator.of(context).pop();
-                                                                                     },
-                                                                                     icon: const Icon(Icons.cancel_outlined, color: Color.fromARGB(255, 57, 99, 156)),
-                                                                                     label: Text(
-                                                                                       'Cancelar',
-                                                                                         style: TextStyle(
-                                                                                         color:Color.fromARGB(255, 57, 99, 156)
-                                                                                       ),
-                                                                                     ),
-                                                                                   ),
-                                                                                   TextButton.icon(
-                                                                                     onPressed: () async {
-                                                                                       try {
-                                                                                         await denunciarComentarioEvento(globals.idEvento);
-                                                                                         Navigator.of(context).pop();
+                                                                        IconButton(
+                                                                          icon: Icon(Icons.more_vert, size: 16.0),
+                                                                          padding: EdgeInsets.all(0),
+                                                                          constraints: BoxConstraints(),
+                                                                          onPressed: () {
+                                                                            showDialog(
+                                                                              context: context,
+                                                                              builder: (BuildContext context) {
+                                                                                return AlertDialog(
+                                                                                  content: globals.idUtilizador == comentario['ID_UTILIZADOR']
+                                                                                      ? Text('Deseja apagar este comentário?')
+                                                                                      : Text('Deseja denunciar este comentário?'),
+                                                                                  actions: [
+                                                                                    TextButton.icon(
+                                                                                      onPressed: () {
+                                                                                        Navigator.of(context).pop();
+                                                                                      },
+                                                                                      icon: const Icon(Icons.cancel_outlined, color: Color.fromARGB(255, 57, 99, 156)),
+                                                                                      label: Text(
+                                                                                        'Cancelar',
+                                                                                        style: TextStyle(color: Color.fromARGB(255, 57, 99, 156)),
+                                                                                      ),
+                                                                                    ),
+                                                                                    globals.idUtilizador == comentario['ID_UTILIZADOR']
+                                                                                        ? TextButton.icon(
+                                                                                            onPressed: () async {
+                                                                                              try { // aqui funciona quase a 100%
+                                                                                                print(comID);
+                                                                                                await deleteComentarioEvento(comID);
+                                                                                                Navigator.of(context).pop();
+                                                                                                Navigator.of(context).pop();
+                                                                                                final TabController? tabController = DefaultTabController.of(context);
+                                                                                                  if (tabController != null) {
+                                                                                                  tabController.index = 1;
+                                                                                                  Navigator.pushNamed(context, '/evento');
+                                                                                                }
+                                                                                                showDialog(
+                                                                                                  context: context,
+                                                                                                  builder: (BuildContext context) {
+                                                                                                    return AlertDialog(
+                                                                                                      shape: RoundedRectangleBorder(
+                                                                                                        borderRadius: BorderRadius.circular(10),
+                                                                                                      ),
+                                                                                                      content: Padding(
+                                                                                                        padding: const EdgeInsets.all(16.0),
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.min,
+                                                                                                          children: const [
+                                                                                                            SizedBox(height: 16),
+                                                                                                            Text('Comentário apagado com sucesso!'),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    );
+                                                                                                  },
+                                                                                                );
+                                                                                              } catch (error) {
+                                                                                                showDialog(
+                                                                                                  context: context,
+                                                                                                  builder: (BuildContext context) {
+                                                                                                    return Dialog(
+                                                                                                      shape: RoundedRectangleBorder(
+                                                                                                        borderRadius: BorderRadius.circular(10),
+                                                                                                      ),
+                                                                                                      child: Padding(
+                                                                                                        padding: const EdgeInsets.all(16.0),
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.min,
+                                                                                                          children: [
+                                                                                                            SizedBox(height: 16),
+                                                                                                            Text('Erro ao apagar comentário!\n$error'),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    );
+                                                                                                  },
+                                                                                                );
+                                                                                              }
+                                                                                              Navigator.of(context).pop();
+                                                                                            },
+                                                                                            icon: Icon(Icons.delete_outline, color: Color.fromARGB(255, 57, 99, 156)),
+                                                                                            label: Text(
+                                                                                              'Apagar',
+                                                                                              style: TextStyle(color: Color.fromARGB(255, 57, 99, 156)),
+                                                                                            ),
+                                                                                          )
+                                                                                        : TextButton.icon(
+                                                                                            onPressed: () async {
+                                                                                              try {
+                                                                                                await denunciarComentarioEvento(comID);
+                                                                                                Navigator.of(context).pop();
 
-                                                                                         // NÃO TÁ A APARECER ESTA MENSAGEM
-                                                                                         showDialog(
-                                                                                           context: context,
-                                                                                           builder: (BuildContext context) {
-                                                                                             return AlertDialog(
-                                                                                               shape: RoundedRectangleBorder(
-                                                                                                 borderRadius: BorderRadius.circular(10),
-                                                                                               ),
-                                                                                               content: Padding(
-                                                                                                 padding: const EdgeInsets.all(16.0),
-                                                                                                 child: Column(
-                                                                                                   mainAxisSize: MainAxisSize.min,
-                                                                                                   children: const [
-                                                                                                     SizedBox(height: 16),
-                                                                                                     Text('Obrigado!\nComentário denunciado com sucesso!'),
-                                                                                                   ],
-                                                                                                 ),
-                                                                                               ),
-                                                                                             );
-                                                                                           },
-                                                                                         );
-                                                                                       } catch (error) {
-                                                                                         showDialog(
-                                                                                           context: context,
-                                                                                           builder: (BuildContext context) {
-                                                                                             return Dialog(
-                                                                                               shape: RoundedRectangleBorder(
-                                                                                                 borderRadius: BorderRadius.circular(10),
-                                                                                               ),
-                                                                                               child: Padding(
-                                                                                                 padding: const EdgeInsets.all(16.0),
-                                                                                                 child: Column(
-                                                                                                   mainAxisSize: MainAxisSize.min,
-                                                                                                   children: [
-                                                                                                     SizedBox(height: 16),
-                                                                                                     Text('Erro ao denunciar comentário!\n$error'),
-                                                                                                   ],
-                                                                                                 ),
-                                                                                               ),
-                                                                                             );
-                                                                                           },
-                                                                                         );
-                                                                                       }
-                                                                                       
-                                                                                       Navigator.of(context).pop();
-                                                                                     },
-                                                                                     icon: Icon(Icons.report_outlined, color: Color.fromARGB(255, 57, 99, 156)),
-                                                                                     label: Text(
-                                                                                       'Denunciar',
-                                                                                       style: TextStyle(
-                                                                                         color:Color.fromARGB(255, 57, 99, 156), 
-                                                                                       ),
-                                                                                     ),
-                                                                                   ),
-                                                                                 ],
-                                                                               );
-                                                                             }
-                                                                           );
-                                                                         },
-                                                                       ),
-                                                                     ],
-                                                                   ),
+                                                                                                // Mensagem de confirmação de denúncia
+                                                                                                showDialog(
+                                                                                                  context: context,
+                                                                                                  builder: (BuildContext context) {
+                                                                                                    return AlertDialog(
+                                                                                                      shape: RoundedRectangleBorder(
+                                                                                                        borderRadius: BorderRadius.circular(10),
+                                                                                                      ),
+                                                                                                      content: Padding(
+                                                                                                        padding: const EdgeInsets.all(16.0),
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.min,
+                                                                                                          children: const [
+                                                                                                            SizedBox(height: 16),
+                                                                                                            Text('Obrigado!\nComentário denunciado com sucesso!'),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    );
+                                                                                                  },
+                                                                                                );
+                                                                                              } catch (error) {
+                                                                                                showDialog(
+                                                                                                  context: context,
+                                                                                                  builder: (BuildContext context) {
+                                                                                                    return Dialog(
+                                                                                                      shape: RoundedRectangleBorder(
+                                                                                                        borderRadius: BorderRadius.circular(10),
+                                                                                                      ),
+                                                                                                      child: Padding(
+                                                                                                        padding: const EdgeInsets.all(16.0),
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.min,
+                                                                                                          children: [
+                                                                                                            SizedBox(height: 16),
+                                                                                                            Text('Erro ao denunciar comentário!\n$error'),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    );
+                                                                                                  },
+                                                                                                );
+                                                                                              }
+
+                                                                                              Navigator.of(context).pop();
+                                                                                            },
+                                                                                            icon: Icon(Icons.report_outlined, color: Color.fromARGB(255, 57, 99, 156)),
+                                                                                            label: Text(
+                                                                                              'Denunciar',
+                                                                                              style: TextStyle(color: Color.fromARGB(255, 57, 99, 156)),
+                                                                                            ),
+                                                                                          ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                          },
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                                    //corpo do comentario
                                                                    //SizedBox(height: 4),
                                                                    Text('${comentario['COMENTARIO']}'),
@@ -656,108 +717,118 @@ class Evento extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  _launchGoogleMaps(evento['LOCALIZACAO']);
-                },
-                icon: const Icon(Icons.directions, color: Colors.white),
-                label: const Text('Direções'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
-                  foregroundColor: Colors.white,
-                ),
-              ),
-              ElevatedButton.icon(
-                onPressed: () async {
-                  var data = await checkInscricao(globals.idUtilizador, evento['ID_EVENTO']);
-                  bool inscrito = data['isInscrito'];
-                  if (inscrito) {
-                    await deleteInscricao(data['ID_INSCRICAO']);
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          icon: const Icon(Icons.check),
-                          title: const Text('Sucesso'),
-                          content: const Text('Sua inscrição foi anulada!'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  } else {
-                    await createInscricao(evento['ID_EVENTO'], globals.idUtilizador);
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          icon: const Icon(Icons.check),
-                          title: const Text('Sucesso'),
-                          content: const Text('Você está inscrito!'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                icon: const Icon(Icons.how_to_reg, color: Colors.white),
-                label: const Text('Inscrever'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
-                  foregroundColor: Colors.white,
+                  Container(
+                    padding: const EdgeInsets.all(1.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            _launchGoogleMaps(evento['LOCALIZACAO']);
+                          },
+                          icon: const Icon(
+                            Icons.directions, 
+                            color: Colors.white, 
+                            size: 20.0, 
+                          ),
+                          label: const Text(
+                            'Direções',
+                            style: TextStyle(fontSize: 14.0), 
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), // padding interno
+                            minimumSize: const Size(95, 43), 
+                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                            foregroundColor: Colors.white,
+                          ),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            var data = await checkInscricao(globals.idUtilizador, evento['ID_EVENTO']);
+                            bool inscrito = data['isInscrito'];
+                            if (inscrito) {
+                              await deleteInscricao(data['ID_INSCRICAO']);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    icon: const Icon(Icons.check),
+                                    title: const Text('Sucesso'),
+                                    content: const Text('Sua inscrição foi anulada!'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            } else {
+                              await createInscricao(evento['ID_EVENTO'], globals.idUtilizador);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    icon: const Icon(Icons.check),
+                                    title: const Text('Sucesso'),
+                                    content: const Text('Você está inscrito!'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.how_to_reg, 
+                            color: Colors.white, 
+                            size: 20.0, 
+                          ),
+                          label: const Text(
+                            'Inscrever',
+                            style: TextStyle(fontSize: 14.0), 
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), // padding interno
+                            minimumSize: const Size(95, 43), 
+                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                            foregroundColor: Colors.white,
+                          ),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            final query = Uri.encodeComponent(evento['LOCALIZACAO']);
+                            final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
+                            Share.shareUri(googleMapsUrl);
+                          },
+                          icon: const Icon(
+                            Icons.share, 
+                            color: Colors.white, 
+                            size: 20.0, 
+                          ),
+                          label: const Text(
+                            'Partilhar',
+                            style: TextStyle(fontSize: 14.0), 
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                            minimumSize: const Size(95, 43), 
+                            backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
+                            foregroundColor: Colors.white,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  Center(
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        final query = Uri.encodeComponent(evento['LOCALIZACAO']);
-                        final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
-                        Share.shareUri(googleMapsUrl);
-                      },
-                      icon: const Icon(Icons.share, color: Colors.white),
-                      label: const Text('Partilhar'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
-                        foregroundColor: Colors.white, 
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        final query = Uri.encodeComponent(evento['LOCALIZACAO']);
-                        final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
-                        Share.shareUri(googleMapsUrl);
-                      },
-                      icon: const Icon(Icons.share, color: Colors.white),
-                      label: const Text('Partilhar'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0), 
-                        foregroundColor: Colors.white, 
-                      ),
-                    ),
-                  ),
+                  )
                 ],
               ),
             );
