@@ -34,9 +34,19 @@ class _NotificoesState extends State<Notificoes> {
               itemCount: notificacoes.length,
               itemBuilder: (context, index) {
                  final notificacao = notificacoes[index];
-                 return ListTile(
-                  title: Text(notificacao['TEXTO']),
-                 );
+                 return Column(
+                  Image.network(
+                      'https://pintbackend-w8pt.onrender.com/images/${notificacao['IMAGEM']}',
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: 150,
+                    ),
+                  children: [
+                    ListTile(
+                      title: Text(notificacao['TEXTO']),
+                    ),
+                  ],
+                );
               }
             );
           }
