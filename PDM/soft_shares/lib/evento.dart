@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, prefer_const_constructors
+// ignore_for_file: use_build_context_synchronously, prefer_const_constructors, avoid_print
 
 import 'package:flutter/material.dart';
 // ignore: unused_import
@@ -432,12 +432,10 @@ class Evento extends StatelessWidget {
                                                                                                 await deleteComentarioEvento(comID);
                                                                                                 Navigator.of(context).pop();
                                                                                                 Navigator.of(context).pop();
-                                                                                                final TabController? tabController = DefaultTabController.of(context);
-                                                                                                  if (tabController != null) {
-                                                                                                  tabController.index = 1;
-                                                                                                  Navigator.pushNamed(context, '/evento');
-                                                                                                }
-                                                                                                showDialog(
+                                                                                                final TabController tabController = DefaultTabController.of(context);
+                                                                                                tabController.index = 1;
+                                                                                                Navigator.pushNamed(context, '/evento');
+                                                                                                                                                                                              showDialog(
                                                                                                   context: context,
                                                                                                   builder: (BuildContext context) {
                                                                                                     return AlertDialog(
