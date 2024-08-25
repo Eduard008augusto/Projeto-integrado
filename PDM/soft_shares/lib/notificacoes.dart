@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
@@ -17,6 +19,58 @@ class _NotificoesState extends State<Notificoes> {
       drawer: const MenuDrawer(),
       appBar: AppBar(
         title: const Text('Notificações'),
+        actions: [
+          IconButton(onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  icon: const Icon(Icons.delete),
+                  title: const Text('Deseja eliminar todas as notificações?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Cancelar'),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        try {
+                          await deleteNotificacoes(globals.idCentro, globals.idUtilizador);
+                          Navigator.of(context).pop();
+                          Navigator.pushNamed(context, '/notificacoes');
+                        } catch (error) {
+                          Navigator.of(context).pop();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                icon: const Icon(Icons.error),
+                                title: const Text('ERRO'),
+                                content: Text('$error'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
+                      child: const Text('Confirmar'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }, icon: const Icon(Icons.delete)),
+          const SizedBox(width: 10,),
+        ],
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: getNotificacoes(globals.idCentro, globals.idUtilizador),
