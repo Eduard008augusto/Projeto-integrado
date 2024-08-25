@@ -3,11 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import './services/token_service.dart';
 
+import './database/server.dart';
+import './database/var.dart' as globals;
+
+int? quant;
+
+void checkQuantidade() async {
+  quant = await quantidadeNotificacoes(globals.idCentro, globals.idUtilizador);
+}
+
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    checkQuantidade();
+
     return Drawer(
       child: Column(
         children: [
@@ -68,12 +80,12 @@ class MenuDrawer extends StatelessWidget {
           ),
             ListTile(
             leading: const Icon(Icons.notifications_outlined, size: 30.0),
-            title: const Text(
-              "Notificações",
-              style: TextStyle(fontSize: 18.0),
+            title: Text(
+              '$quant Notificações',
+              style: const TextStyle(fontSize: 18.0),
             ),
             onTap: () {
-              Navigator.pushNamed(context, '/favoritos');
+              Navigator.pushNamed(context, '/notificacoes');
             },
           ),
           const Divider(
