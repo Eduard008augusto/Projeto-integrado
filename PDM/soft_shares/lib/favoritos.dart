@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
+import 'drawer_mapa.dart';
 import './database/var.dart' as globals;
 
 void main() {
@@ -20,7 +21,7 @@ class Favoritos extends StatelessWidget {
         title: const Text('Favoritos'),
         
       ),
-      drawer: const MenuDrawer(),
+      drawer: globals.idCentro == 0 ? const MenuDrawerMapa() : const MenuDrawer(),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: fetchFavoritos(globals.idUtilizador),
         builder: (context, snapshot) {

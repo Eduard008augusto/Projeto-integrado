@@ -87,22 +87,49 @@ class _NotificoesState extends State<Notificoes> {
             return ListView.builder(
               itemCount: notificacoes.length,
               itemBuilder: (context, index) {
-                 final notificacao = notificacoes[index];
-                 return Column(
+                final notificacao = notificacoes[index];
+                return Column(
                   children: [
-                    Image.network(
-                      'https://pintbackend-w8pt.onrender.com/images/${notificacao['IMAGEM']}',
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: 150,
+                    Material(
+                      elevation: 15,
+                      color: const Color.fromARGB(255, 231, 231, 231),
+                      borderRadius: BorderRadius.circular(5),
+                      child: GestureDetector(
+                        child: Row(
+                          children: [
+                            Image.network(
+                              'https://pintbackend-w8pt.onrender.com/images/${notificacao['IMAGEM']}',
+                              fit: BoxFit.cover,
+                              height: 80,
+                              width: 80,
+                            ),
+                            const SizedBox(width: 5,),
+                            Expanded(
+                              child: Text(
+                                notificacao['TEXTO'],
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 5,
+                              ),
+                            )
+                          ],
+                        ),
+                        onTap: () {
+                          if(notificacao['TIPO'] == 'conteudo'){
+                            globals.idPublicacao = notificacao['ID_REF'];
+                            Navigator.pushNamed(context, '/conteudo');
+                          } else if(notificacao['TIPO'] == 'evento'){
+                            globals.idEvento = notificacao['ID_REF'];
+                            Navigator.pushNamed(context, '/evento');
+                          }
+                        },
+                      ),
                     ),
-                    ListTile(
-                      title: Text(notificacao['TEXTO']),
-                    ),
+                    const SizedBox(height: 10),
                   ],
                 );
               }
             );
+
           }
         },
       )
