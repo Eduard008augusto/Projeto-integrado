@@ -960,7 +960,7 @@ Future<Map<String, dynamic>> updateComentarioEvento(var comentario, var texto) a
 Future<int> quantidadeNotificacoes(var centro, var user) async {
   final response = await http.get(Uri.parse('${baseUrl}notificacao/NumeroNotifCentroUser/$centro/$user'));
   var data = jsonDecode(response.body);
-  print(data);
+  //print(data);
   if (data['success']) {
     return data['NumeroNotificacoes'];
   } else {

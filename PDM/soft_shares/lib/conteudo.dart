@@ -550,7 +550,7 @@ class Conteudo extends StatelessWidget {
                                                                                                                       final TabController tabController = DefaultTabController.of(context);
                                                                                                                       tabController.index = 1;
                                                                                                                       Navigator.pushNamed(context, '/conteudo');
-                                                                                                                                                                                                                                          showDialog(
+                                                                                                                      showDialog(
                                                                                                                         context: context,
                                                                                                                         builder: (BuildContext context) {
                                                                                                                           return AlertDialog(

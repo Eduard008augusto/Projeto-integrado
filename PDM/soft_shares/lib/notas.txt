@@ -8,5 +8,3 @@
 - Definições de preferências de notificações
 - Adicionar um separador na cena das publicações ainda não verificadas para os eventos
 -    [FEITO]    Arranjar o drawer no perfil para não mostrar areas caso o user nunca tenha selecionado um centro
-
-
