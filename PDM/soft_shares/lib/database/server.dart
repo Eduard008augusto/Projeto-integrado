@@ -622,6 +622,41 @@ Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subare
   }
 }
 
+// editar evento por rever
+Future<Map<String, dynamic>> updateEvento(var idEvento, var nome, var data, var morada, var imagem, var telefone, var desc, var preco) async {
+  final url = Uri.parse('${baseUrl}evento/updateMobile/$idEvento');
+
+  final body = json.encode({
+    'NOME': nome,
+    'DATA': data,
+    'LOCALIZACAO': morada,
+    'IMAGEMEVENTO': imagem,
+    'TELEFONE': telefone,
+    'DESCRICAO': desc,
+    'PRECO': preco,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+    print(data);
+
+    if (data['success']) {
+      print('Atualizado com sucesso!');
+      return data;
+    } else {
+      throw Exception('Falha ao atualizar evento: ${data['error']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
 // retornar o album do conteudo
 Future<List<Map<String, dynamic>>> getAlbumConteudo(var conteudo) async {
   final response = await http.get(Uri.parse('${baseUrl}fotoconteudo/listporconteudo/$conteudo'));
