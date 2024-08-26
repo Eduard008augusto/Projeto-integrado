@@ -623,10 +623,12 @@ Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subare
 }
 
 // editar evento por rever
-Future<Map<String, dynamic>> updateEvento(var idEvento, var nome, var data, var morada, var imagem, var telefone, var desc, var preco) async {
+Future<Map<String, dynamic>> updateEvento(var idEvento, var area, var subarea, var nome, var data, var morada, var imagem, var telefone, var desc, var preco) async {
   final url = Uri.parse('${baseUrl}evento/updateMobile/$idEvento');
 
   final body = json.encode({
+    'ID_AREA': area,
+    'ID_SUBAREA': subarea,
     'NOME': nome,
     'DATA': data,
     'LOCALIZACAO': morada,
