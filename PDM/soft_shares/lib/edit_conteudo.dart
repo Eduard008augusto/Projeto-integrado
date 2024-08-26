@@ -361,7 +361,7 @@ class _EditConteudoState extends State<EditConteudo> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirmar'),
-          content: const Text('Deseja adicionar este conteúdo?'),
+          content: const Text('Deseja editar este conteúdo?'),
           actions: <Widget>[
             TextButton(
               child: const Text('Cancelar'),
@@ -370,7 +370,7 @@ class _EditConteudoState extends State<EditConteudo> {
               },
             ),
             TextButton(
-              child: const Text('Adicionar'),
+              child: const Text('Confirmar'),
               onPressed: () async {
                 globals.nomeP = nomeController.text;
                 globals.moradaP = moradaController.text;
