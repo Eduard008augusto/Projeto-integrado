@@ -630,7 +630,7 @@ Future<Map<String, dynamic>> updateEvento(var idEvento, var area, var subarea, v
     'ID_AREA': area,
     'ID_SUBAREA': subarea,
     'NOME': nome,
-    'DATA': data,
+    'DATA': data.toIso8601String(),
     'LOCALIZACAO': morada,
     'IMAGEMEVENTO': imagem,
     'TELEFONE': telefone,
