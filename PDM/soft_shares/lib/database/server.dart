@@ -1142,7 +1142,82 @@ Future<Map<String, dynamic>> deleteLikeEvento(var like) async {
   }
 }
 
+// sacar de todas as areas
+Future<List<Map<String, dynamic>>> getAreasPreferencias(var centro, var user) async {
+  final response = await http.get(Uri.parse('${baseUrl}preferencias/ListAreasComPreferencias/$centro/$user'));
+  var data = jsonDecode(response.body);
+  if(data['success']){
+    print(data['message']);
+    List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
+    return res;
+  } else {
+    throw Exception('Falha ao carregar areas preferenciais: ${data['error']}');
+  }
+}
 
+// salvar preferencia
+Future<Map<String, dynamic>> savePreferencia(var user, var centro, var area) async {
+  final url = Uri.parse('${baseUrl}preferencias/guardarPreferencia');
+
+  final body = json.encode({
+    'ID_UTILIZADOR': user,
+    'ID_CENTRO': centro,
+    'ID_AREA': area,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Prefencia salva com sucesso');
+      return data;
+    } else {
+      throw Exception('Falha ao salvar preferencia: ${data['error']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
+
+// apagar um preferencia
+Future<Map<String, dynamic>> deletePreferencia(var user, var centro, var area) async {
+  final url = Uri.parse('${baseUrl}preferencias/deletePreferencia');
+
+  final body = json.encode({
+    'ID_UTILIZADOR': user,
+    'ID_CENTRO': centro,
+    'ID_AREA': area,
+  });
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: body,
+  );
+
+  try {
+    var data = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(data);
+
+    if (data['success']) {
+      print('Prefencia apagada com sucesso');
+      return data;
+    } else {
+      throw Exception('Falha ao salvar preferencia: ${data['error']}');
+    }
+  } catch (e) {
+    throw Exception('Erro ao decodificar a resposta JSON: $e');
+  }
+}
 
 
 

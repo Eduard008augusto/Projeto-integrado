@@ -70,6 +70,10 @@ class _NotificoesState extends State<Notificoes> {
             );
           }, icon: const Icon(Icons.delete)),
           const SizedBox(width: 10,),
+          IconButton(onPressed: (){
+            Navigator.pushNamed(context, '/preferencias');
+          }, icon: const Icon(Icons.edit)),
+          const SizedBox(width: 10,),
         ],
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(

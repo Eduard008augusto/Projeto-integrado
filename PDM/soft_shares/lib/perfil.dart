@@ -24,7 +24,7 @@ class Perfil extends StatelessWidget {
           IconButton(onPressed: (){
             Navigator.pushNamed(context, '/pendente');
           }, icon: const Icon(Icons.pending_actions),),
-          const SizedBox(width: 30,),
+          const SizedBox(width: 10,),
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
@@ -34,7 +34,7 @@ class Perfil extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(width: 20.0,),
+          const SizedBox(width: 10.0,),
         ],
       ),
       drawer: globals.idCentro == 0 ? const MenuDrawerMapa() : const MenuDrawer(),
