@@ -78,11 +78,38 @@ class MenuDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/favoritos');
             },
           ),
-            ListTile(
+          ListTile(
             leading: const Icon(Icons.notifications_outlined, size: 30.0),
-            title: Text(
-              '$quant Notificações',
-              style: const TextStyle(fontSize: 18.0),
+            title: Row(
+              children: [
+                const Text(
+                  'Notificações',
+                  style: TextStyle(fontSize: 18.0, color: Colors.black),
+                ),
+                if (quant != null) ...[
+                  const SizedBox(width: 8), 
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: 22, 
+                        height: 22, 
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(174, 0, 183, 224), 
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      Text(
+                        '$quant',
+                        style: const TextStyle(
+                          fontSize: 13.0,
+                          color: Colors.white, 
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
             ),
             onTap: () {
               Navigator.pushNamed(context, '/notificacoes');
