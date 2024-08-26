@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
@@ -38,11 +36,15 @@ class _NotificoesState extends State<Notificoes> {
                       onPressed: () async {
                         try {
                           await deleteNotificacoes(globals.idCentro, globals.idUtilizador);
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context).pop();
+                          // ignore: use_build_context_synchronously
                           Navigator.pushNamed(context, '/notificacoes');
                         } catch (error) {
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context).pop();
                           showDialog(
+                            // ignore: use_build_context_synchronously
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
@@ -95,8 +97,8 @@ class _NotificoesState extends State<Notificoes> {
                 return Column(
                   children: [
                     Material(
-                      elevation: 15,
-                      color: const Color.fromARGB(255, 231, 231, 231),
+                      elevation: 3, 
+                      color: const Color.fromARGB(255, 255, 252, 255),
                       borderRadius: BorderRadius.circular(5),
                       child: GestureDetector(
                         child: Row(
@@ -128,12 +130,11 @@ class _NotificoesState extends State<Notificoes> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 16), 
                   ],
                 );
               }
             );
-
           }
         },
       )

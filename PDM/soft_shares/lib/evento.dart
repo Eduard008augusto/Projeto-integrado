@@ -428,14 +428,18 @@ class Evento extends StatelessWidget {
                                                                                         ? TextButton.icon(
                                                                                             onPressed: () async {
                                                                                               try { // aqui funciona quase a 100%
+                                                                                                // ignore: avoid_print
                                                                                                 print(comID);
                                                                                                 await deleteComentarioEvento(comID);
                                                                                                 Navigator.of(context).pop();
                                                                                                 Navigator.of(context).pop();
-                                                                                                final TabController tabController = DefaultTabController.of(context);
-                                                                                                tabController.index = 1;
-                                                                                                Navigator.pushNamed(context, '/evento');
-                                                                                                                                                                                              showDialog(
+                                                                                                // ignore: unnecessary_nullable_for_final_variable_declarations
+                                                                                                final TabController? tabController = DefaultTabController.of(context);
+                                                                                                  if (tabController != null) {
+                                                                                                  tabController.index = 1;
+                                                                                                  Navigator.pushNamed(context, '/evento');
+                                                                                                }
+                                                                                                showDialog(
                                                                                                   context: context,
                                                                                                   builder: (BuildContext context) {
                                                                                                     return AlertDialog(

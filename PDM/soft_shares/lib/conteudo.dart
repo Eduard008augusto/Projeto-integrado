@@ -546,9 +546,12 @@ class Conteudo extends StatelessWidget {
                                                                                                                       await deleteComentarioConteudo(comID);
                                                                                                                       Navigator.of(context).pop();
                                                                                                                       Navigator.of(context).pop();
-                                                                                                                      final TabController tabController = DefaultTabController.of(context);
-                                                                                                                      tabController.index = 1;
-                                                                                                                      Navigator.pushNamed(context, '/conteudo');
+                                                                                                                      // ignore: unnecessary_nullable_for_final_variable_declarations
+                                                                                                                      final TabController? tabController = DefaultTabController.of(context);
+                                                                                                                        if (tabController != null) {
+                                                                                                                        tabController.index = 1;
+                                                                                                                        Navigator.pushNamed(context, '/conteudo');
+                                                                                                                      }
                                                                                                                       showDialog(
                                                                                                                         context: context,
                                                                                                                         builder: (BuildContext context) {

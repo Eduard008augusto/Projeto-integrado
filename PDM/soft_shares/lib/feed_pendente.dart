@@ -14,120 +14,250 @@ class Pendente extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Publicações pendentes'),
-      ),
-      drawer: const MenuDrawer(),
-      body: Column(
-        children: [
-          Expanded(
-            child: FutureBuilder<List<Map<String, dynamic>>>(
-              future: getConteudoRever(globals.idUtilizador, globals.idCentro),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Erro: ${snapshot.error}'),
-                  );
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(
-                    child: Text('Nenhuma publicação encontrada'),
-                  );
-                } else {
-                  final List<Map<String, dynamic>> publicacoes = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: publicacoes.length,
-                    itemBuilder: (context, index) {
-                      final publicacao = publicacoes[index];
+    return DefaultTabController(
+      length: 2, 
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Conteudos Pendentes'),
+          bottom: const TabBar(
+            labelColor: Color.fromARGB(255, 57, 99, 156),
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+            tabs: [
+              Tab(text: 'Publicações'),
+              Tab(text: 'Eventos'),
+            ],
+          ),
+        ),
+        drawer: const MenuDrawer(),
+        body: TabBarView(
+          children: [
+            // Conteúdo da primeira aba
+            Column(
+              children: [
+                Expanded(
+                  child: FutureBuilder<List<Map<String, dynamic>>>(
+                    future: getConteudoRever(globals.idUtilizador, globals.idCentro),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Erro: ${snapshot.error}'),
+                        );
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(
+                          child: Text('Nenhuma publicação encontrada'),
+                        );
+                      } else {
+                        final List<Map<String, dynamic>> publicacoes = snapshot.data!;
+                        return ListView.builder(
+                          itemCount: publicacoes.length,
+                          itemBuilder: (context, index) {
+                            final publicacao = publicacoes[index];
 
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            globals.idPublicacao = publicacao['ID_CONTEUDO'];
-                            globals.idArea = publicacao['ID_AREA'];//teste 
-                            //globals.nomArea = publicacao['NOME_AREA'];
-                            Navigator.pushNamed(context, '/conteudo_to_edit');
-                          },
-                          child: Card(
-                            elevation: 4.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(15.0),
-                                    topRight: Radius.circular(15.0),
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  globals.idPublicacao = publicacao['ID_CONTEUDO'];
+                                  globals.idArea = publicacao['ID_AREA'];
+                                  Navigator.pushNamed(context, '/conteudo_to_edit');
+                                },
+                                child: Card(
+                                  elevation: 4.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
                                   ),
-                                  child: Image.network(
-                                    'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: 150,
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                                  child: Text(
-                                    publicacao['NOMECONTEUDO'],
-                                    style: const TextStyle(fontSize: 20.0),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                const SizedBox(height: 6),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                                  child: Row(
-                                    children: [
-                                      const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
-                                      const SizedBox(width: 3),
-                                      Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(15.0),
+                                          topRight: Radius.circular(15.0),
+                                        ),
+                                        child: Image.network(
+                                          'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
+                                          fit: BoxFit.cover,
+                                          width: double.infinity,
+                                          height: 150,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 12),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                         child: Text(
-                                          publicacao['MORADA'],
-                                          style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                          publicacao['NOMECONTEUDO'],
+                                          style: const TextStyle(fontSize: 20.0),
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 6),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                                  child: Row(
-                                    children: [
-                                      const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
-                                      const SizedBox(width: 3),
-                                      Text(
-                                        publicacao['TELEFONE'],
-                                        style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                      const SizedBox(height: 6),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                        child: Row(
+                                          children: [
+                                            const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                            const SizedBox(width: 3),
+                                            Expanded(
+                                              child: Text(
+                                                publicacao['MORADA'],
+                                                style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
+                                      const SizedBox(height: 6),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                        child: Row(
+                                          children: [
+                                            const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                            const SizedBox(width: 3),
+                                            Text(
+                                              publicacao['TELEFONE'],
+                                              style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 12),
                                     ],
                                   ),
                                 ),
-                                const SizedBox(height: 12),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
+                              ),
+                            );
+                          },
+                        );
+                      }
                     },
-                  );
-                }
-              },
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+            Column(
+children: [
+                Column(
+              children: [
+                Expanded(
+                  child: FutureBuilder<List<Map<String, dynamic>>>(
+                    future: getEventoRever(globals.idUtilizador, globals.idCentro),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Erro: ${snapshot.error}'),
+                        );
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(
+                          child: Text('Nenhum evento encontrada'),
+                        );
+                      } else {
+                        final List<Map<String, dynamic>> eventos = snapshot.data!;
+                        return ListView.builder(
+                          itemCount: eventos.length,
+                          itemBuilder: (context, index) {
+                            final evento = eventos[index];
+
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  globals.idEvento = evento['ID_EVENTO'];
+                                  globals.idArea = evento['ID_AREA'];
+                                  Navigator.pushNamed(context, '/evento_to_edit');
+                                },
+                                child: Card(
+                                  elevation: 4.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(15.0),
+                                          topRight: Radius.circular(15.0),
+                                        ),
+                                        child: Image.network(
+                                          'https://pintbackend-w8pt.onrender.com/images/${evento['IMAGEMEVENTO']}',
+                                          fit: BoxFit.cover,
+                                          width: double.infinity,
+                                          height: 150,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 12),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                        child: Text(
+                                          evento['NOMEEVENTO'],
+                                          style: const TextStyle(fontSize: 20.0),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                        child: Row(
+                                          children: [
+                                            const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                            const SizedBox(width: 3),
+                                            Expanded(
+                                              child: Text(
+                                                evento['MORADA'],
+                                                style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                        child: Row(
+                                          children: [
+                                            const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                            const SizedBox(width: 3),
+                                            Text(
+                                              evento['TELEFONE'],
+                                              style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 12),
+                                              ]
+                                            )
+                                          )
+                                        )
+                                      );
+                                    }
+                                  );
+                                }
+                              }
+                            )
+                          )
+                        ],
+                      ),
+                    ],
+
+                  ),
+          ]
+        )
       ),
     );
   }
