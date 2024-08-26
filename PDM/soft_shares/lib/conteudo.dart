@@ -2,14 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
-//import 'package:path/path.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'like_bttn_conteudo.dart';
-//import 'package:comment_box/comment/comment.dart';
 
 import 'up_picconteudo.dart';
 
@@ -47,7 +45,7 @@ class Conteudo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                CustomStarRating(rating: estrelaBD),
+                CustomStarRating(rating: estrela),
                 const SizedBox(height: 16),
                 const Text(
                   'Classificação do Preço',
@@ -57,7 +55,7 @@ class Conteudo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                CustomEuroRating(rating: precoBD),
+                CustomEuroRating(rating: preco),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {
@@ -68,6 +66,8 @@ class Conteudo extends StatelessWidget {
                     }
 
                     Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, '/conteudo');
                   },
                   child: const Text('Classificar'),
                 ),
@@ -94,8 +94,7 @@ class Conteudo extends StatelessWidget {
         if (data['Avaliou']) {
           avaliado = true;
           Map<String, dynamic> res = Map<String, dynamic>.from(data['avaliacao']);
-          estrela = res['AVALIACAOGERAL']!;
-          print(estrela);
+          estrela = res['AVALIACAOGERAL'];
           preco = res['AVALIACAOPRECO'];
         } else {
           avaliado = false;
