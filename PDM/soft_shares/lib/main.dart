@@ -7,6 +7,7 @@ import 'package:soft_shares/database/connection_check.dart';
 import 'package:soft_shares/edit_conteudo.dart';
 import 'package:soft_shares/feed_pendente.dart';
 import 'package:soft_shares/notificacoes.dart';
+import 'package:soft_shares/preferencias.dart';
 import 'firebase_options.dart';
 
 import './database/var.dart' as globals;
@@ -84,6 +85,7 @@ class MainApp extends StatelessWidget {
         '/favoritos': (context) => const Favoritos(),
         '/pendente': (context) => const Pendente(),
         '/notificacoes': (context) => const Notificoes(),
+        '/preferencias': (context) => const Preferencias(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

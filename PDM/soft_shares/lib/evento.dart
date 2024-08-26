@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, prefer_const_constructors
+// ignore_for_file: use_build_context_synchronously, prefer_const_constructors, avoid_print
 
 import 'package:flutter/material.dart';
 // ignore: unused_import
