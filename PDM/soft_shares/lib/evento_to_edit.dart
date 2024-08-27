@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 import './database/var.dart' as globals;
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class EventoToEdit extends StatelessWidget {
   const EventoToEdit({super.key});
@@ -13,16 +12,10 @@ class EventoToEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          globals.nomArea ,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-        ),
-      ),
+      appBar: AppBar(),
       drawer: const MenuDrawer(),
       body: FutureBuilder<Map<String, dynamic>>(
-        future: fetchEvento(globals.idEvento),
+        future: fetchEvento(globals.idEventoEdit),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -35,10 +28,7 @@ class EventoToEdit extends StatelessWidget {
             if (evento.isEmpty) {
               return const Center(child: Text('Nenhm evento encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
             }
-            var mediaAvaliacoesGerais = evento['mediaAvaliacoesGerais'];
-            var ratingEstrela = mediaAvaliacoesGerais.toInt();
-            var ratingPreco = evento['mediaAvaliacoesPreco'];
-            var totalAvaliacoes = int.tryParse(evento['totalAvaliacoes']);
+            
             globals.idSubAreaFAV = evento['ID_SUBAREA'];
 
             globals.idEventoEdit = evento['ID_EVENTO'];
@@ -91,53 +81,29 @@ class EventoToEdit extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Column(
+                          mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    evento['NOMEEVENTO'] ?? 'Nome não disponível',
-                                    style: const TextStyle(fontSize: 20.0),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '($totalAvaliacoes)',
-                                      style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    RatingBarIndicator(
-                                      rating: ratingEstrela.toDouble(),
-                                      itemBuilder: (context, index) => const Icon(
-                                        Icons.star,
-                                        color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
-                                      ),
-                                      itemCount: 5,
-                                      itemSize: 20.0,
-                                      direction: Axis.horizontal,
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            Flexible(
+                              fit: FlexFit.loose,
+                              child: Text(
+                                evento['NOME'] ?? 'Nome não disponível',
+                                style: const TextStyle(fontSize: 20.0),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                            const SizedBox(height: 5,),
+                            Flexible(
+                              fit: FlexFit.loose,
+                              child: Text(
+                                (evento['DESCRICAO'] == null || evento['DESCRICAO'] == ' ' || evento['DESCRICAO'] == '') ? 'Descrição não disponível' : evento['DESCRICAO'],
+                                style: const TextStyle(fontSize: 16.0),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 4,
+                              ),
                             ),
                             const SizedBox(height: 10),
-                            RatingBarIndicator(
-                              rating: ratingPreco.toDouble(),
-                              itemBuilder: (context, index) => const Icon(
-                                Icons.euro,
-                                color: Colors.black,
-                              ),
-                              itemCount: 3,
-                              itemSize: 20.0,
-                              direction: Axis.horizontal,
-                            ),
                             const Divider(
                               height: 50,
                               thickness: 1,

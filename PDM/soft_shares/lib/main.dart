@@ -5,6 +5,8 @@ import 'package:soft_shares/conteudo_to_edit.dart';
 import 'package:soft_shares/database/connection_check.dart';
 //import 'package:soft_shares/database/database.dart';
 import 'package:soft_shares/edit_conteudo.dart';
+import 'package:soft_shares/edit_evento.dart';
+import 'package:soft_shares/evento_to_edit.dart';
 import 'package:soft_shares/feed_pendente.dart';
 import 'package:soft_shares/notificacoes.dart';
 import 'package:soft_shares/preferencias.dart';
@@ -75,8 +77,9 @@ class MainApp extends StatelessWidget {
         '/conteudo': (context) => Conteudo(),
         '/addconteudo': (context) => const Addconteudo(),
         '/editconteudo': (context) => const EditConteudo(),
+        '/editevento': (context) => const EditEvento(),
         '/conteudo_to_edit': (context) => const ConteudoToEdit(),
-        '/evento_to_edit': (context) => const ConteudoToEdit(),
+        '/evento_to_edit': (context) => const EventoToEdit(),
         '/perfil': (context) => const Perfil(),
         '/ediperfil': (context) => const Perfil(),
         '/feedeventos': (context) => const FeedEventos(),

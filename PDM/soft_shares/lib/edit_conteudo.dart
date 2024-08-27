@@ -389,7 +389,7 @@ class _EditConteudoState extends State<EditConteudo> {
                   print('ID AREA: ${globals.idAreaEdit}\nID SUBAREA: ${globals.idSubArea}\nID SUBAREA: ${globals.idUtilizador}\n');
 
                   await updateConteudo(
-                    globals.idPublicacao,
+                    globals.idConteudoEdit,
                     globals.idAreaEdit,
                     globals.idSubArea,
                     globals.nomeP,

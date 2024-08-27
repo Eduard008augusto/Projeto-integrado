@@ -166,7 +166,7 @@ class Pendente extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  globals.idEvento = evento['ID_EVENTO'];
+                                  globals.idEventoEdit = evento['ID_EVENTO'];
                                   //globals.idArea = evonto['ID_AREA']; (?)
                                   Navigator.pushNamed(context, '/evento_to_edit');
                                 },
