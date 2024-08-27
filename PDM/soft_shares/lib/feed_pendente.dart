@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 import './database/var.dart' as globals;
@@ -32,7 +33,6 @@ class Pendente extends StatelessWidget {
         drawer: const MenuDrawer(),
         body: TabBarView(
           children: [
-            // Conteúdo da primeira aba
             Column(
               children: [
                 Expanded(
@@ -143,39 +143,33 @@ class Pendente extends StatelessWidget {
               ],
             ),
             Column(
-            children: [
-              Column(
               children: [
                 Expanded(
                   child: FutureBuilder<List<Map<String, dynamic>>>(
                     future: getEventoRever(globals.idUtilizador, globals.idCentro),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
+                        return const Center(child: CircularProgressIndicator(),);
                       } else if (snapshot.hasError) {
-                        return Center(
-                          child: Text('Erro: ${snapshot.error}'),
-                        );
+                        return Center(child: Text('Erro: ${snapshot.error}'),);
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Center(
-                          child: Text('Nenhum evento encontrada'),
-                        );
+                        return const Center(child: Text('Nenhum evento encontrado'),);
                       } else {
                         final List<Map<String, dynamic>> eventos = snapshot.data!;
                         return ListView.builder(
                           itemCount: eventos.length,
                           itemBuilder: (context, index) {
                             final evento = eventos[index];
+                            double preco = double.tryParse(evento['PRECO'].toString()) ?? 0.0;
 
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                               child: GestureDetector(
                                 onTap: () {
                                   globals.idEvento = evento['ID_EVENTO'];
-                                  globals.idArea = evento['ID_AREA'];
-                                  Navigator.pushNamed(context, '/evento_to_edit');
+                                  //Navigator.pushNamed(context, '/evento');
+
+                                  // EDITAR AQUI PARA MANDAR PARA O EDITAR EVENTO
                                 },
                                 child: Card(
                                   elevation: 4.0,
@@ -201,7 +195,7 @@ class Pendente extends StatelessWidget {
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                         child: Text(
-                                          evento['NOMEEVENTO'],
+                                          evento['NOME'],
                                           style: const TextStyle(fontSize: 20.0),
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
@@ -216,10 +210,8 @@ class Pendente extends StatelessWidget {
                                             const SizedBox(width: 3),
                                             Expanded(
                                               child: Text(
-                                                evento['MORADA'],
+                                                evento['LOCALIZACAO'],
                                                 style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
                                           ],
@@ -230,32 +222,43 @@ class Pendente extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                         child: Row(
                                           children: [
-                                            const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                            const Icon(Icons.calendar_today_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
                                             const SizedBox(width: 3),
                                             Text(
-                                              evento['TELEFONE'],
+                                              DateFormat('dd/MM/yyyy').format(DateTime.parse(evento['DATA'])),
                                               style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 12),
-                                              ]
-                                            )
-                                          )
-                                        )
-                                      );
-                                    }
-                                  );
-                                }
-                              }
-                            )
-                          )
-                        ],
-                      ),
-                    ],
-
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                        child: Row(
+                                          children: [
+                                            const Icon(Icons.euro_outlined, size: 17.0, color: Color.fromARGB(255, 69, 79, 100)),
+                                            const SizedBox(width: 3),
+                                            Text(
+                                              'Preço: $preco€',
+                                              style: const TextStyle(color: Colors.black),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 12),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
                   ),
+                ),
+              ],
+            )
           ]
         )
       ),

@@ -365,8 +365,8 @@ class _AddconteudoState extends State<Addconteudo> {
                   if (context.mounted) {
                     Navigator.pushReplacementNamed(context, '/areas');
                   }
-                } catch (e) {
-                  print(e);
+                } catch (e, stackTrace) {
+                  print('$e\n\n$stackTrace');
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Erro ao adicionar conteúdo: $e'),
