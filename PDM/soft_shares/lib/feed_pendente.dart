@@ -167,9 +167,8 @@ class Pendente extends StatelessWidget {
                               child: GestureDetector(
                                 onTap: () {
                                   globals.idEvento = evento['ID_EVENTO'];
-                                  //Navigator.pushNamed(context, '/evento');
-
-                                  // EDITAR AQUI PARA MANDAR PARA O EDITAR EVENTO
+                                  //globals.idArea = evonto['ID_AREA']; (?)
+                                  Navigator.pushNamed(context, '/evento_to_edit');
                                 },
                                 child: Card(
                                   elevation: 4.0,
