@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,8 +16,8 @@ int preco = 0;
 int estrelaBD = 0;
 int precoBD = 0;
 
-class ConteudoToEdit extends StatelessWidget {
-  const ConteudoToEdit({super.key});
+class EventoToEdit extends StatelessWidget {
+  const EventoToEdit({super.key});
 
   void _showRatingDialog(BuildContext context) {
     showDialog(
@@ -54,9 +55,9 @@ class ConteudoToEdit extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     if (avaliado) {
-                      await updateAvaliacao(globals.idAvaliacao, globals.idPublicacao, globals.idUtilizador, estrelaBD, precoBD);
+                      await updateAvaliacao(globals.idAvaliacao, globals.idEvento, globals.idUtilizador, estrelaBD, precoBD);
                     } else {
-                      await createAvaliacao(globals.idPublicacao, globals.idUtilizador, estrelaBD, precoBD);
+                      await createAvaliacao(globals.idEvento, globals.idUtilizador, estrelaBD, precoBD);
                     }
 
                     Navigator.of(context).pop();
@@ -82,7 +83,7 @@ class ConteudoToEdit extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> check() async {
       try {
-        var data = await checkAvaliacao(globals.idUtilizador, globals.idPublicacao);
+        var data = await checkAvaliacao(globals.idUtilizador, globals.idEvento);
         if (data['Avaliou']) {
           avaliado = true;
           Map<String, dynamic> res = Map<String, dynamic>.from(data['avaliacao']);
@@ -109,24 +110,24 @@ class ConteudoToEdit extends StatelessWidget {
       ),
       drawer: const MenuDrawer(),
       body: FutureBuilder<Map<String, dynamic>>(
-        future: fetchPublicacao(globals.idPublicacao),
+        future: fetchEvento(globals.idEvento),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Erro: ${snapshot.error}', overflow: TextOverflow.ellipsis, maxLines: 2));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Nenhuma publicação encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
+            return const Center(child: Text('Nenhum evento encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
           } else {
-            final Map<String, dynamic> publicacao = snapshot.data!;
-            if (publicacao.isEmpty) {
-              return const Center(child: Text('Nenhuma publicação encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
+            final Map<String, dynamic> evento = snapshot.data!;
+            if (evento.isEmpty) {
+              return const Center(child: Text('Nenhm evento encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
             }
-            var mediaAvaliacoesGerais = publicacao['mediaAvaliacoesGerais'];
+            var mediaAvaliacoesGerais = evento['mediaAvaliacoesGerais'];
             var ratingEstrela = mediaAvaliacoesGerais.toInt();
-            var ratingPreco = publicacao['mediaAvaliacoesPreco'];
-            var totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']);
-            globals.idSubAreaFAV = publicacao['ID_SUBAREA'];
+            var ratingPreco = evento['mediaAvaliacoesPreco'];
+            var totalAvaliacoes = int.tryParse(evento['totalAvaliacoes']);
+            globals.idSubAreaFAV = evento['ID_SUBAREA'];
 
             return SingleChildScrollView(
               child: Column(
@@ -142,9 +143,9 @@ class ConteudoToEdit extends StatelessWidget {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(15.0),
-                                child: publicacao['IMAGEMCONTEUDO'] != null 
+                                child: evento['IMAGEMEVENTO'] != null 
                                   ? Image.network(
-                                      'https://pintbackend-w8pt.onrender.com/images/${publicacao['IMAGEMCONTEUDO']}',
+                                      'https://pintbackend-w8pt.onrender.com/images/${evento['IMAGEMEVENTO']}',
                                       fit: BoxFit.cover,
                                       width: double.infinity,
                                     )
@@ -183,7 +184,7 @@ class ConteudoToEdit extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    publicacao['NOMECONTEUDO'] ?? 'Nome não disponível',
+                                    evento['NOMEEVENTO'] ?? 'Nome não disponível',
                                     style: const TextStyle(fontSize: 20.0),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
@@ -233,10 +234,10 @@ class ConteudoToEdit extends StatelessWidget {
                             Row(
                               children: [
                                 const Icon(Icons.location_on_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                const SizedBox(width: 3),
                                 Expanded(
                                   child: Text(
-                                    publicacao['MORADA'] ?? 'Morada não disponível',
+                                    evento['LOCALIZACAO'] ?? 'Localização não disponível',
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
@@ -254,10 +255,12 @@ class ConteudoToEdit extends StatelessWidget {
                             Row(
                               children: [
                                 const Icon(Icons.access_time, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                const SizedBox(width: 3),
                                 Expanded(
                                   child: Text(
-                                    publicacao['HORARIO'] ?? 'Horário não disponível',
+                                    evento['DATA'] != null
+                                        ? DateFormat('dd/MM/yyyy HH:mm').format(DateTime.parse(evento['DATA']))
+                                        : 'Data e hora não disponíveis',
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
@@ -275,10 +278,10 @@ class ConteudoToEdit extends StatelessWidget {
                             Row(
                               children: [
                                 const Icon(Icons.phone_outlined, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                const SizedBox(width: 3),
                                 Expanded(
                                   child: Text(
-                                    publicacao['TELEFONE'] ?? 'Telefone não disponível',
+                                    evento['TELEFONE'].toString(),
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
@@ -295,11 +298,13 @@ class ConteudoToEdit extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.web, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                const Icon(Icons.euro, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                const SizedBox(width: 3),
                                 Expanded(
                                   child: Text(
-                                    publicacao['WEBSITE'] ?? 'Website não disponível',
+                                    evento['PRECO'] != null
+                                        ? '${evento['PRECO'].toString()}€'
+                                        : 'Preço não disponível',
                                     style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
@@ -316,27 +321,22 @@ class ConteudoToEdit extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.accessibility, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
-                                const SizedBox(width: 3), 
+                                const Icon(Icons.groups, size: 17.0, color: Color.fromARGB(255, 57, 99, 156)),
+                                const SizedBox(width: 3),
                                 Expanded(
                                   child: Text(
-                                    publicacao['ACESSIBILIDADE'] ?? 'Acessibilidade não disponível',
-                                    style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                                    evento['totalInscritos'] != null ?
+                                    '${evento['totalInscritos'].toString()} pessoas inscritas'
+                                    : 'Total de inscrições',
+                                    style: const TextStyle(color: Color.fromARGB(255, 69, 79, 100)),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
                                 ),
                               ],
                             ),
-                            const Divider(
-                              height: 50,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                              color: Color.fromARGB(136, 41, 40, 40),
-                            ),
-                          ],
-                        ),
+                         ],
+                       ),
                       ],
                     ),
                   ),
@@ -348,8 +348,8 @@ class ConteudoToEdit extends StatelessWidget {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
-          //globals.idArea = publicacao['ID_AREA'];//teste
-          Navigator.pushNamed(context, '/editconteudo');
+          //globals.idArea = evento['ID_AREA'];//teste
+          Navigator.pushNamed(context, '/editevento');
         },
         child: Container(
           width: 56.0,

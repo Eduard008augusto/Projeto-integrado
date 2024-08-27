@@ -143,8 +143,8 @@ class Pendente extends StatelessWidget {
               ],
             ),
             Column(
-children: [
-                Column(
+            children: [
+              Column(
               children: [
                 Expanded(
                   child: FutureBuilder<List<Map<String, dynamic>>>(
