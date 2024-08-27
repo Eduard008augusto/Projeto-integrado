@@ -72,7 +72,7 @@ class MainApp extends StatelessWidget {
         '/registo': (context) => Registar(),
         '/feed': (context) => const Feed(),
         '/mapa': (context) => const Mapa(),
-        '/conteudo': (context) => const Conteudo(),
+        '/conteudo': (context) => Conteudo(),
         '/addconteudo': (context) => const Addconteudo(),
         '/editconteudo': (context) => const EditConteudo(),
         '/conteudo_to_edit': (context) => const ConteudoToEdit(),

@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, prefer_const_constructors
+// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -15,14 +15,14 @@ bool isFavorite = false;
 bool isLiked = false;
 bool avaliado = false;
 
-int estrela = 0;
-int preco = 0;
-
 int estrelaBD = 0;
 int precoBD = 0;
 
 class Conteudo extends StatelessWidget {
-  const Conteudo({super.key});
+  Conteudo({super.key});
+
+  int estrela = 0;
+  int preco = 0;
 
   void _showRatingDialog(BuildContext context) {
     showDialog(
@@ -88,6 +88,9 @@ class Conteudo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
+    
     Future<void> check() async {
       try {
         var data = await checkAvaliacao(globals.idUtilizador, globals.idPublicacao);
@@ -1134,8 +1137,8 @@ class CustomStarRating extends StatelessWidget {
         color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
       ),
       unratedColor: Colors.grey.withOpacity(0.5),
-      onRatingUpdate: (rating) {
-        estrelaBD = rating.toInt();
+      onRatingUpdate: (ratingb) {
+        estrelaBD = ratingb.toInt();
       },
     );
   }
@@ -1160,8 +1163,8 @@ class CustomEuroRating extends StatelessWidget {
         color: Colors.black,
       ),
       unratedColor: Colors.black.withOpacity(0.3),
-      onRatingUpdate: (rating) {
-        precoBD = rating.toInt();
+      onRatingUpdate: (ratingb) {
+        precoBD = ratingb.toInt();
       },
     );
   }

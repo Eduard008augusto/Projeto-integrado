@@ -428,7 +428,6 @@ class Evento extends StatelessWidget {
                                                                                         ? TextButton.icon(
                                                                                             onPressed: () async {
                                                                                               try { // aqui funciona quase a 100%
-                                                                                                // ignore: avoid_print
                                                                                                 print(comID);
                                                                                                 await deleteComentarioEvento(comID);
                                                                                                 Navigator.of(context).pop();
