@@ -76,6 +76,7 @@ class MainApp extends StatelessWidget {
         '/addconteudo': (context) => const Addconteudo(),
         '/editconteudo': (context) => const EditConteudo(),
         '/conteudo_to_edit': (context) => const ConteudoToEdit(),
+        '/evento_to_edit': (context) => const ConteudoToEdit(),
         '/perfil': (context) => const Perfil(),
         '/ediperfil': (context) => const Perfil(),
         '/feedeventos': (context) => const FeedEventos(),
