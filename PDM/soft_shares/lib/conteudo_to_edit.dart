@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
-import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -17,66 +16,6 @@ int precoBD = 0;
 
 class ConteudoToEdit extends StatelessWidget {
   const ConteudoToEdit({super.key});
-
-  void _showRatingDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Classificação Geral',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                CustomStarRating(rating: estrelaBD),
-                const SizedBox(height: 16),
-                const Text(
-                  'Classificação do Preço',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                CustomEuroRating(rating: precoBD),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (avaliado) {
-                      await updateAvaliacao(globals.idAvaliacao, globals.idPublicacao, globals.idUtilizador, estrelaBD, precoBD);
-                    } else {
-                      await createAvaliacao(globals.idPublicacao, globals.idUtilizador, estrelaBD, precoBD);
-                    }
-
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Classificar'),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> _launchGoogleMaps(String address) async {
-    final query = Uri.encodeComponent(address);
-    final googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
-
-    await launchUrl(googleMapsUrl);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +66,8 @@ class ConteudoToEdit extends StatelessWidget {
             var ratingPreco = publicacao['mediaAvaliacoesPreco'];
             var totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']);
             globals.idSubAreaFAV = publicacao['ID_SUBAREA'];
+
+            globals.idConteudoEdit = publicacao['ID_CONTEUDO'];
 
             return SingleChildScrollView(
               child: Column(
@@ -348,7 +289,6 @@ class ConteudoToEdit extends StatelessWidget {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
-          //globals.idArea = publicacao['ID_AREA'];//teste
           Navigator.pushNamed(context, '/editconteudo');
         },
         child: Container(
@@ -364,9 +304,6 @@ class ConteudoToEdit extends StatelessWidget {
     );
   }
 }
-
-
-
  
 class CustomStarRating extends StatelessWidget {
   final int rating;

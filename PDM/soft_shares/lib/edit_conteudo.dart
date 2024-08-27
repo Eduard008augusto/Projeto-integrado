@@ -41,7 +41,7 @@ class _EditConteudoState extends State<EditConteudo> {
       ),
       drawer: const MenuDrawer(),
       body: FutureBuilder<Map<String, dynamic>>(
-        future: fetchPublicacao(globals.idPublicacao),
+        future: fetchPublicacao(globals.idConteudoEdit),
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.waiting){
             return const Center(child: CircularProgressIndicator(),);

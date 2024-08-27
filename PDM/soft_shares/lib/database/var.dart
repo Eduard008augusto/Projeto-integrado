@@ -34,7 +34,6 @@ var password = '';
 DateTime dataNascimento = DateTime.now();
 
 // Criar Publicação
-//var areaP = '';
 var nomeP = '';
 var moradaP = '';
 var horarioP = '';
@@ -54,3 +53,7 @@ DateTime? dataEvento;
 double? precoEvento = 0.0;
 String? descricaoEvento = '';
 String? imagemEvento = '';
+
+// Edit
+var idConteudoEdit = 0;
+var idEventoEdit = 0;
