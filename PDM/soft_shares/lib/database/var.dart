@@ -57,3 +57,6 @@ String? imagemEvento = '';
 // Edit
 var idConteudoEdit = 0;
 var idEventoEdit = 0;
+
+var idAreaDropDown = 0;
+var idSubAreaDropDown = 1;

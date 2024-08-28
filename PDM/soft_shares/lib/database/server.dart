@@ -21,6 +21,28 @@ Future<List<Map<String, dynamic>>> fetchAreas() async {
   }
 }
 
+Future<Map<String, dynamic>> getArea(var area) async {
+  final response = await http.get(Uri.parse('${baseUrl}area/get/$area'));
+  var data = jsonDecode(response.body);
+  if (data['success']) {
+    Map<String, dynamic> area = Map<String, dynamic>.from(data['data']);
+    return area;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
+Future<Map<String, dynamic>> getSubArea(var area) async {
+  final response = await http.get(Uri.parse('${baseUrl}subarea/get/$area'));
+  var data = jsonDecode(response.body);
+  if (data['success']) {
+    Map<String, dynamic> subarea = Map<String, dynamic>.from(data['data']);
+    return subarea;
+  } else {
+    throw Exception('Falha ao carregar dados');
+  }
+}
+
 // login
 Future<Map<String, dynamic>> login(String email, String password) async {
   try {

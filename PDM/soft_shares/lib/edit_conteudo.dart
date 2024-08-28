@@ -1,10 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously, sized_box_for_whitespace, duplicate_ignore
 
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:soft_shares/drawer.dart';
-import 'package:soft_shares/dropdown_areas.dart';
-import 'dropdown_subareas.dart';
 
 import './database/server.dart';
 import './database/var.dart' as globals;
@@ -155,28 +153,10 @@ class _EditConteudoState extends State<EditConteudo> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text('Área *'),
-                                  // ignore: sized_box_for_whitespace
+                                  const Text('Área e Subárea *'),
                                   Container(
                                     width: double.infinity,
-                                    child: const DropdownListViewArea(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text('Subárea *'),
-                                  // ignore: sized_box_for_whitespace
-                                  Container(
-                                    width: double.infinity,
-                                    child: const DropdownListView(),
+                                    child: DropdownListView(area: publicacao['ID_AREA'], subarea: publicacao['ID_SUBAREA'],),
                                   ),
                                 ],
                               ),
@@ -383,15 +363,13 @@ class _EditConteudoState extends State<EditConteudo> {
                   if (image != null) {
                     await uploadImage(image!);
                   } else {
-                    globals.imagem = '';
+                    globals.imagem = ' ';
                   }
-
-                  print('ID AREA: ${globals.idAreaEdit}\nID SUBAREA: ${globals.idSubArea}\nID SUBAREA: ${globals.idUtilizador}\n');
 
                   await updateConteudo(
                     globals.idConteudoEdit,
-                    globals.idAreaEdit,
-                    globals.idSubArea,
+                    globals.idAreaDropDown,
+                    globals.idSubAreaDropDown,
                     globals.nomeP,
                     globals.moradaP,
                     globals.horarioP,
@@ -402,7 +380,7 @@ class _EditConteudoState extends State<EditConteudo> {
                   );
 
                   if (context.mounted) {
-                    Navigator.pushReplacementNamed(context, '/areas');
+                    Navigator.pushReplacementNamed(context, '/pendente');
                   }
                 } catch (e) {
                   print(e);
@@ -417,6 +395,204 @@ class _EditConteudoState extends State<EditConteudo> {
           ],
         );
       },
+    );
+  }
+}
+
+class DropdownListView extends StatefulWidget {
+  final int? area;
+  final int? subarea;
+
+  const DropdownListView({super.key, this.area, this.subarea});
+
+  @override
+  _DropdownListViewState createState() => _DropdownListViewState();
+}
+
+class _DropdownListViewState extends State<DropdownListView> {
+  String? selectedArea;
+  List<Map<String, dynamic>> areas = [];
+
+  String? selectedSubArea;
+  List<Map<String, dynamic>> subAreas = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAndSetAreas();
+    fetchAndSetSubAreas();
+  }
+
+  void fetchAndSetAreas() async {
+    final fetchedAreas = await fetchAreas();
+    var data = await getArea(widget.area);
+    setState(() {
+      areas = fetchedAreas;
+      selectedArea = data['NOME'];
+      globals.idAreaDropDown = data['ID_AREA'];
+    });
+  }
+
+  void fetchAndSetSubAreas() async {
+    final fetchedSubAreas = await fetchSubAreas(widget.area);
+    var data = await getSubArea(widget.subarea);
+    setState(() {
+      subAreas = fetchedSubAreas;
+      selectedSubArea = data['NOME'];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        FutureBuilder<List<Map<String, dynamic>>>(
+          future: fetchAreas(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Erro: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('Nenhuma área encontrada'));
+            } else {
+              final items = snapshot.data!;
+              return DropdownButtonFormField<String>(
+                value: selectedArea,
+                hint: const Text('Selecione uma área'),
+                isExpanded: true,
+                items: items.map((item) {
+                  return DropdownMenuItem<String>(
+                    value: item['NOME'],
+                    child: Row(
+                      children: [
+                        Text(item['NOME']),
+                      ],
+                    ),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedArea = value;
+                    globals.idAreaDropDown = items.firstWhere((item) => item['NOME'] == value)['ID_AREA'];
+                  });
+                },
+                validator: (value) {
+                  if (value == null) {
+                    return 'Por favor, selecione uma área';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+              );
+            }
+          },
+        ),
+
+        const SizedBox(height: 10,),
+
+        FutureBuilder<List<Map<String, dynamic>>>(
+          future: fetchSubAreas(globals.idAreaDropDown),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Erro: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('Nenhuma subárea encontrada'));
+            } else {
+              final items = snapshot.data!;
+              try {
+                return DropdownButtonFormField<String>(
+                  value: selectedSubArea,
+                  hint: const Text('Selecione uma Subárea'),
+                  isExpanded: true,
+                  items: items.map((item) {
+                    return DropdownMenuItem<String>(
+                      onTap: (){
+                        globals.idSubAreaDropDown = item['ID_SUBAREA'];
+                      },
+                      value: item['NOME'],
+                      child: Row(
+                        children: [
+                          Image.network(
+                            'https://pintbackend-w8pt.onrender.com/images/${item['IMAGEMSUBAREA']}',
+                            height: 35.0,
+                            width: 35.0,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.image, size: 35.0);
+                            },
+                          ),
+                          const SizedBox(width: 8),
+                          Text(item['NOME']),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedSubArea = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Por favor, selecione uma subárea';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                );
+              } catch (e) {
+                return DropdownButtonFormField<String>(
+                  value: null,
+                  hint: const Text('Selecione uma Subárea'),
+                  isExpanded: true,
+                  items: items.map((item) {
+                    return DropdownMenuItem<String>(
+                      onTap: (){
+                        globals.idSubAreaDropDown = item['ID_SUBAREA'];
+                      },
+                      value: item['NOME'],
+                      child: Row(
+                        children: [
+                          Image.network(
+                            'https://pintbackend-w8pt.onrender.com/images/${item['IMAGEMSUBAREA']}',
+                            height: 35.0,
+                            width: 35.0,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.image, size: 35.0);
+                            },
+                          ),
+                          const SizedBox(width: 8),
+                          Text(item['NOME']),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedSubArea = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Por favor, selecione uma subárea';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                );
+              }
+            }
+          },
+        ),
+      ],
     );
   }
 }
