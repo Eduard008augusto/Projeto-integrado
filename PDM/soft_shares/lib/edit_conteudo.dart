@@ -363,7 +363,7 @@ class _EditConteudoState extends State<EditConteudo> {
                   if (image != null) {
                     await uploadImage(image!);
                   } else {
-                    globals.imagem = ' ';
+                    globals.imagem = '';
                   }
 
                   await updateConteudo(
@@ -382,6 +382,8 @@ class _EditConteudoState extends State<EditConteudo> {
                   if (context.mounted) {
                     Navigator.pushReplacementNamed(context, '/pendente');
                   }
+
+                  globals.imagem = '';
                 } catch (e) {
                   print(e);
                   ScaffoldMessenger.of(context).showSnackBar(

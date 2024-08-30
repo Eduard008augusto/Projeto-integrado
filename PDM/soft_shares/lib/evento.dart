@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 // ignore: unused_import
-import 'package:soft_shares/add_comentario_conteudo.dart';
 import 'package:soft_shares/database/server.dart';
-import 'package:soft_shares/drawer.dart';
+import 'drawer.dart';
+import 'drawer_mapa.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:intl/intl.dart';
@@ -46,7 +46,7 @@ class Evento extends StatelessWidget {
           const SizedBox(width: 20),
         ],
       ),
-      drawer: const MenuDrawer(),
+      drawer: globals.idCentro == 0 ? const MenuDrawerMapa() : const MenuDrawer(),
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchEvento(globals.idEvento),
         builder: (context, snapshot) {
@@ -751,6 +751,7 @@ class Evento extends StatelessWidget {
                               await deleteInscricao(data['ID_INSCRICAO']);
                               showDialog(
                                 context: context,
+                                barrierDismissible: false,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     icon: const Icon(Icons.check),
@@ -760,6 +761,8 @@ class Evento extends StatelessWidget {
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                          Navigator.pushNamed(context, '/evento');
                                         },
                                         child: const Text('OK'),
                                       ),
@@ -771,6 +774,7 @@ class Evento extends StatelessWidget {
                               await createInscricao(evento['ID_EVENTO'], globals.idUtilizador);
                               showDialog(
                                 context: context,
+                                barrierDismissible: false,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     icon: const Icon(Icons.check),
@@ -780,6 +784,8 @@ class Evento extends StatelessWidget {
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                          Navigator.pushNamed(context, '/evento');
                                         },
                                         child: const Text('OK'),
                                       ),

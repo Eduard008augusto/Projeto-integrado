@@ -2,8 +2,8 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:soft_shares/image_picker_page.dart';
 import 'drawer.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
@@ -19,8 +19,9 @@ class EditarPerfil extends StatefulWidget {
   _EditarPerfilState createState() => _EditarPerfilState();
 }
 
-DateTime? pickedDate;
-File? selectedImage;
+File? image;
+
+DateTime? selectedDateTime;
 
 class _EditarPerfilState extends State<EditarPerfil> {
   final _formKey = GlobalKey<FormState>();
@@ -62,8 +63,8 @@ class _EditarPerfilState extends State<EditarPerfil> {
             nomeController.text = user['NOME'];
             descricaoController.text = user['DESCRICAO'] ?? 'Descrição';
             moradaController.text = user['MORADA'] ?? 'Morada';
-            telefoneController.text = user['TELEFONE']?.toString() ?? '000000000';
-            dataNascimentoController.text = DateFormat('dd-MM-yyyy').format(DateTime.parse(user['DATANASCIMENTO'] ?? '1970-01-01T00:00:00.000Z'));
+            telefoneController.text = user['TELEFONE']?.toString() ?? '0';
+            dataNascimentoController.text = DateFormat('dd/MM/yyyy').format(DateTime.parse(user['DATANASCIMENTO'] ?? '1970-01-01T00:00:00.000Z'));
             
             return Padding(
               padding: const EdgeInsets.all(25.0),
@@ -74,7 +75,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                     Stack(
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(left: 16.0, right: 16.0),
+                          margin: const EdgeInsets.only(left: 10.0, right: 10.0),
                           padding: const EdgeInsets.all(16.0),
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -86,23 +87,46 @@ class _EditarPerfilState extends State<EditarPerfil> {
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           child: GestureDetector(
-                            onTap: () async {
-                              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-                              if (pickedFile != null) {
-                                setState(() {
-                                  selectedImage = File(pickedFile.path);
-                                });
-                              }
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ImagePickerPage(
+                                    onImagePicked: (File? pickedImage) {
+                                      setState(() {
+                                        image = pickedImage;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              );
                             },
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 const Icon(Icons.cloud_upload_outlined, size: 50, color: Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0)),
                                 const SizedBox(height: 16),
-                                const Text('Escolher Imagem de Perfil'),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => ImagePickerPage(
+                                          onImagePicked: (File? pickedImage) {
+                                            setState(() {
+                                              image = pickedImage;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
+                                  ),
+                                  child: const Text('Escolher Imagem'),
+                                ),
                                 const SizedBox(height: 8),
-                                if (selectedImage != null)
-                                  Image.file(selectedImage!),
+                                if (image != null)
+                                  Image.file(image!),
                               ],
                             ),
                           ),
@@ -150,7 +174,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                       ],
                     ),
                     const SizedBox(height: 20.0),
-                    const Text('Descrição', style: TextStyle(fontSize: 16)),
+                    const Text('Sobre si', style: TextStyle(fontSize: 16)),
                     TextFormField(
                       controller: descricaoController,
                       decoration: const InputDecoration(
@@ -176,23 +200,40 @@ class _EditarPerfilState extends State<EditarPerfil> {
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 20.0),
-                    ElevatedButton(
-                      onPressed: () async {
-                        pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime(2100),
-                          locale: const Locale('pt', 'PT'),
-                        );
-                        if (pickedDate != null) {
-                          setState(() {
-                            dataNascimentoController.text = DateFormat('dd-MM-yyyy').format(pickedDate!);
-                            globals.dataNascimento = pickedDate!;
-                          });
-                        }
-                      },
-                      child: const Text('Escolher Data de Nascimento'),
+                    Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Data de Nascimento'),
+                          TextFormField(
+                            controller: dataNascimentoController,
+                            readOnly: true,
+                            decoration: const InputDecoration(
+                              hintText: 'Data de Nascimento',
+                              border: OutlineInputBorder(),
+                            ),
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.parse(user['DATANASCIMENTO'] ?? '1970-01-01T00:00:00.000Z'),
+                                firstDate: DateTime(1900),
+                                lastDate: DateTime(2101),
+                              );
+                    
+                              if (pickedDate != null) {
+                                selectedDateTime = DateTime(
+                                  pickedDate.year,
+                                  pickedDate.month,
+                                  pickedDate.day,
+                                );
+
+                                dataNascimentoController.text = DateFormat('dd/MM/yyyy').format(selectedDateTime!);
+                                globals.dataNascimento = selectedDateTime!;
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                     const Divider(
                       height: 70,
@@ -258,16 +299,15 @@ class _EditarPerfilState extends State<EditarPerfil> {
             ElevatedButton(
               child: const Text('Salvar'),
               onPressed: () async {
+                
                 globals.nome = nomeController.text;
                 globals.descricaoU = descricaoController.text;
                 globals.moradaU = moradaController.text;
                 globals.telefoneU = int.tryParse(telefoneController.text) ?? 0;
 
-                if (selectedImage != null) {
-                  await uploadImage(selectedImage!);
+                if (image != null) {
+                  await uploadImage(image!);
                 }
-
-                print(globals.imagem);
                 
                 await updateUser(
                   globals.idUtilizador,
@@ -278,6 +318,8 @@ class _EditarPerfilState extends State<EditarPerfil> {
                   globals.telefoneU,
                   globals.imagem
                 );
+
+                globals.imagem = '';
 
                 Navigator.pushReplacementNamed(context, '/perfil');
               },

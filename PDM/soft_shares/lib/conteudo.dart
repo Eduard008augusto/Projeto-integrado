@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:soft_shares/database/server.dart';
-import 'package:soft_shares/drawer.dart';
+import 'drawer.dart';
+import 'drawer_mapa.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './database/var.dart' as globals;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -117,7 +118,7 @@ class Conteudo extends StatelessWidget {
           maxLines: 1,
         ),
       ),
-      drawer: const MenuDrawer(),
+      drawer: globals.idCentro == 0 ? const MenuDrawerMapa() : const MenuDrawer(),
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchPublicacao(globals.idPublicacao),
         builder: (context, snapshot) {

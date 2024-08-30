@@ -1,4 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import './services/token_service.dart';
@@ -6,20 +7,31 @@ import './services/token_service.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
 
-int? quant;
-
-void checkQuantidade() async {
-  quant = await quantidadeNotificacoes(globals.idCentro, globals.idUtilizador);
-}
-
-class MenuDrawer extends StatelessWidget {
+class MenuDrawer extends StatefulWidget {
   const MenuDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  _MenuDrawerState createState() => _MenuDrawerState();
+}
 
+class _MenuDrawerState extends State<MenuDrawer> {
+  int? quant;
+
+  @override
+  void initState() {
+    super.initState();
     checkQuantidade();
+  }
 
+  void checkQuantidade() async {
+    int? qtd = await quantidadeNotificacoes(globals.idCentro, globals.idUtilizador);
+    setState(() {
+      quant = qtd;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
@@ -87,15 +99,15 @@ class MenuDrawer extends StatelessWidget {
                   style: TextStyle(fontSize: 18.0, color: Colors.black),
                 ),
                 if (quant != null) ...[
-                  const SizedBox(width: 8), 
+                  const SizedBox(width: 8),
                   Stack(
                     alignment: Alignment.center,
                     children: [
                       Container(
-                        width: 22, 
-                        height: 22, 
+                        width: 22,
+                        height: 22,
                         decoration: const BoxDecoration(
-                          color: Color.fromARGB(174, 0, 183, 224), 
+                          color: Color.fromARGB(174, 0, 183, 224),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -103,7 +115,7 @@ class MenuDrawer extends StatelessWidget {
                         '$quant',
                         style: const TextStyle(
                           fontSize: 13.0,
-                          color: Colors.white, 
+                          color: Colors.white,
                         ),
                       ),
                     ],

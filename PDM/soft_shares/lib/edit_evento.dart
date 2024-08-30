@@ -227,8 +227,6 @@ class EditEventoState extends State<EditEvento> {
                                         border: OutlineInputBorder(),
                                       ),
                                       onTap: () async {
-                                        //FocusScope.of(context).requestFocus(FocusNode());
-
                                         DateTime? pickedDate = await showDatePicker(
                                           context: context,
                                           initialDate: DateTime.parse(evento['DATA']),
@@ -413,8 +411,8 @@ class EditEventoState extends State<EditEvento> {
                       globals.nomeEvento,
                       globals.dataEvento,
                       globals.localizacaoEvento,
-                      globals.telefoneEvento,
                       globals.imagem,
+                      globals.telefoneEvento,
                       globals.descricaoEvento,
                       globals.precoEvento,
                     );
@@ -440,6 +438,8 @@ class EditEventoState extends State<EditEvento> {
                       Navigator.pushNamed(context, '/pendente');
                     }
                   }
+
+                  globals.imagem = '';
                 } catch (e) {
                   print('Erro ao editar evento: $e');
                   if (mounted) {

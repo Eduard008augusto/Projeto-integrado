@@ -431,6 +431,8 @@ class AddEventoState extends State<AddEvento> {
                       },
                     );
                   }
+
+                  globals.imagem = '';
                 } catch (e) {
                   print('Erro ao adicionar evento: $e');
                   if (mounted) {

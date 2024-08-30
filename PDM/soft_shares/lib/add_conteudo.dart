@@ -365,6 +365,8 @@ class _AddconteudoState extends State<Addconteudo> {
                   if (context.mounted) {
                     Navigator.pushReplacementNamed(context, '/areas');
                   }
+
+                  globals.imagem = '';
                 } catch (e, stackTrace) {
                   print('$e\n\n$stackTrace');
                   ScaffoldMessenger.of(context).showSnackBar(
