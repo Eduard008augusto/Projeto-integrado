@@ -12,6 +12,7 @@ void main() {
   runApp(const EditConteudo());
 }
 
+
 class EditConteudo extends StatefulWidget {
   const EditConteudo({super.key});
 
@@ -21,6 +22,9 @@ class EditConteudo extends StatefulWidget {
 
 class _EditConteudoState extends State<EditConteudo> {
   File? image;
+
+  int area = 0;
+  int subarea = 0;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -421,6 +425,9 @@ class _DropdownListViewState extends State<DropdownListView> {
   @override
   void initState() {
     super.initState();
+
+
+
     fetchAndSetAreas();
     fetchAndSetSubAreas();
   }
@@ -441,6 +448,7 @@ class _DropdownListViewState extends State<DropdownListView> {
     setState(() {
       subAreas = fetchedSubAreas;
       selectedSubArea = data['NOME'];
+      globals.idSubAreaDropDown = data['ID_SUBAREA'];
     });
   }
 

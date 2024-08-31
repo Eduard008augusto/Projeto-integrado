@@ -363,7 +363,10 @@ class _AddconteudoState extends State<Addconteudo> {
                   );
 
                   if (context.mounted) {
-                    Navigator.pushReplacementNamed(context, '/areas');
+                    //Navigator.pushReplacementNamed(context, '/feed');
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, '/feed');
                   }
 
                   globals.imagem = '';

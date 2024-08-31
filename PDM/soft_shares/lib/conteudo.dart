@@ -88,9 +88,7 @@ class Conteudo extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-
-    
+  Widget build(BuildContext context) {    
     
     Future<void> check() async {
       try {
