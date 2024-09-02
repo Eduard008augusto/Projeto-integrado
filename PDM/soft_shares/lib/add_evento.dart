@@ -2,13 +2,11 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:soft_shares/drawer.dart';
-//import 'package:soft_shares/dropdown_areas_edit.dart';
-//import 'package:soft_shares/dropdown_subareas_edit.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
-import 'image_picker_page.dart';
 
 class AddEvento extends StatefulWidget {
   const AddEvento({super.key});
@@ -20,6 +18,17 @@ class AddEvento extends StatefulWidget {
 class AddEventoState extends State<AddEvento> {
   File? image;
   DateTime? selectedDateTime;
+
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+      });
+    }
+  }
 
   final _formKey = GlobalKey<FormState>();
 
@@ -68,17 +77,7 @@ class AddEventoState extends State<AddEvento> {
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ImagePickerPage(
-                                      onImagePicked: (File? pickedImage) {
-                                        setState(() {
-                                          image = pickedImage;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                );
+                                _pickImage();
                               },
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -87,17 +86,7 @@ class AddEventoState extends State<AddEvento> {
                                   const SizedBox(height: 16),
                                   ElevatedButton(
                                     onPressed: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => ImagePickerPage(
-                                            onImagePicked: (File? pickedImage) {
-                                              setState(() {
-                                                image = pickedImage;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      );
+                                      _pickImage();
                                     },
                                     style: ElevatedButton.styleFrom(
                                       foregroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),

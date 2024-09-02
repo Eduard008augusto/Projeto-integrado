@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:soft_shares/drawer.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
-import 'image_picker_page.dart';
 
 class EditEvento extends StatefulWidget {
   const EditEvento({super.key});

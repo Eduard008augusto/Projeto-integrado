@@ -2,8 +2,8 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:soft_shares/image_picker_page.dart';
 import 'drawer.dart';
 import './database/server.dart';
 import './database/var.dart' as globals;
@@ -19,11 +19,22 @@ class EditarPerfil extends StatefulWidget {
   _EditarPerfilState createState() => _EditarPerfilState();
 }
 
-File? image;
-
-DateTime? selectedDateTime;
-
 class _EditarPerfilState extends State<EditarPerfil> {
+
+  File? image;
+  DateTime? selectedDateTime;
+
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+      });
+    }
+  }
+  
   final _formKey = GlobalKey<FormState>();
   TextEditingController nomeController = TextEditingController();
   TextEditingController descricaoController = TextEditingController();
@@ -88,17 +99,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                           ),
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => ImagePickerPage(
-                                    onImagePicked: (File? pickedImage) {
-                                      setState(() {
-                                        image = pickedImage;
-                                      });
-                                    },
-                                  ),
-                                ),
-                              );
+                              _pickImage();
                             },
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -107,17 +108,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                                 const SizedBox(height: 16),
                                 ElevatedButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => ImagePickerPage(
-                                          onImagePicked: (File? pickedImage) {
-                                            setState(() {
-                                              image = pickedImage;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    );
+                                    _pickImage();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),
