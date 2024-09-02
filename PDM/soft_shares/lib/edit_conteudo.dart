@@ -2,11 +2,11 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:soft_shares/drawer.dart';
 
 import './database/server.dart';
 import './database/var.dart' as globals;
-import 'image_picker_page.dart';
 
 void main() {
   runApp(const EditConteudo());
@@ -22,6 +22,17 @@ class EditConteudo extends StatefulWidget {
 
 class _EditConteudoState extends State<EditConteudo> {
   File? image;
+
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        image = File(pickedFile.path);
+      });
+    }
+  }
 
   int area = 0;
   int subarea = 0;
@@ -84,17 +95,7 @@ class _EditConteudoState extends State<EditConteudo> {
                                 ),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => ImagePickerPage(
-                                          onImagePicked: (File? pickedImage) {
-                                            setState(() {
-                                              image = pickedImage;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    );
+                                    _pickImage();
                                   },
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -103,17 +104,7 @@ class _EditConteudoState extends State<EditConteudo> {
                                       const SizedBox(height: 16),
                                       ElevatedButton(
                                         onPressed: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) => ImagePickerPage(
-                                                onImagePicked: (File? pickedImage) {
-                                                  setState(() {
-                                                    image = pickedImage;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          );
+                                          _pickImage();
                                         },
                                         style: ElevatedButton.styleFrom(
                                           foregroundColor: const Color.fromARGB(0xFF, 0x00, 0xB8, 0xE0),

@@ -35,6 +35,10 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
       ),
       body: Column(
         children: [
+
+
+
+
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -53,6 +57,12 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
               ),
             ),
           ),
+
+
+
+
+
+          
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:soft_shares/database/server.dart';
 import 'package:soft_shares/drawer.dart';
@@ -36,15 +38,11 @@ class _NotificoesState extends State<Notificoes> {
                       onPressed: () async {
                         try {
                           await deleteNotificacoes(globals.idCentro, globals.idUtilizador);
-                          // ignore: use_build_context_synchronously
                           Navigator.of(context).pop();
-                          // ignore: use_build_context_synchronously
                           Navigator.pushNamed(context, '/notificacoes');
                         } catch (error) {
-                          // ignore: use_build_context_synchronously
                           Navigator.of(context).pop();
                           showDialog(
-                            // ignore: use_build_context_synchronously
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
@@ -74,7 +72,7 @@ class _NotificoesState extends State<Notificoes> {
           const SizedBox(width: 10,),
           IconButton(onPressed: (){
             Navigator.pushNamed(context, '/preferencias');
-          }, icon: const Icon(Icons.edit)),
+          }, icon: const Icon(Icons.settings)),
           const SizedBox(width: 10,),
         ],
       ),
