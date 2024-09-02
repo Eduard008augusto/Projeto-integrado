@@ -439,6 +439,7 @@ class Conteudo extends StatelessWidget {
                                                                                         comentarioController.text,
                                                                                       );
                                                                                       Navigator.of(context).pop();
+                                                                                      Navigator.of(context).pop();
                                                                                       Navigator.pushNamed(context, '/conteudo');
                                                                                     },
                                                                                     child: const Text('Confirmar'),

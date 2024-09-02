@@ -39,6 +39,7 @@ class _NotificoesState extends State<Notificoes> {
                         try {
                           await deleteNotificacoes(globals.idCentro, globals.idUtilizador);
                           Navigator.of(context).pop();
+                          Navigator.of(context).pop();
                           Navigator.pushNamed(context, '/notificacoes');
                         } catch (error) {
                           Navigator.of(context).pop();

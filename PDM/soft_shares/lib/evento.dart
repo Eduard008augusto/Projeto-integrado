@@ -324,6 +324,7 @@ class Evento extends StatelessWidget {
                                                                comentarioController.text,
                                                              );
                                                              Navigator.of(context).pop();
+                                                             Navigator.of(context).pop();
                                                              Navigator.pushNamed(context, '/evento');
                                                            },
                                                            child: const Text('Confirmar'),
@@ -637,6 +638,7 @@ class Evento extends StatelessWidget {
                                                                  globals.idUtilizador,
                                                                  comentarioControllerC.text,
                                                                );
+                                                               Navigator.of(context).pop();
                                                                Navigator.of(context).pop();
                                                                Navigator.pushNamed(context, '/evento');
                                                              },
