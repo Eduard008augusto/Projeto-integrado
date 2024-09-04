@@ -361,8 +361,7 @@ class _AddconteudoState extends State<Addconteudo> {
                   }
 
                   globals.imagem = '';
-                } catch (e, stackTrace) {
-                  print('$e\n\n$stackTrace');
+                } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Erro ao adicionar conteúdo: $e'),

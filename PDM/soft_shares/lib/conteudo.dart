@@ -98,6 +98,9 @@ class Conteudo extends StatelessWidget {
           Map<String, dynamic> res = Map<String, dynamic>.from(data['avaliacao']);
           estrela = res['AVALIACAOGERAL'];
           preco = res['AVALIACAOPRECO'];
+
+          estrelaBD = res['AVALIACAOGERAL'];
+          precoBD = res['AVALIACAOPRECO'];
         } else {
           avaliado = false;
         }
@@ -132,7 +135,7 @@ class Conteudo extends StatelessWidget {
               return const Center(child: Text('Nenhuma publicação encontrada', overflow: TextOverflow.ellipsis, maxLines: 2));
             }
             var mediaAvaliacoesGerais = publicacao['mediaAvaliacoesGerais'];
-            var ratingEstrela = mediaAvaliacoesGerais.toInt();
+            var ratingEstrela = mediaAvaliacoesGerais;
             var ratingPreco = publicacao['mediaAvaliacoesPreco'];
             var totalAvaliacoes = int.tryParse(publicacao['totalAvaliacoes']);
             String  morada = publicacao['MORADA'] ?? ' não disponível';
@@ -463,8 +466,6 @@ class Conteudo extends StatelessWidget {
                                                     } else {
                                                       final List<Map<String, dynamic>> comentarios = snapshot.data!;
                                                       TextEditingController comentarioController = TextEditingController();
-                                                          //final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-                                                          //int initialTabIndex = arguments?['tabIndex'] ?? 0;
                                                       return Stack(
                                                         children: [
                                                           SingleChildScrollView(
@@ -545,7 +546,6 @@ class Conteudo extends StatelessWidget {
                                                                                                               ? TextButton.icon(
                                                                                                                   onPressed: () async {
                                                                                                                     try { // aqui funciona quase a 100%
-                                                                                                                      print(comID);
                                                                                                                       await deleteComentarioConteudo(comID);
                                                                                                                       Navigator.of(context).pop();
                                                                                                                       Navigator.of(context).pop();
@@ -751,7 +751,7 @@ class Conteudo extends StatelessWidget {
                                                                                         globals.idUtilizador,
                                                                                         comentarioController.text,
                                                                                       );
-                                                                                      Navigator.of(context).pop(); // por enquanto esta é a melhor forma
+                                                                                      Navigator.of(context).pop();
                                                                                       Navigator.of(context).pop();
                                                                                       Navigator.pushNamed(context, '/conteudo');
                                                                                     },
@@ -1097,7 +1097,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
                     }
                   } else {
                     var res = await createFavorito(globals.idCentro, globals.idArea, globals.idSubAreaFAV, globals.idPublicacao, globals.idUtilizador);
-                    print(res);
                     if (res['success']) {
                       setState(() {
                         isFavorite = true;

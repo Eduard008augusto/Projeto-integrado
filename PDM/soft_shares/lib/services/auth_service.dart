@@ -80,8 +80,6 @@ class AuthService {
           _userObj = userData;
 
           try {
-            print(_userObj["id"]);
-            print(_userObj["email"]);
             Map<String, dynamic> regRes = await registo(globals.idCentroUSER, _userObj["name"], _userObj["email"], _userObj["id"]);
 
             if (regRes['success']) {
@@ -92,8 +90,6 @@ class AuthService {
               return true;
             }
           } catch (e) {
-            print(_userObj["id"]);
-            print(_userObj["email"]);
             Map<String, dynamic> logRes = await login(_userObj["email"], _userObj["id"]);
 
             if (logRes['success']) {

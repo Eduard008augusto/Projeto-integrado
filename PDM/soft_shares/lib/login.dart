@@ -110,8 +110,6 @@ class Login extends StatelessWidget {
               try {
                 Map<String, dynamic> data = await login(emailController.text, passController.text);
 
-                print(data);
-
                 if (data['success']) {
                   await TokenManager().storeIdUtilizador(data['id_utilizador']);
                   globals.idUtilizador = await TokenManager().getIdUtilizador();
@@ -206,7 +204,7 @@ class Login extends StatelessWidget {
                   onTap: () async {
                     try {
                       bool success = await AuthService().signInWithGoogle();
-                      print(success);
+
                       if (success) {
                         Navigator.pushReplacementNamed(context, '/mapa');
                       } else {

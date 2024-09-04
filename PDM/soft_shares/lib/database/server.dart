@@ -62,7 +62,7 @@ Future<Map<String, dynamic>> login(String email, String password) async {
 
     var data = jsonDecode(response.body);
 
-    print(data);
+    
 
     if (data['success']) {
       Map<String, dynamic> res = Map<String, dynamic>.from(data);
@@ -93,7 +93,6 @@ Future<void> uploadImage(File imageFile) async {
   if (response.statusCode == 200) {
     var responseBody = await http.Response.fromStream(response);
     var responseData = json.decode(responseBody.body);
-    print(responseData);
     globals.imagem = responseData['imageName'];
     print('Image uploaded: ${globals.imagem}');
   } else {
@@ -122,7 +121,7 @@ Future<Map<String, dynamic>> registo(var idcentro, var nome, var email, var pass
 
   var data = jsonDecode(response.body);
 
-  print(data);
+  
 
   if (data['success']) {
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
@@ -220,7 +219,7 @@ Future<Map<String, dynamic>> createPublicacao(var centro, var area, var subarea,
 
   var data = jsonDecode(response.body);
 
-  print(data);
+  
 
   if (data['success']) {
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
@@ -313,8 +312,6 @@ Future<Map<String, dynamic>> createEvento(var centro, var area, var subArea, var
 
   var responseData = jsonDecode(response.body);
 
-  print(responseData);
-
   if (responseData['success']) {
     Map<String, dynamic> res = Map<String, dynamic>.from(responseData['data']);
     return res;
@@ -358,7 +355,7 @@ Future<Map<String, dynamic>> createFavorito(var centro, var area, var subarea, v
 
   var data = jsonDecode(response.body);
 
-  print(data);
+  
 
   if(data['success']){
     Map<String, dynamic> res = Map<String, dynamic>.from(data);
@@ -383,7 +380,7 @@ Future<Map<String, dynamic>> deleteFavorito(var id) async {
   if (response.statusCode == 200) {
     try {
       var data = jsonDecode(response.body) as Map<String, dynamic>;
-      print(data);
+      
 
       if (data['success']) {
         return data;
@@ -414,7 +411,7 @@ Future<List<Map<String, dynamic>>> fetchFavoritos(var id) async {
 Future<Map<String, dynamic>> checkAvaliacao(var user, var conteudo) async {
   final response = await http.get(Uri.parse('${baseUrl}avaliacao/utilizadorAvaliou/$user/$conteudo'));
   final data = jsonDecode(response.body);
-  print(data);
+  
   if(data['success']){
     if(data['Avaliou']){
       globals.idAvaliacao = data['ID_AVALIACAO'];
@@ -445,7 +442,7 @@ Future<Map<String, dynamic>> createAvaliacao(var conteudo, var user, var estrela
   if (response.statusCode == 201) {
     try {
       var data = jsonDecode(response.body) as Map<String, dynamic>;
-      print(data);
+      
 
       if (data['success']) {
         return data;
@@ -479,7 +476,7 @@ Future<Map<String, dynamic>> updateAvaliacao(var id, var conteudo, var user, var
 
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
-    print(data);
+    
 
     if (data['success']) {
       print('Avaliado com sucesso!');
@@ -496,7 +493,7 @@ Future<Map<String, dynamic>> updateAvaliacao(var id, var conteudo, var user, var
 Future<Map<String, dynamic>> checkInscricao(var user, var evento) async {
   final response = await http.get(Uri.parse('${baseUrl}inscricaoevento/isInscrito/$user/$evento'));
   final data = jsonDecode(response.body);
-  print(data);
+  
   if(data['success']){
     if(data['isInscrito']){
       globals.idEventoINSC = data['ID_INSCRICAO'];
@@ -525,7 +522,7 @@ Future<Map<String, dynamic>> createInscricao(var evento, var user) async {
   if (response.statusCode == 201) {
     try {
       var data = jsonDecode(response.body) as Map<String, dynamic>;
-      print(data);
+      
 
       if (data['success']) {
         return data;
@@ -556,7 +553,7 @@ Future<Map<String, dynamic>> deleteInscricao(var id) async {
   if (response.statusCode == 200) {
     try {
       var data = jsonDecode(response.body) as Map<String, dynamic>;
-      print(data);
+      
 
       if (data['success']) {
         return data;
@@ -631,7 +628,7 @@ Future<Map<String, dynamic>> updateConteudo(var idConteudo, var area, var subare
 
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
-    print(data);
+    
 
     if (data['success']) {
       print('Atualizado com sucesso!');
@@ -668,7 +665,7 @@ Future<Map<String, dynamic>> updateEvento(var idEvento, var area, var subarea, v
 
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
-    print(data);
+    
 
     if (data['success']) {
       print('Atualizado com sucesso!');
@@ -685,7 +682,7 @@ Future<Map<String, dynamic>> updateEvento(var idEvento, var area, var subarea, v
 Future<List<Map<String, dynamic>>> getAlbumConteudo(var conteudo) async {
   final response = await http.get(Uri.parse('${baseUrl}fotoconteudo/listporconteudo/$conteudo'));
   var data = jsonDecode(response.body);
-  print(data);
+  
   if (data['success']) {
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
@@ -716,7 +713,7 @@ Future<Map<String, dynamic>> uploadImagemConteudo(var conteudo, var user, var im
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Imagem enviada com sucesso!');
@@ -733,7 +730,7 @@ Future<Map<String, dynamic>> uploadImagemConteudo(var conteudo, var user, var im
 Future<List<Map<String, dynamic>>> getAlbumEvento(var evento) async {
   final response = await http.get(Uri.parse('${baseUrl}fotoevento/listporevento/$evento'));
   var data = jsonDecode(response.body);
-  print(data);
+  
   if (data['success']) {
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
@@ -764,7 +761,7 @@ Future<Map<String, dynamic>> uploadImagemEvento(var evento, var user, var imagem
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Imagem enviada com sucesso!');
@@ -781,7 +778,7 @@ Future<Map<String, dynamic>> uploadImagemEvento(var evento, var user, var imagem
 Future<List<Map<String, dynamic>>> getComentarioConteudo(var conteudo) async {
   final response = await http.get(Uri.parse('${baseUrl}comentarioconteudo/list/$conteudo'));
   var data = jsonDecode(response.body);
-  print(data);
+  
   if (data['success']) {
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
@@ -810,7 +807,7 @@ Future<Map<String, dynamic>> createComentarioConteudo(var centro, var conteudo, 
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Comentário criado com sucesso!');
@@ -840,7 +837,7 @@ Future<Map<String, dynamic>> deleteComentarioConteudo(var comentario) async {
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Comentário apagado com sucesso!');
@@ -857,7 +854,7 @@ Future<Map<String, dynamic>> deleteComentarioConteudo(var comentario) async {
 Future<Map<String, dynamic>> denunciarComentarioConteudo(var comentario) async {
   final response = await http.post(Uri.parse('${baseUrl}comentarioconteudo/denunciar/$comentario'));
   var data = jsonDecode(response.body);
-  print(data);
+  
   if (data['success']) {
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
@@ -883,7 +880,7 @@ Future<Map<String, dynamic>> updateComentarioConteudo(var comentario, var texto)
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Comentário atualizado com sucesso!');
@@ -900,7 +897,7 @@ Future<Map<String, dynamic>> updateComentarioConteudo(var comentario, var texto)
 Future<List<Map<String, dynamic>>> getComentarioEvento(var comentario) async {
   final response = await http.get(Uri.parse('${baseUrl}comentarioevento/list/$comentario'));
   var data = jsonDecode(response.body);
-  print(data);
+  
   if (data['success']) {
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
@@ -929,7 +926,7 @@ Future<Map<String, dynamic>> createComentarioEvento(var centro, var evento, var 
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Comentário criado com sucesso!');
@@ -959,7 +956,7 @@ Future<Map<String, dynamic>> deleteComentarioEvento(var comentario) async {
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Comentário apagado com sucesso!');
@@ -976,7 +973,7 @@ Future<Map<String, dynamic>> deleteComentarioEvento(var comentario) async {
 Future<Map<String, dynamic>> denunciarComentarioEvento(var comentario) async {
   final response = await http.post(Uri.parse('${baseUrl}comentarioevento/denunciar/$comentario'));
   var data = jsonDecode(response.body);
-  print(data);
+  
   if (data['success']) {
     Map<String, dynamic> res = Map<String, dynamic>.from(data['data']);
     return res;
@@ -1002,7 +999,7 @@ Future<Map<String, dynamic>> updateComentarioEvento(var comentario, var texto) a
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Comentário atualizado com sucesso!');
@@ -1019,7 +1016,7 @@ Future<Map<String, dynamic>> updateComentarioEvento(var comentario, var texto) a
 Future<int> quantidadeNotificacoes(var centro, var user) async {
   final response = await http.get(Uri.parse('${baseUrl}notificacao/NumeroNotifCentroUser/$centro/$user'));
   var data = jsonDecode(response.body);
-  //print(data);
+  //
   if (data['success']) {
     return data['NumeroNotificacoes'];
   } else {
@@ -1031,7 +1028,7 @@ Future<int> quantidadeNotificacoes(var centro, var user) async {
 Future<List<Map<String, dynamic>>> getNotificacoes(var centro, var user) async {
   final response = await http.get(Uri.parse('${baseUrl}notificacao/ListPorCentroUser/$centro/$user'));
   var data = jsonDecode(response.body);
-  print(data);
+  
   if(data['success']){
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
@@ -1045,7 +1042,7 @@ Future<Map<String, dynamic>> deleteNotificacoes(var centro, var user) async {
   final response = await http.get(Uri.parse('${baseUrl}notificacao/delete/$centro/$user'));
   var data = jsonDecode(response.body);
   if(data['success']){
-    print(data['message']);
+    
     Map<String, dynamic> res = Map<String, dynamic>.from(data);
     return res;
   } else {
@@ -1058,7 +1055,7 @@ Future<Map<String, dynamic>> isLikedConteudo(var user, var comentario) async {
   final response = await http.get(Uri.parse('${baseUrl}avaliacaocomentarioconteudo/utilizadorAvaliouComentario/$user/$comentario'));
   var data = jsonDecode(response.body);
   if(data['success']){
-    print(data['message']);
+    
     Map<String, dynamic> res = Map<String, dynamic>.from(data);
     return res;
   } else {
@@ -1084,7 +1081,7 @@ Future<Map<String, dynamic>> createLikeConteudo(var comentario, var user) async 
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Like adicionado com sucesso!');
@@ -1114,7 +1111,7 @@ Future<Map<String, dynamic>> deleteLikeConteudo(var like) async {
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Like removido com sucesso!');
@@ -1132,7 +1129,7 @@ Future<Map<String, dynamic>> isLikedEvento(var user, var comentario) async {
   final response = await http.get(Uri.parse('${baseUrl}avaliacaocomentarioevento/utilizadorAvaliouComentario/$user/$comentario'));
   var data = jsonDecode(response.body);
   if(data['success']){
-    print(data['message']);
+    
     Map<String, dynamic> res = Map<String, dynamic>.from(data);
     return res;
   } else {
@@ -1158,7 +1155,7 @@ Future<Map<String, dynamic>> createLikeEvento(var comentario, var user) async {
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Like adicionado com sucesso!');
@@ -1188,7 +1185,7 @@ Future<Map<String, dynamic>> deleteLikeEvento(var like) async {
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Like removido com sucesso!');
@@ -1206,7 +1203,7 @@ Future<List<Map<String, dynamic>>> getAreasPreferencias(var centro, var user) as
   final response = await http.get(Uri.parse('${baseUrl}preferencias/ListAreasComPreferencias/$centro/$user'));
   var data = jsonDecode(response.body);
   if(data['success']){
-    print(data['message']);
+    
     List<Map<String, dynamic>> res = List<Map<String, dynamic>>.from(data['data']);
     return res;
   } else {
@@ -1233,7 +1230,7 @@ Future<Map<String, dynamic>> savePreferencia(var user, var centro, var area) asy
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Prefencia salva com sucesso');
@@ -1265,7 +1262,7 @@ Future<Map<String, dynamic>> deletePreferencia(var user, var centro, var area) a
   try {
     var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(data);
+    
 
     if (data['success']) {
       print('Prefencia apagada com sucesso');
